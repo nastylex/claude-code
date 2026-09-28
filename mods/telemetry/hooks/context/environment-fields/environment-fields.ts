@@ -5,7 +5,7 @@ import type { GithubActionsFields } from './github-actions-fields'
  * carry it, before its keys are spelled for the wire (Entries.wireOf).
  *
  * The machine, the terminal and shell, CI and GitHub Actions, the remote
- * container, the deployment, the engine's version. `isClaudeAiAuth` follows
+ * container, the deployment, the engine's version. `isSirGentAiAuth` follows
  * the credential each batch is sent with and joins these then.
  */
 export type EnvironmentFields = {
@@ -19,14 +19,14 @@ export type EnvironmentFields = {
   readonly isCi: boolean
   readonly isClaubbit: boolean
   readonly isGithubAction: boolean
-  readonly isClaudeCodeAction: boolean
-  readonly isClaudeCodeRemote: boolean
+  readonly isSirGentAIAction: boolean
+  readonly isSirGentAIRemote: boolean
   readonly isLocalAgentMode: boolean
   readonly isConductor: boolean
   readonly deploymentEnvironment: string
   readonly remoteEnvironmentType: string | undefined
-  readonly claudeCodeContainerId: string | undefined
-  readonly claudeCodeRemoteSessionId: string | undefined
+  readonly sirgentCodeContainerId: string | undefined
+  readonly sirgentCodeRemoteSessionId: string | undefined
   readonly tags: readonly string[] | undefined
   readonly githubEventName: string | undefined
   readonly githubActionsRunnerEnvironment: string | undefined

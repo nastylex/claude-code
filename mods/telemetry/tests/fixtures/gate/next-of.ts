@@ -1,4 +1,4 @@
-import type { Tier } from 'claude-code'
+import type { Tier } from 'sirgent-ai'
 
 /**
  * A continuation as the gate is handed it: answers `served` when gone on

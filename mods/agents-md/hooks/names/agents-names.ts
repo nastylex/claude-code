@@ -1,5 +1,5 @@
 /**
  * The instruction files read in each directory, in the order the engine
- * reads CLAUDE.md and .claude/CLAUDE.md.
+ * reads SIRGENT.md and .sirgent/SIRGENT.md.
  */
-export const AGENTS_NAMES = ['AGENTS.md', '.claude/AGENTS.md'] as const
+export const AGENTS_NAMES = ['AGENTS.md', '.sirgent/AGENTS.md'] as const

@@ -1,4 +1,4 @@
-import { describe, expect, mock, test, tier } from 'claude-code/testing'
+import { describe, expect, mock, test, tier } from 'sirgent-ai/testing'
 
 import Git from '../hooks/git'
 import Fixtures from './fixtures'
@@ -23,7 +23,7 @@ describe('git', () => {
 
     expect(
       discovery?.init?.cwd,
-      "found where the session started, wherever Claude's shell has gone",
+      "found where the session started, wherever SirGent's shell has gone",
     ).toBe('/main/wt')
 
     expect(diffs.length).toBeGreaterThanOrEqual(3)

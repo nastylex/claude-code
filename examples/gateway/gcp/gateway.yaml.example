@@ -1,23 +1,23 @@
-# gateway.yaml.example — Claude Gateway config template, GCP-shaped (walkthrough §6).
+# gateway.yaml.example — SirGent Gateway config template, GCP-shaped (walkthrough §6).
 #
 # Google Workspace IdP + Agent Platform (formerly Vertex AI) upstream, following
-# the walkthrough at https://code.claude.com/docs/en/claude-apps-gateway-on-gcp.
+# the walkthrough at https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-gcp.
 # The active sections
 # below are a strict subset of the full configuration reference at
-# https://code.claude.com/docs/en/claude-apps-gateway; optional keys are included
+# https://code.sirgent.ai/docs/en/sirgent-apps-gateway; optional keys are included
 # commented-out.
 #
 # USAGE — this is the shippable TEMPLATE. Copy it to gateway.yaml and fill it in:
 #     cp gateway.yaml.example gateway.yaml
 #   setup.sh and terraform/ read gateway.yaml (your filled-in copy, which is
 #   gitignored). It is published as the Secret Manager secret `gateway-config`
-#   (§6) and mounted at /etc/claude/gateway.yaml — the container ENTRYPOINT runs
-#   `claude gateway --config /etc/claude/gateway.yaml`.
+#   (§6) and mounted at /etc/sirgent/gateway.yaml — the container ENTRYPOINT runs
+#   `sirgent gateway --config /etc/sirgent/gateway.yaml`.
 #
 # Secret expansion: ${ENV_VAR} reads an env var; ${file:/path} reads a mounted file.
 # On Cloud Run, setup.sh injects the JWT / OIDC / Postgres secrets as ENV VARS
 # (Cloud Run can't mount multiple secrets into a single directory), and mounts
-# only gateway.yaml itself as a file at /etc/claude. On GKE you may use file mounts.
+# only gateway.yaml itself as a file at /etc/sirgent. On GKE you may use file mounts.
 #
 # BEFORE DEPLOY — replace every REPLACE_ME placeholder below (setup.sh refuses to
 # publish the config secret while any remain), and create the referenced secrets:
@@ -92,13 +92,13 @@ store:
 # ── Upstreams — Agent Platform ───────────────────────────────────────────────
 upstreams:
   - provider: vertex
-    region: us-east5              # a region where the Claude models you need are published in Model Garden
+    region: us-east5              # a region where the SirGent models you need are published in Model Garden
     project_id: REPLACE_ME        # your GCP project ID for Agent Platform access
     auth: {}                      # ADC via Cloud Run SA / GKE Workload Identity (preferred — no static keys)
     # base_url: https://us-east5-aiplatform.p.googleapis.com   # Private Service Connect endpoint
   # Add more upstreams for failover (tried top→bottom on 5xx/timeout/501): a
-  # second region, or an anthropic/bedrock fallback. See
-  # https://code.claude.com/docs/en/claude-apps-gateway.
+  # second region, or an sirgent/bedrock fallback. See
+  # https://code.sirgent.ai/docs/en/sirgent-apps-gateway.
 
 # ── Telemetry fan-out (OPTIONAL) ─────────────────────────────────────────────
 # The CLI sends OTLP/HTTP to the gateway; the gateway fans out, stamping
@@ -106,7 +106,7 @@ upstreams:
 # Collector with the googlecloud exporter (-> Cloud Trace / Managed Prometheus).
 # Takes effect after the second pass (once public_url is the real URL, not the
 # placeholder): when forward_to and public_url are both configured the gateway pushes
-# CLAUDE_CODE_ENABLE_TELEMETRY and the OTEL exporter selectors to every client
+# SIRGENT_ENABLE_TELEMETRY and the OTEL exporter selectors to every client
 # automatically — no per-developer config needed.
 # telemetry:
 #   forward_to:
@@ -124,11 +124,11 @@ upstreams:
 #   policies:
 #     - match: { email_domain: example.com }
 #       cli:
-#         availableModels: [claude-opus-4-8, claude-sonnet-4-6, claude-haiku-4-5]
+#         availableModels: [sirgent-opus-4-8, sirgent-sonnet-4-6, sirgent-haiku-4-5]
 #         permissions: { deny: ["Read(./.env)", "Read(./secrets/**)"] }
 #     - match: {}        # catch-all floor — keep LAST
 #       cli:
-#         availableModels: [claude-sonnet-4-6, claude-haiku-4-5]
+#         availableModels: [sirgent-sonnet-4-6, sirgent-haiku-4-5]
 
 # ── Admin API (OPTIONAL — enables db-mode runtime config + spend caps) ───────
 # admin_groups needs a groups claim — with Google as IdP, set
@@ -147,10 +147,10 @@ upstreams:
 #   # admin_groups: [platform-finops@example.com]   # group emails via oidc.google_groups, or any groups-capable IdP
 
 # ── Model catalog (OPTIONAL) ─────────────────────────────────────────────────
-# Default true: every built-in Claude model is exposed and auto-translated per
+# Default true: every built-in SirGent model is exposed and auto-translated per
 # upstream. Set false + a models: list to pin IDs (e.g. provisioned throughput).
 # auto_include_builtin_models: true
 # models:
-#   - id: claude-opus-4-8
-#     label: Claude Opus 4.8
-#     upstream_model: { vertex: claude-opus-4-8 }
+#   - id: sirgent-opus-4-8
+#     label: SirGent Opus 4.8
+#     upstream_model: { vertex: sirgent-opus-4-8 }

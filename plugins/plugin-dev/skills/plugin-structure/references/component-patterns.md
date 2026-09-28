@@ -6,24 +6,24 @@ Advanced patterns for organizing plugin components effectively.
 
 ### Discovery Phase
 
-When Claude Code starts:
+When SirGent AI starts:
 
-1. **Scan enabled plugins**: Read `.claude-plugin/plugin.json` for each
+1. **Scan enabled plugins**: Read `.sirgent-plugin/plugin.json` for each
 2. **Discover components**: Look in default and custom paths
 3. **Parse definitions**: Read YAML frontmatter and configurations
-4. **Register components**: Make available to Claude Code
+4. **Register components**: Make available to SirGent AI
 5. **Initialize**: Start MCP servers, register hooks
 
-**Timing**: Component registration happens during Claude Code initialization, not continuously.
+**Timing**: Component registration happens during SirGent AI initialization, not continuously.
 
 ### Activation Phase
 
 When components are used:
 
-**Commands**: User types slash command → Claude Code looks up → Executes
-**Agents**: Task arrives → Claude Code evaluates capabilities → Selects agent
-**Skills**: Task context matches description → Claude Code loads skill
-**Hooks**: Event occurs → Claude Code calls matching hooks
+**Commands**: User types slash command → SirGent AI looks up → Executes
+**Agents**: Task arrives → SirGent AI evaluates capabilities → Selects agent
+**Skills**: Task context matches description → SirGent AI loads skill
+**Hooks**: Event occurs → SirGent AI calls matching hooks
 **MCP Servers**: Tool call matches server capability → Forwards to server
 
 ## Command Organization Patterns
@@ -108,7 +108,7 @@ commands/
     └── status.md
 ```
 
-**Note**: Claude Code doesn't support nested command discovery automatically. Use custom paths:
+**Note**: SirGent AI doesn't support nested command discovery automatically. Use custom paths:
 
 ```json
 {
@@ -345,7 +345,7 @@ hooks/
 }
 ```
 
-**Note**: Use build script to combine files, Claude Code doesn't support file references.
+**Note**: Use build script to combine files, SirGent AI doesn't support file references.
 
 **When to use**:
 - 10+ hooks
@@ -469,7 +469,7 @@ plugin/
 **Usage in components**:
 ```bash
 #!/bin/bash
-source "${CLAUDE_PLUGIN_ROOT}/lib/test-utils.sh"
+source "${SIRGENT_PLUGIN_ROOT}/lib/test-utils.sh"
 run_tests
 ```
 
@@ -504,7 +504,7 @@ Nested plugin structure:
 
 ```
 plugin/
-├── .claude-plugin/
+├── .sirgent-plugin/
 │   └── plugin.json
 ├── core/              # Core functionality
 │   ├── commands/

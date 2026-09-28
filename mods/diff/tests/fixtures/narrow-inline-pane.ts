@@ -1,4 +1,4 @@
-import type { RenderInput } from 'claude-code'
+import type { RenderInput } from 'sirgent-ai'
 
 import { INLINE_PANE } from './inline-pane.js'
 

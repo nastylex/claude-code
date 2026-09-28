@@ -6,7 +6,7 @@ allowed-tools: ["Read", "Write", "Grep", "Glob", "Bash", "TodoWrite", "AskUserQu
 
 # Plugin Creation Workflow
 
-Guide the user through creating a complete, high-quality Claude Code plugin from initial concept to tested implementation. Follow a systematic approach: understand requirements, design components, clarify details, implement following best practices, validate, and test.
+Guide the user through creating a complete, high-quality SirGent AI plugin from initial concept to tested implementation. Follow a systematic approach: understand requirements, design components, clarify details, implement following best practices, validate, and test.
 
 ## Core Principles
 
@@ -124,7 +124,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
    - Offer options: current directory, ../new-plugin-name, custom path
 3. Create directory structure using bash:
    ```bash
-   mkdir -p plugin-name/.claude-plugin
+   mkdir -p plugin-name/.sirgent-plugin
    mkdir -p plugin-name/skills     # if needed
    mkdir -p plugin-name/commands   # if needed
    mkdir -p plugin-name/agents     # if needed
@@ -143,7 +143,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
    }
    ```
 5. Create README.md template
-6. Create .gitignore if needed (for .claude/*.local.md, etc.)
+6. Create .gitignore if needed (for .sirgent/*.local.md, etc.)
 7. Initialize git repo if creating new directory
 
 **Output**: Plugin directory structure created and ready for components
@@ -185,7 +185,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
    - Write command markdown with frontmatter
    - Include clear description and argument-hint
    - Specify allowed-tools (minimal necessary)
-   - Write instructions FOR Claude (not TO user)
+   - Write instructions FOR SirGent (not TO user)
    - Provide usage examples and tips
    - Reference relevant skills if applicable
 
@@ -203,7 +203,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
 2. For each hook:
    - Create hooks/hooks.json with hook configuration
    - Prefer prompt-based hooks for complex logic
-   - Use ${CLAUDE_PLUGIN_ROOT} for portability
+   - Use ${SIRGENT_PLUGIN_ROOT} for portability
    - Create hook scripts if needed (in examples/ not scripts/)
    - Test with validate-hook-schema.sh and test-hook.sh utilities
 
@@ -211,7 +211,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
 1. Load mcp-integration skill using Skill tool
 2. Create .mcp.json configuration with:
    - Server type (stdio for local, SSE for hosted)
-   - Command and args (with ${CLAUDE_PLUGIN_ROOT})
+   - Command and args (with ${SIRGENT_PLUGIN_ROOT})
    - extensionToLanguage mapping if LSP
    - Environment variables as needed
 3. Document required env vars in README
@@ -220,9 +220,9 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
 ### For Settings:
 1. Load plugin-settings skill using Skill tool
 2. Create settings template in README
-3. Create example .claude/plugin-name.local.md file (as documentation)
+3. Create example .sirgent/plugin-name.local.md file (as documentation)
 4. Implement settings reading in hooks/commands as needed
-5. Add to .gitignore: `.claude/*.local.md`
+5. Add to .gitignore: `.sirgent/*.local.md`
 
 **Progress tracking**: Update todos as each component is completed
 
@@ -257,7 +257,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
 5. **Test hook configuration** (if plugin has hooks):
    - Run validate-hook-schema.sh on hooks/hooks.json
    - Test hook scripts with test-hook.sh
-   - Verify ${CLAUDE_PLUGIN_ROOT} usage
+   - Verify ${SIRGENT_PLUGIN_ROOT} usage
 
 6. **Present findings**:
    - Summary of validation results
@@ -272,7 +272,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
 
 ## Phase 7: Testing & Verification
 
-**Goal**: Test that plugin works correctly in Claude Code
+**Goal**: Test that plugin works correctly in SirGent AI
 
 **Actions**:
 1. **Installation instructions**:
@@ -280,7 +280,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
      ```bash
      cc --plugin-dir /path/to/plugin-name
      ```
-   - Or copy to `.claude-plugin/` for project testing
+   - Or copy to `.sirgent-plugin/` for project testing
 
 2. **Verification checklist** for user to perform:
    - [ ] Skills load when triggered (ask questions with trigger phrases)
@@ -294,7 +294,7 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
    - For skills: Ask questions using trigger phrases from descriptions
    - For commands: Run `/plugin-name:command-name` with various arguments
    - For agents: Create scenarios matching agent examples
-   - For hooks: Use `claude --debug` to see hook execution
+   - For hooks: Use `sirgent --debug` to see hook execution
    - For MCP: Use `/mcp` to verify servers and tools
 
 4. **Ask user**: "I've prepared the plugin for testing. Would you like me to guide you through testing each component, or do you want to test it yourself?"
@@ -354,9 +354,9 @@ Guide the user through creating a complete, high-quality Claude Code plugin from
 - **Apply best practices**:
   - Third-person descriptions for skills
   - Imperative form in skill bodies
-  - Commands written FOR Claude
+  - Commands written FOR SirGent
   - Strong trigger phrases
-  - ${CLAUDE_PLUGIN_ROOT} for portability
+  - ${SIRGENT_PLUGIN_ROOT} for portability
   - Progressive disclosure
   - Security-first (HTTPS, no hardcoded credentials)
 
@@ -383,7 +383,7 @@ Every component must meet these standards:
 - ✅ Includes working examples
 - ✅ Properly documented
 - ✅ Validated with utilities
-- ✅ Tested in Claude Code
+- ✅ Tested in SirGent AI
 
 ---
 

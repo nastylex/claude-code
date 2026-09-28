@@ -1,4 +1,4 @@
-import type { On, RenderElement } from 'claude-code'
+import type { On, RenderElement } from 'sirgent-ai'
 
 import { isOnPaneSurface } from '../../../hooks/is-on-pane-surface'
 import type Views from '../../../hooks/views'

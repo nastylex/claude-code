@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Claude Code Hook: Bash Command Validator
+SirGent AI Hook: Bash Command Validator
 =========================================
 This hook runs as a PreToolUse hook for the Bash tool.
 It validates bash commands against a set of rules before execution.
 In this case it changes grep calls to using rg.
 
-Read more about hooks here: https://docs.anthropic.com/en/docs/claude-code/hooks
+Read more about hooks here: https://docs.sirgent.ai/en/docs/sirgent-ai/hooks
 
 Make sure to change your path to your actual script.
 
@@ -18,7 +18,7 @@ Make sure to change your path to your actual script.
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /path/to/claude-code/examples/hooks/bash_command_validator_example.py"
+            "command": "python3 /path/to/sirgent-ai/examples/hooks/bash_command_validator_example.py"
           }
         ]
       }
@@ -58,7 +58,7 @@ def main():
         input_data = json.load(sys.stdin)
     except json.JSONDecodeError as e:
         print(f"Error: Invalid JSON input: {e}", file=sys.stderr)
-        # Exit code 1 shows stderr to the user but not to Claude
+        # Exit code 1 shows stderr to the user but not to SirGent
         sys.exit(1)
 
     tool_name = input_data.get("tool_name", "")
@@ -75,7 +75,7 @@ def main():
     if issues:
         for message in issues:
             print(f"• {message}", file=sys.stderr)
-        # Exit code 2 blocks tool call and shows stderr to Claude
+        # Exit code 2 blocks tool call and shows stderr to SirGent
         sys.exit(2)
 
 

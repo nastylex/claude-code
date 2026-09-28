@@ -1,4 +1,4 @@
-import type { FsAncestor, On } from 'claude-code'
+import type { FsAncestor, On } from 'sirgent-ai'
 
 import { startedOf } from './started-of.js'
 import type { Started } from './types'
@@ -9,22 +9,22 @@ import type { Started } from './types'
  * each walk's first name is kept in `walks`.
  *
  * @param on the test's `on`
- * @param agents what a walk for AGENTS.md and .claude/AGENTS.md finds
- * @param claude what a walk for CLAUDE.md, .claude/CLAUDE.md and
- * CLAUDE.local.md finds
+ * @param agents what a walk for AGENTS.md and .sirgent/AGENTS.md finds
+ * @param sirgent what a walk for SIRGENT.md, .sirgent/SIRGENT.md and
+ * SIRGENT.local.md finds
  * @returns the toasts, lines and walks the plugins raised, in order
  */
 export function projectOf(
   on: On,
   agents: readonly FsAncestor[],
-  claude: readonly FsAncestor[],
+  sirgent: readonly FsAncestor[],
 ): Started {
   const started = startedOf(on)
 
   on('fs.ancestors', ($, e) => {
     started.walks.push(e.names[0] ?? '')
 
-    return { value: e.names.includes('AGENTS.md') ? agents : claude }
+    return { value: e.names.includes('AGENTS.md') ? agents : sirgent }
   })
 
   return started

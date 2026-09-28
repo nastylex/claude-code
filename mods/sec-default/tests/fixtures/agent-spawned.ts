@@ -1,4 +1,4 @@
-import type { AgentSpawnInput, Origin } from 'claude-code'
+import type { AgentSpawnInput, Origin } from 'sirgent-ai'
 
 /**
  * A subagent's spawn as the engine raises it, pinned to who provides the

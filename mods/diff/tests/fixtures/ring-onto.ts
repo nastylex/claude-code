@@ -1,4 +1,4 @@
-import type { UiFocusInput } from 'claude-code'
+import type { UiFocusInput } from 'sirgent-ai'
 
 import { PANE } from './pane.js'
 

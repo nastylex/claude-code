@@ -1,4 +1,4 @@
-import type { SessionEndInput } from 'claude-code'
+import type { SessionEndInput } from 'sirgent-ai'
 
 /**
  * The session as it ends: the person left.

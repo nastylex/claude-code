@@ -1,4 +1,4 @@
-import type { CommandRunInput } from 'claude-code'
+import type { CommandRunInput } from 'sirgent-ai'
 
 /**
  * The command that brings an earlier conversation back, as the person types

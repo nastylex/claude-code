@@ -1,4 +1,4 @@
-import type { PromptSectionInput } from 'claude-code'
+import type { PromptSectionInput } from 'sirgent-ai'
 
 /**
  * The system prompt's memory section, as the engine asks for it.

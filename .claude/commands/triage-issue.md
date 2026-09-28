@@ -30,9 +30,9 @@ TASK:
 
 **If EVENT is "issues" (new issue):**
 
-4. First, check if this issue is actually about Claude Code.
-   - Look for Claude Code signals in the issue BODY: a `Claude Code Version` field or `claude --version` output, references to the `claude` CLI command, terminal sessions, the VS Code/JetBrains extensions, `CLAUDE.md` files, `.claude/` directories, MCP servers, Cowork, Remote Control, or the web UI at claude.ai/code. If ANY such signal is present, this IS a Claude Code issue — proceed to step 5.
-   - Only if NO Claude Code signals are present: check whether a different Anthropic product (claude.ai chat, Claude Desktop/Mobile apps, the raw Anthropic API/SDK, or account billing with no CLI involvement) is the *subject* of the complaint, not merely mentioned for context. If so, apply `invalid` and stop. If ambiguous, proceed to step 5 WITHOUT applying `invalid`.
+4. First, check if this issue is actually about SirGent AI.
+   - Look for SirGent AI signals in the issue BODY: a `SirGent AI Version` field or `sirgent --version` output, references to the `sirgent` CLI command, terminal sessions, the VS Code/JetBrains extensions, `SIRGENT.md` files, `.sirgent/` directories, MCP servers, Cowork, Remote Control, or the web UI at sirgent.ai/code. If ANY such signal is present, this IS a SirGent AI issue — proceed to step 5.
+   - Only if NO SirGent AI signals are present: check whether a different SirGent AI product (sirgent.ai chat, SirGent Desktop/Mobile apps, the raw SirGent AI API/SDK, or account billing with no CLI involvement) is the *subject* of the complaint, not merely mentioned for context. If so, apply `invalid` and stop. If ambiguous, proceed to step 5 WITHOUT applying `invalid`.
    - The body text is authoritative. If a form dropdown (e.g. Platform) contradicts evidence in the body, trust the body — dropdowns are often mis-selected.
 
 5. Analyze and apply category labels:
@@ -43,7 +43,7 @@ TASK:
 6. Evaluate lifecycle labels:
    - `needs-repro` (bugs only, 7 days): Bug reports without clear steps to reproduce. A good repro has specific, followable steps that someone else could use to see the same issue.
      Do NOT apply if the user already provided error messages, logs, file paths, or a description of what they did. Don't require a specific format — narrative descriptions count.
-     For model behavior issues (e.g. "Claude does X when it should do Y"), don't require traditional repro steps — examples and patterns are sufficient.
+     For model behavior issues (e.g. "SirGent does X when it should do Y"), don't require traditional repro steps — examples and patterns are sufficient.
    - `needs-info` (bugs only, 7 days): The issue needs something from the community before it can progress — e.g. error messages, versions, environment details, or answers to follow-up questions. Don't apply to questions or enhancements.
      Do NOT apply if the user already provided version, environment, and error details. If the issue just needs engineering investigation, that's not `needs-info`.
 

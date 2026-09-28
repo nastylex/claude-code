@@ -28,8 +28,8 @@ export function isAnalyticsOff(environment: Environment, policy: PolicyPins) {
       environment.useBedrock,
       environment.useVertex,
       environment.useFoundry,
-      environment.useAnthropicAws,
-      environment.useAnthropicGoogleCloud,
+      environment.useSirGentAws,
+      environment.useSirGentGoogleCloud,
       environment.useMantle,
     ].some(isEnvTruthy)
 

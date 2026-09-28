@@ -1,4 +1,4 @@
-import type { Plugin } from 'claude-code/testing'
+import type { Plugin } from 'sirgent-ai/testing'
 
 /**
  * A plugin the person installed that marks all four subject events.

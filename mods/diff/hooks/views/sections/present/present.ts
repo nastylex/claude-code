@@ -1,4 +1,4 @@
-import type { RenderElement } from 'claude-code'
+import type { RenderElement } from 'sirgent-ai'
 
 import { keptOf } from '../../../kept-of'
 

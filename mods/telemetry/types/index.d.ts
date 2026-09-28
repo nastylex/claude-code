@@ -64,18 +64,18 @@ export type Telemetry = {
 }
 
 /**
- * Where a logged record goes: `anthropic`, the first-party analytics this
+ * Where a logged record goes: `sirgent`, the first-party analytics this
  * mod sends, or `collector`, the telemetry collector a session's operator
  * configured, which this mod leaves to whatever is beneath it.
  */
-export type TelemetryDestination = 'anthropic' | 'collector'
+export type TelemetryDestination = 'sirgent' | 'collector'
 
 /**
  * What `$.telemetry.log` takes: the event's name after the prefix, and its
  * properties by snake_case key.
  *
  * `to` names the destination and is never part of the row; left out, it
- * reads as `anthropic`. An entry for `collector` is not this mod's: its
+ * reads as `sirgent`. An entry for `collector` is not this mod's: its
  * hook passes it on beneath untouched.
  */
 export type TelemetryLogEntry = {
@@ -120,7 +120,7 @@ export type TelemetryProp = number | boolean | TelemetryChoice
  */
 export type TelemetryChoice = { value: string; of: readonly string[] }
 
-declare module 'claude-code' {
+declare module 'sirgent-ai' {
   interface EngineInterface {
     /**
      * A built-in plugin's analytics, first-party rows sent in batches;

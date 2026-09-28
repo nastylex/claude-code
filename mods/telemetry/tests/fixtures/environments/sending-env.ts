@@ -4,7 +4,7 @@
  */
 export const SENDING_ENV: Readonly<Record<string, string>> = {
   USER_TYPE: 'ant',
-  CLAUDE_CODE_ENTRYPOINT: 'cli',
+  SIRGENT_ENTRYPOINT: 'cli',
   TERM_PROGRAM: 'ghostty',
   SHELL: '/bin/zsh',
   HOME: '/Users/person',

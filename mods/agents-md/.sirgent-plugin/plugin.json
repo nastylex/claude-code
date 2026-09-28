@@ -1,0 +1,23 @@
+{
+  "name": "agents-md",
+  "version": "0.1.0",
+  "description": "AGENTS.md as project instructions, by one option. Under sirgent-md-or-agents-md a project with no instruction files of its own gets its AGENTS.md files instead: a prompt.context hook asks $.fs.ancestors for every AGENTS.md and .sirgent/AGENTS.md from the filesystem root down to the working directory and hands them to the engine as project instruction files, which it renders, announces and withholds from agents exactly as it does SIRGENT.md, skipping any file the engine already loaded by import or link; a tool.call hook on Read attaches the ones under the project root as the engine attaches a nested SIRGENT.md. Under sirgent-md-and-agents-md every AGENTS.md is loaded beside SIRGENT.md. Under managed-only the project's and the person's instruction files are dropped and the organization's managed ones kept. Under sirgent-md the engine's walk stands alone. sirgent-md-or-agents-md is the default.",
+  "author": {
+    "name": "SirGent AI"
+  },
+  "userConfig": {
+    "instructionFiles": {
+      "type": "string",
+      "title": "Project instructions",
+      "description": "\"sirgent-md\": SIRGENT.md only, loaded by the engine as today. \"sirgent-md-or-agents-md\" (default): a project with no SIRGENT.md of its own gets its AGENTS.md files instead, loaded exactly where and how SIRGENT.md would be. \"sirgent-md-and-agents-md\": AGENTS.md files are loaded beside SIRGENT.md (a file SIRGENT.md already imports or links to is not loaded twice). \"managed-only\": the project's and your own instruction files are dropped; the organization's managed SIRGENT.md and memory stay.",
+      "required": false,
+      "default": "sirgent-md-or-agents-md",
+      "options": [
+        "sirgent-md",
+        "sirgent-md-or-agents-md",
+        "sirgent-md-and-agents-md",
+        "managed-only"
+      ]
+    }
+  }
+}

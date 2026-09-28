@@ -1,4 +1,4 @@
-import type { CommandRunInput } from 'claude-code'
+import type { CommandRunInput } from 'sirgent-ai'
 
 import { DIFF } from './diff.js'
 

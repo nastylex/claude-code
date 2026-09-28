@@ -1,4 +1,4 @@
-import type { RenderElement } from 'claude-code'
+import type { RenderElement } from 'sirgent-ai'
 
 /**
  * What stands around a message in the pane: the header block, the message,

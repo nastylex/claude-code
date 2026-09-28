@@ -1,4 +1,4 @@
-import type { Settings } from 'claude-code'
+import type { Settings } from 'sirgent-ai'
 
 /**
  * A yes/no read off managed policy that fails closed: true (protect) when

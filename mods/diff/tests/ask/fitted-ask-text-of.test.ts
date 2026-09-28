@@ -1,4 +1,4 @@
-import { describe, expect, test, tier } from 'claude-code/testing'
+import { describe, expect, test, tier } from 'sirgent-ai/testing'
 
 import Ask from '../../hooks/ask'
 import Fixtures from '../fixtures'

@@ -1,4 +1,4 @@
-import type { Origin } from 'claude-code'
+import type { Origin } from 'sirgent-ai'
 
 /**
  * What the gate reads of the continuation it is handed: the hooks beneath

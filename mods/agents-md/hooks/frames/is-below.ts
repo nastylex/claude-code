@@ -2,7 +2,7 @@ import { normalSpellingOf } from './normal-spelling-of.js'
 
 /**
  * Whether a path lies strictly inside a directory, by spelling (no links
- * followed), as the engine bounds its nested CLAUDE.md walk.
+ * followed), as the engine bounds its nested SIRGENT.md walk.
  *
  * @param path an absolute path
  * @param dir an absolute directory

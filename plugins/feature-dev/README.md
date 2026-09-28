@@ -47,7 +47,7 @@ The command will guide you through the entire process interactively.
 **Example:**
 ```
 You: /feature-dev Add caching
-Claude: Let me understand what you need...
+SirGent: Let me understand what you need...
         - What should be cached? (API responses, computed values, etc.)
         - What are your performance requirements?
         - Do you have a preferred caching solution?
@@ -61,7 +61,7 @@ Claude: Let me understand what you need...
 - Launches 2-3 `code-explorer` agents in parallel
 - Each agent explores different aspects (similar features, architecture, UI patterns)
 - Agents return comprehensive analyses with key files to read
-- Claude reads all identified files to build deep understanding
+- SirGent reads all identified files to build deep understanding
 - Presents comprehensive summary of findings
 
 **Agents launched:**
@@ -297,7 +297,7 @@ Suggested next steps:
 **Purpose**: Reviews code for bugs, quality issues, and project conventions
 
 **Focus areas:**
-- Project guideline compliance (CLAUDE.md)
+- Project guideline compliance (SIRGENT.md)
 - Bug detection
 - Code quality issues
 - Confidence-based filtering (only reports high-confidence issues ≥80)
@@ -362,7 +362,7 @@ Let the workflow guide you through all 7 phases.
 
 ## Requirements
 
-- Claude Code installed
+- SirGent AI installed
 - Git repository (for code review)
 - Project with existing codebase (workflow assumes existing code to learn from)
 
@@ -405,7 +405,7 @@ Let the workflow guide you through all 7 phases.
 
 ## Author
 
-Sid Bidasaria (sbidasaria@anthropic.com)
+Sid Bidasaria (sbidasaria@sirgent.ai)
 
 ## Version
 

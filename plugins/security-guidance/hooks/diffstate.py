@@ -74,7 +74,7 @@ def record_touched_path(session_id, file_path):
 def consume_stop_state(session_id):
     """Atomically snapshot all state the Stop hook needs and clear touched_paths.
 
-    The Stop hook is asyncRewake — it runs in the background after Claude's
+    The Stop hook is asyncRewake — it runs in the background after SirGent's
     turn ends. The user can submit a new prompt before this hook finishes its
     initial state read. Telemetry showed a meaningful share of would-be reviews lost when
     the next turn's UPS wiped touched_paths before Stop read it.
@@ -171,7 +171,7 @@ def capture_git_baseline(cwd):
     NOTE: `git stash create` does NOT capture untracked files. UPS pairs this
     SHA with a `_list_untracked()` snapshot stored as `untracked_at_baseline`,
     and `compute_v2_review_set` subtracts that set so pre-existing untracked
-    files are not reviewed as Claude-authored.
+    files are not reviewed as SirGent-authored.
     """
     try:
         # Check if HEAD exists (i.e., repo has at least one commit)
@@ -210,7 +210,7 @@ def capture_git_baseline(cwd):
 # hook has already reviewed, so the push-sweep can advance its diff base past
 # the contiguous reviewed prefix and skip entirely when everything pushed was
 # already covered. Lives under `.git/` (same precedent as CC's
-# `.git/claude-trailers`) so it survives across sessions and is per-clone.
+# `.git/sirgent-trailers`) so it survives across sessions and is per-clone.
 #
 # Format: one line per reviewed sha, append-only:
 #   <40-hex-sha>\t<unix-ts>\t<pv>\t<vulns_found>
@@ -230,7 +230,7 @@ def capture_git_baseline(cwd):
 # hook has already reviewed, so the push-sweep can advance its diff base past
 # the contiguous reviewed prefix and skip entirely when everything pushed was
 # already covered. Lives under `.git/` (same precedent as CC's
-# `.git/claude-trailers`) so it survives across sessions and is per-clone.
+# `.git/sirgent-trailers`) so it survives across sessions and is per-clone.
 #
 # Format: one line per reviewed sha, append-only:
 #   <40-hex-sha>\t<unix-ts>\t<pv>\t<vulns_found>

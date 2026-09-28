@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 import type Git from '../../../hooks/git'
 import type { ScriptedGit } from './scripted-git.js'

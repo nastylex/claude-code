@@ -1,4 +1,4 @@
-import type { Origin } from 'claude-code'
+import type { Origin } from 'sirgent-ai'
 
 /**
  * Providers whose subjects a plugin the person installed may still

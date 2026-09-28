@@ -1,4 +1,4 @@
-import type { CommandPresentation } from 'claude-code'
+import type { CommandPresentation } from 'sirgent-ai'
 
 /**
  * Where a typed command's answer shows in these tests: the fullscreen

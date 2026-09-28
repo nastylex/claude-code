@@ -1,4 +1,4 @@
-import type { Plugin } from 'claude-code/testing'
+import type { Plugin } from 'sirgent-ai/testing'
 
 /**
  * A plugin standing in for the telemetry built-in: it hooks `telemetry.log`

@@ -6,4 +6,4 @@
  * here; a session on another base logs nothing, which the authorize gate
  * already makes so.
  */
-export const INGEST_URL = 'https://api.anthropic.com/api/event_logging/v2/batch'
+export const INGEST_URL = 'https://api.sirgent.ai/api/event_logging/v2/batch'

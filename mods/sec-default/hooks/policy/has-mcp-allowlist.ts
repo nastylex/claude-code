@@ -1,4 +1,4 @@
-import type { Settings } from 'claude-code'
+import type { Settings } from 'sirgent-ai'
 
 /**
  * Whether managed policy holds an MCP allowlist (allowedMcpServers set at

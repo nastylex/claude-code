@@ -1,5 +1,5 @@
-import type { Args, On } from 'claude-code'
-import { mock } from 'claude-code/testing'
+import type { Args, On } from 'sirgent-ai'
+import { mock } from 'sirgent-ai/testing'
 
 import Beneath from './beneath'
 import { gitIn } from './git-in.js'

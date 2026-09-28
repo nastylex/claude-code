@@ -1,6 +1,6 @@
 # MCP Authentication Patterns
 
-Complete guide to authentication methods for MCP servers in Claude Code plugins.
+Complete guide to authentication methods for MCP servers in SirGent AI plugins.
 
 ## Overview
 
@@ -10,13 +10,13 @@ MCP servers support multiple authentication methods depending on the server type
 
 ### How It Works
 
-Claude Code automatically handles the complete OAuth 2.0 flow for SSE and HTTP servers:
+SirGent AI automatically handles the complete OAuth 2.0 flow for SSE and HTTP servers:
 
 1. User attempts to use MCP tool
-2. Claude Code detects authentication needed
+2. SirGent AI detects authentication needed
 3. Opens browser for OAuth consent
 4. User authorizes in browser
-5. Tokens stored securely by Claude Code
+5. Tokens stored securely by SirGent AI
 6. Automatic token refresh
 
 ### Configuration
@@ -30,7 +30,7 @@ Claude Code automatically handles the complete OAuth 2.0 flow for SSE and HTTP s
 }
 ```
 
-No additional auth configuration needed! Claude Code handles everything.
+No additional auth configuration needed! SirGent AI handles everything.
 
 ### Supported Services
 
@@ -56,7 +56,7 @@ This plugin requires the following Asana permissions:
 
 ### Token Storage
 
-Tokens are stored securely by Claude Code:
+Tokens are stored securely by SirGent AI:
 - Not accessible to plugins
 - Encrypted at rest
 - Automatic refresh
@@ -74,7 +74,7 @@ Tokens are stored securely by Claude Code:
 - Check server documentation for required scopes
 
 **Token expiration:**
-- Claude Code auto-refreshes
+- SirGent AI auto-refreshes
 - If refresh fails, prompts re-authentication
 
 ## Token-Based Authentication
@@ -235,7 +235,7 @@ For tokens that change or expire, use a helper script:
   "api": {
     "type": "sse",
     "url": "https://api.example.com",
-    "headersHelper": "${CLAUDE_PLUGIN_ROOT}/scripts/get-headers.sh"
+    "headersHelper": "${SIRGENT_PLUGIN_ROOT}/scripts/get-headers.sh"
   }
 }
 ```
@@ -383,7 +383,7 @@ export API_TOKEN="your-token"
 
 **Enable debug mode:**
 ```bash
-claude --debug
+sirgent --debug
 ```
 
 Look for:
@@ -468,7 +468,7 @@ Some enterprise services require client certificates.
 ```json
 {
   "secure-api": {
-    "command": "${CLAUDE_PLUGIN_ROOT}/servers/mtls-wrapper",
+    "command": "${SIRGENT_PLUGIN_ROOT}/servers/mtls-wrapper",
     "args": ["--cert", "${CLIENT_CERT}", "--key", "${CLIENT_KEY}"],
     "env": {
       "API_URL": "https://secure.example.com"
@@ -493,7 +493,7 @@ echo "{\"Authorization\": \"Bearer $JWT\"}"
 
 ```json
 {
-  "headersHelper": "${CLAUDE_PLUGIN_ROOT}/scripts/generate-jwt.sh"
+  "headersHelper": "${SIRGENT_PLUGIN_ROOT}/scripts/generate-jwt.sh"
 }
 ```
 

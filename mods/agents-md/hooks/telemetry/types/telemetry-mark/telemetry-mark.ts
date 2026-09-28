@@ -1,4 +1,4 @@
-import type { EngineInterface } from 'claude-code'
+import type { EngineInterface } from 'sirgent-ai'
 
 /**
  * What `$.telemetry.mark` takes, as the telemetry mod's contract declares

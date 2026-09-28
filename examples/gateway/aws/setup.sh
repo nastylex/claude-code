@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# setup.sh — AWS setup for Claude apps gateway (walkthrough §1–7, ECS track).
+# setup.sh — AWS setup for SirGent apps gateway (walkthrough §1–7, ECS track).
 #
 # Provisions, in this order: the three security groups (§1), the task +
 # execution IAM roles (§2), the gateway container image in Amazon ECR (§6),
@@ -15,7 +15,7 @@
 # config edit triggers a rebuild on the next run.
 #
 #   Section markers (§N) below map to the walkthrough:
-#   https://code.claude.com/docs/en/claude-apps-gateway-on-aws
+#   https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-aws
 #
 # Covers here:  security groups (§1) -> IAM roles + Bedrock model-access note (§2)
 #               -> build & push image, config baked in (§6 + §4) -> DB subnet group
@@ -38,7 +38,7 @@
 set -euo pipefail
 
 # ---- configuration (env-overridable) ----------------------------------------
-AWS_REGION="${AWS_REGION:-$(aws configure get region 2>/dev/null || true)}"   # guide uses us-east-1 (a region where Bedrock serves the Claude models you need)
+AWS_REGION="${AWS_REGION:-$(aws configure get region 2>/dev/null || true)}"   # guide uses us-east-1 (a region where Bedrock serves the SirGent models you need)
 ACCOUNT_ID="${ACCOUNT_ID:-$(aws sts get-caller-identity --query Account --output text 2>/dev/null || true)}"
 
 VPC_ID="${VPC_ID:-}"                                       # REQUIRED — the VPC from the prerequisites
@@ -47,27 +47,27 @@ CORP_CIDR="${CORP_CIDR:-}"                                 # REQUIRED — your c
                                                            # Must not overlap PRIVATE_SUBNETS: hosts there are trusted_proxies (gateway.yaml) and could spoof client IPs via X-Forwarded-For.
 
 # §1 security groups
-ALB_SG_NAME="${ALB_SG_NAME:-claude-gateway-alb}"
-GW_SG_NAME="${GW_SG_NAME:-claude-gateway-svc}"
-DB_SG_NAME="${DB_SG_NAME:-claude-gateway-db}"
+ALB_SG_NAME="${ALB_SG_NAME:-sirgent-gateway-alb}"
+GW_SG_NAME="${GW_SG_NAME:-sirgent-gateway-svc}"
+DB_SG_NAME="${DB_SG_NAME:-sirgent-gateway-db}"
 
 # §2 IAM roles (task role = the gateway's runtime AWS identity; execution role
 # = the ECS agent's identity for pulling the image and injecting secrets)
-TASK_ROLE="${TASK_ROLE:-claude-gateway-task}"
-EXEC_ROLE="${EXEC_ROLE:-claude-gateway-execution}"
+TASK_ROLE="${TASK_ROLE:-sirgent-gateway-task}"
+EXEC_ROLE="${EXEC_ROLE:-sirgent-gateway-execution}"
 
 # §6 image
-ECR_REPO="${ECR_REPO:-claude-gateway}"                     # ECR repository name
+ECR_REPO="${ECR_REPO:-sirgent-gateway}"                     # ECR repository name
 VERSION="${VERSION:-}"                                     # REQUIRED — the gateway release tag you build and push (e.g. the linux-x64 binary's version)
 DOCKERFILE="${DOCKERFILE:-./Dockerfile}"
-CLAUDE_BINARY="${CLAUDE_BINARY:-./claude}"                 # prebuilt linux-x64 Claude Code release binary (includes the gateway subcommand)
-DIST_URL="${DIST_URL:-}"                                   # optional: download URL, used only if $CLAUDE_BINARY is missing
+SIRGENT_BINARY="${SIRGENT_BINARY:-./sirgent}"                 # prebuilt linux-x64 SirGent AI release binary (includes the gateway subcommand)
+DIST_URL="${DIST_URL:-}"                                   # optional: download URL, used only if $SIRGENT_BINARY is missing
 DIST_SHA256="${DIST_SHA256:-}"                             # REQUIRED with DIST_URL: expected sha256 of the binary (verified fail-closed)
 DIST_SHA256="${DIST_SHA256,,}"                                # normalize to lowercase — openssl emits lowercase hex; some tools (PowerShell Get-FileHash) publish uppercase
 # Obtain DIST_SHA256 out-of-band — never from the server that serves DIST_URL.
-# For binaries from the standard Claude Code release channel, verify the
+# For binaries from the standard SirGent AI release channel, verify the
 # release's GPG-signed manifest.json and copy the platform checksum from it:
-# https://code.claude.com/docs/en/setup#binary-integrity-and-code-signing
+# https://code.sirgent.ai/docs/en/setup#binary-integrity-and-code-signing
 # For any other distribution channel, use the checksum published alongside the
 # download link on that channel.
 GATEWAY_YAML="${GATEWAY_YAML:-./gateway.yaml}"             # §4 config file — BAKED into the image
@@ -83,12 +83,12 @@ RDS_CA_BUNDLE_URL="${RDS_CA_BUNDLE_URL:-https://truststore.pki.rds.amazonaws.com
 REGISTRY="${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
 
 # §3 RDS
-DB_SUBNET_GROUP="${DB_SUBNET_GROUP:-claude-gateway-db}"
-DB_PARAM_GROUP="${DB_PARAM_GROUP:-claude-gateway-db}"      # carries rds.force_ssl=1 (server-side TLS enforcement)
-DB_INSTANCE="${DB_INSTANCE:-claude-gateway-db}"
+DB_SUBNET_GROUP="${DB_SUBNET_GROUP:-sirgent-gateway-db}"
+DB_PARAM_GROUP="${DB_PARAM_GROUP:-sirgent-gateway-db}"      # carries rds.force_ssl=1 (server-side TLS enforcement)
+DB_INSTANCE="${DB_INSTANCE:-sirgent-gateway-db}"
 DB_CLASS="${DB_CLASS:-db.t4g.micro}"
 DB_STORAGE_GB="${DB_STORAGE_GB:-20}"
-DB_NAME="${DB_NAME:-claude_gateway}"
+DB_NAME="${DB_NAME:-sirgent_gateway}"
 DB_USER="${DB_USER:-gateway}"
 # PG14+ supported; 16 is the recommended default (matches terraform/'s).
 # Always pinned: the instance's engine version and the parameter group's
@@ -103,13 +103,13 @@ OIDC_SECRET_NAME="${OIDC_SECRET_NAME:-gateway-oidc-client-secret}"   # operator-
 # next run (put-role-policy is an upsert).
 
 # §7 ECS + internal ALB deploy
-CLUSTER="${CLUSTER:-claude-gateway}"
-SERVICE="${SERVICE:-claude-gateway}"
-TASK_FAMILY="${TASK_FAMILY:-claude-gateway}"
-LOG_GROUP="${LOG_GROUP:-/ecs/claude-gateway}"
+CLUSTER="${CLUSTER:-sirgent-gateway}"
+SERVICE="${SERVICE:-sirgent-gateway}"
+TASK_FAMILY="${TASK_FAMILY:-sirgent-gateway}"
+LOG_GROUP="${LOG_GROUP:-/ecs/sirgent-gateway}"
 LOG_RETENTION_DAYS="${LOG_RETENTION_DAYS:-90}"             # CloudWatch retention — the group carries the gateway's audit events, so align with your audit retention policy
-ALB_NAME="${ALB_NAME:-claude-gateway}"
-TG_NAME="${TG_NAME:-claude-gateway}"
+ALB_NAME="${ALB_NAME:-sirgent-gateway}"
+TG_NAME="${TG_NAME:-sirgent-gateway}"
 # Explicit modern TLS policy — omitting it falls back to the legacy
 # ELBSecurityPolicy-2016-08 default, which still accepts TLS 1.0/1.1.
 ALB_SSL_POLICY="${ALB_SSL_POLICY:-ELBSecurityPolicy-TLS13-1-2-2021-06}"
@@ -238,7 +238,7 @@ for required in AWS_REGION ACCOUNT_ID VPC_ID PRIVATE_SUBNETS CORP_CIDR VERSION; 
   if [[ -z "${!required}" ]]; then
     echo "ERROR: ${required} is not set." >&2
     case "${required}" in
-      AWS_REGION)      echo "       Set it to a region where Bedrock serves the Claude models you need, e.g. export AWS_REGION=us-east-1" >&2 ;;
+      AWS_REGION)      echo "       Set it to a region where Bedrock serves the SirGent models you need, e.g. export AWS_REGION=us-east-1" >&2 ;;
       ACCOUNT_ID)      echo "       Could not resolve it from STS — is the AWS CLI authenticated? (aws sts get-caller-identity)" >&2 ;;
       VPC_ID)          echo "       Set it to the VPC from the prerequisites, e.g. export VPC_ID=vpc-..." >&2 ;;
       PRIVATE_SUBNETS) echo "       Set it to two+ private subnet IDs in different AZs, e.g. export PRIVATE_SUBNETS='subnet-a subnet-b'" >&2 ;;
@@ -251,7 +251,7 @@ done
 
 # The walkthrough (and this bundle) is scoped to commercial US regions: the
 # task role's Bedrock policy (§2) and the gateway's built-in model catalog
-# both use the us.anthropic.* geo-prefixed cross-region inference profiles,
+# both use the us.sirgent.* geo-prefixed cross-region inference profiles,
 # which only exist in the commercial US regions — an explicit list, not a
 # `us-*` prefix match, because GovCloud (us-gov-*) and ISO (us-iso-*) regions
 # share the prefix but live in different AWS partitions where those profiles
@@ -259,7 +259,7 @@ done
 # provisions fine and then every model call fails. Other-region deploys must
 # pin region-appropriate inference profiles via a models: block in
 # gateway.yaml (see the config reference:
-# https://code.claude.com/docs/en/claude-apps-gateway-config) and adjust the
+# https://code.sirgent.ai/docs/en/sirgent-apps-gateway-config) and adjust the
 # inference-profile ARN prefix in bedrock-invoke.iam.json below — set
 # ALLOW_NON_US_REGION=1 once that's done to proceed.
 case "${AWS_REGION}" in
@@ -267,12 +267,12 @@ case "${AWS_REGION}" in
   *)
     if [[ "${ALLOW_NON_US_REGION:-0}" != "1" ]]; then
       echo "ERROR: AWS_REGION=${AWS_REGION} is not a commercial US region, but this bundle's IAM policy" >&2
-      echo "       and model IDs use the US-geo (us.anthropic.*) cross-region inference profiles" >&2
+      echo "       and model IDs use the US-geo (us.sirgent.*) cross-region inference profiles" >&2
       echo "       (GovCloud/ISO regions are different partitions — the profiles and arn:aws: ARNs" >&2
       echo "       here do not exist there)." >&2
       echo "       Either deploy to us-east-1/us-east-2/us-west-1/us-west-2, or pin region-appropriate" >&2
       echo "       inference profiles in a models: block in gateway.yaml" >&2
-      echo "       (https://code.claude.com/docs/en/claude-apps-gateway-config), adjust the" >&2
+      echo "       (https://code.sirgent.ai/docs/en/sirgent-apps-gateway-config), adjust the" >&2
       echo "       inference-profile ARN in the bedrock-invoke policy, and re-run with" >&2
       echo "       ALLOW_NON_US_REGION=1." >&2
       exit 1
@@ -307,7 +307,7 @@ if [[ "${ALB_SG}" != "None" ]]; then
   skip "security group ${ALB_SG_NAME} (${ALB_SG})"
 else
   ALB_SG="$(aws ec2 create-security-group --group-name "${ALB_SG_NAME}" \
-    --description "Claude gateway ALB" --vpc-id "${VPC_ID}" \
+    --description "SirGent gateway ALB" --vpc-id "${VPC_ID}" \
     --query GroupId --output text)"
 fi
 
@@ -316,7 +316,7 @@ if [[ "${GW_SG}" != "None" ]]; then
   skip "security group ${GW_SG_NAME} (${GW_SG})"
 else
   GW_SG="$(aws ec2 create-security-group --group-name "${GW_SG_NAME}" \
-    --description "Claude gateway service" --vpc-id "${VPC_ID}" \
+    --description "SirGent gateway service" --vpc-id "${VPC_ID}" \
     --query GroupId --output text)"
 fi
 
@@ -325,7 +325,7 @@ if [[ "${DB_SG}" != "None" ]]; then
   skip "security group ${DB_SG_NAME} (${DB_SG})"
 else
   DB_SG="$(aws ec2 create-security-group --group-name "${DB_SG_NAME}" \
-    --description "Claude gateway Postgres" --vpc-id "${VPC_ID}" \
+    --description "SirGent gateway Postgres" --vpc-id "${VPC_ID}" \
     --query GroupId --output text)"
 fi
 
@@ -340,7 +340,7 @@ warn_unexpected_ingress "${DB_SG}"  "${DB_SG_NAME}"  5432 "${GW_SG}"
 
 # ---- 2 IAM roles ------------------------------------------------------------
 # Task role: the gateway's runtime identity — its ONLY permission is invoking
-# Claude models on Bedrock (the upstream's `auth: {}` resolves to this role via
+# SirGent models on Bedrock (the upstream's `auth: {}` resolves to this role via
 # the AWS default credential chain). The policy must cover both the cross-region
 # inference-profile ARNs and the underlying foundation-model ARNs.
 # Execution role: the ECS agent's identity — pulls the image from ECR and
@@ -363,8 +363,8 @@ cat > bedrock-invoke.iam.json <<EOF
     "Effect": "Allow",
     "Action": ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
     "Resource": [
-      "arn:aws:bedrock:${AWS_REGION}:${ACCOUNT_ID}:inference-profile/us.anthropic.*",
-      "arn:aws:bedrock:*::foundation-model/anthropic.*"
+      "arn:aws:bedrock:${AWS_REGION}:${ACCOUNT_ID}:inference-profile/us.sirgent.*",
+      "arn:aws:bedrock:*::foundation-model/sirgent.*"
     ]
   }]
 }
@@ -412,10 +412,10 @@ aws iam attach-role-policy --role-name "${EXEC_ROLE}" \
 aws iam put-role-policy --role-name "${EXEC_ROLE}" \
   --policy-name read-gateway-secrets --policy-document file://secrets-read.iam.json
 
-echo "    NOTE: Bedrock model access is console-only — enable it for the Claude models"
+echo "    NOTE: Bedrock model access is console-only — enable it for the SirGent models"
 echo "          you need (Bedrock console -> Model access), and submit the one-time use"
 echo "          case form for the account. Cross-region inference profiles"
-echo "          (us.anthropic.*) need access in EACH region the profile spans."
+echo "          (us.sirgent.*) need access in EACH region the profile spans."
 
 # ---- 6 Build & push image to Amazon ECR (config baked in — §6 + §4) ---------
 log "Ensuring ECR repository and image (§6)"
@@ -470,31 +470,31 @@ else
     # provided-binary flow is unchanged — no checksum was declared, so none is
     # checked.
     QUARANTINED_SHA=""
-    if [[ -n "${DIST_SHA256}" && -f "${CLAUDE_BINARY}" ]]; then
-      existing_sha="$(sha_of "${CLAUDE_BINARY}")"
+    if [[ -n "${DIST_SHA256}" && -f "${SIRGENT_BINARY}" ]]; then
+      existing_sha="$(sha_of "${SIRGENT_BINARY}")"
       if [[ "${existing_sha}" != "${DIST_SHA256}" ]]; then
-        log "Existing ${CLAUDE_BINARY} sha256 ${existing_sha} does not match DIST_SHA256 — setting it aside as ${CLAUDE_BINARY}.bad"
-        mv -f "${CLAUDE_BINARY}" "${CLAUDE_BINARY}.bad"
+        log "Existing ${SIRGENT_BINARY} sha256 ${existing_sha} does not match DIST_SHA256 — setting it aside as ${SIRGENT_BINARY}.bad"
+        mv -f "${SIRGENT_BINARY}" "${SIRGENT_BINARY}.bad"
         QUARANTINED_SHA="${existing_sha}"
       fi
     fi
-    if [[ ! -f "${CLAUDE_BINARY}" ]]; then
+    if [[ ! -f "${SIRGENT_BINARY}" ]]; then
       if [[ -n "${DIST_URL}" ]]; then
         # Fail closed: never download an executable we can't verify.
         if [[ -z "${DIST_SHA256}" ]]; then
           echo "ERROR: DIST_SHA256 must be set when DIST_URL is used — refusing to download an unverified binary." >&2
           echo "       Set DIST_SHA256 to the expected sha256 of the binary at DIST_URL, obtained out-of-band:" >&2
           echo "       for standard-release binaries, from the release's GPG-signed manifest.json (verify the" >&2
-          echo "       manifest signature first — see code.claude.com/docs/en/setup#binary-integrity-and-code-signing);" >&2
+          echo "       manifest signature first — see code.sirgent.ai/docs/en/setup#binary-integrity-and-code-signing);" >&2
           echo "       otherwise from the channel that published the download link, never from the download server." >&2
           exit 1
         fi
         log "Downloading gateway binary from ${DIST_URL}"
         # Download to a temp path and only mv into place after the checksum
-        # verifies, so an interrupted download can't leave a partial CLAUDE_BINARY
+        # verifies, so an interrupted download can't leave a partial SIRGENT_BINARY
         # that the [[ ! -f ]] guard above would skip — and silently push — on re-run.
         # Refuse plaintext/protocol-downgrade; only follow HTTPS redirects.
-        dl_tmp="${CLAUDE_BINARY}.download"
+        dl_tmp="${SIRGENT_BINARY}.download"
         rm -f "${dl_tmp}"
         curl_https -fL -o "${dl_tmp}" "${DIST_URL}"
         actual_sha="$(sha_of "${dl_tmp}")"
@@ -505,17 +505,17 @@ else
         fi
         log "Verified binary sha256 ${actual_sha}"
         chmod +x "${dl_tmp}"
-        mv -f "${dl_tmp}" "${CLAUDE_BINARY}"
+        mv -f "${dl_tmp}" "${SIRGENT_BINARY}"
       else
-        echo "ERROR: build binary not found at ${CLAUDE_BINARY} and DIST_URL is not set." >&2
+        echo "ERROR: build binary not found at ${SIRGENT_BINARY} and DIST_URL is not set." >&2
         if [[ -n "${QUARANTINED_SHA}" ]]; then
           echo "       The binary that WAS there had sha256 ${QUARANTINED_SHA}, which does not match" >&2
-          echo "       DIST_SHA256=${DIST_SHA256} — it was preserved as ${CLAUDE_BINARY}.bad." >&2
+          echo "       DIST_SHA256=${DIST_SHA256} — it was preserved as ${SIRGENT_BINARY}.bad." >&2
           echo "       If DIST_SHA256 was a typo, fix it and move the file back:" >&2
-          echo "         mv '${CLAUDE_BINARY}.bad' '${CLAUDE_BINARY}'" >&2
+          echo "         mv '${SIRGENT_BINARY}.bad' '${SIRGENT_BINARY}'" >&2
           echo "       Otherwise treat that file as untrusted and obtain a verified binary." >&2
         fi
-        echo "       Provide the prebuilt linux-x64 Claude Code release binary at that path" >&2
+        echo "       Provide the prebuilt linux-x64 SirGent AI release binary at that path" >&2
         echo "       or set DIST_URL to its download URL (see the walkthrough, §6)." >&2
         exit 1
       fi
@@ -545,7 +545,7 @@ else
     # linux/arm64 with the linux-arm64 binary and set cpuArchitecture to ARM64.
     docker build --platform=linux/amd64 --provenance=false \
       -f "${DOCKERFILE}" \
-      --build-arg CLAUDE_BINARY="${CLAUDE_BINARY}" \
+      --build-arg SIRGENT_BINARY="${SIRGENT_BINARY}" \
       --build-arg GATEWAY_CONFIG="${GATEWAY_YAML}" \
       --build-arg RDS_CA_BUNDLE="${RDS_CA_BUNDLE}" \
       -t "${IMAGE}" .
@@ -560,7 +560,7 @@ if aws rds describe-db-subnet-groups --db-subnet-group-name "${DB_SUBNET_GROUP}"
 else
   # shellcheck disable=SC2086  # subnet IDs are separate arguments by design
   aws rds create-db-subnet-group --db-subnet-group-name "${DB_SUBNET_GROUP}" \
-    --db-subnet-group-description "Claude gateway" --subnet-ids ${PRIVATE_SUBNETS} >/dev/null
+    --db-subnet-group-description "SirGent gateway" --subnet-ids ${PRIVATE_SUBNETS} >/dev/null
 fi
 
 # Parameter group with rds.force_ssl=1: the server side of TLS enforcement —
@@ -574,7 +574,7 @@ if aws rds describe-db-parameter-groups --db-parameter-group-name "${DB_PARAM_GR
 else
   aws rds create-db-parameter-group --db-parameter-group-name "${DB_PARAM_GROUP}" \
     --db-parameter-group-family "${PG_FAMILY}" \
-    --description "Claude gateway - require TLS on every connection" >/dev/null
+    --description "SirGent gateway - require TLS on every connection" >/dev/null
 fi
 # modify-db-parameter-group is an upsert — applied every run so a pre-existing
 # group converges too. rds.force_ssl is dynamic; no reboot needed.
@@ -948,7 +948,7 @@ cat <<EOF
   Secrets               ${SECRET_NAME}, ${JWT_SECRET_NAME}, ${OIDC_SECRET_NAME}$( [[ -n "${OIDC_ARN}" ]] || printf ' (MISSING — create it)' )
   ECS service           ${CLUSTER}/${SERVICE} behind ${ALB_DNS:-(not deployed yet)}
 
-Next steps (see https://code.claude.com/docs/en/claude-apps-gateway-on-aws):
+Next steps (see https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-aws):
   - Create the one operator-provided secret (from the Okta OIDC web app). Put the
     client secret in a 0600 file first — passing it as a literal argument would
     leave it readable in the process table and in audit/EDR logs:
@@ -956,8 +956,8 @@ Next steps (see https://code.claude.com/docs/en/claude-apps-gateway-on-aws):
         --secret-string file:///path/to/okta-client-secret.txt
   - Fill in the REPLACE_ME values in ${GATEWAY_YAML}, then re-run: setup.sh builds the
     image (config baked in) and deploys once the secret and ACM_CERT_ARN exist.
-  - Enable Bedrock model access in the console for the Claude models you need (per
-    region the us.anthropic.* profiles span) and submit the one-time use case form.
+  - Enable Bedrock model access in the console for the SirGent models you need (per
+    region the us.sirgent.* profiles span) and submit the one-time use case form.
   - Alias your internal hostname (gateway.yaml public_url) to the ALB in a Route 53
     private hosted zone, and register <public_url>/oauth/callback on the Okta app.
   - The gateway runs its own schema migrations at boot, so ${DB_USER} needs CREATE TABLE.

@@ -9,7 +9,7 @@ import type {
   ProcessRunResult,
   SessionMessage,
   TimerCall,
-} from 'claude-code'
+} from 'sirgent-ai'
 
 /**
  * The engine as `session.start` bound it from its `$`, each member spelled

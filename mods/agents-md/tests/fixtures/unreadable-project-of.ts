@@ -1,4 +1,4 @@
-import type { On } from 'claude-code'
+import type { On } from 'sirgent-ai'
 
 import { startedOf } from './started-of.js'
 import type { Started } from './types'

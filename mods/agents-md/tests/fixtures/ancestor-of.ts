@@ -1,4 +1,4 @@
-import type { FsAncestor } from 'claude-code'
+import type { FsAncestor } from 'sirgent-ai'
 
 /**
  * One instruction file a walk found.

@@ -2,7 +2,7 @@
 
 # Ralph Wiggum Stop Hook
 # Prevents session exit when a ralph-loop is active
-# Feeds Claude's output back as input to continue the loop
+# Feeds SirGent's output back as input to continue the loop
 
 set -euo pipefail
 
@@ -10,7 +10,7 @@ set -euo pipefail
 HOOK_INPUT=$(cat)
 
 # Check if ralph-loop is active
-RALPH_STATE_FILE=".claude/ralph-loop.local.md"
+RALPH_STATE_FILE=".sirgent/ralph-loop.local.md"
 
 if [[ ! -f "$RALPH_STATE_FILE" ]]; then
   # No active loop - allow exit
@@ -60,7 +60,7 @@ TRANSCRIPT_PATH=$(echo "$HOOK_INPUT" | jq -r '.transcript_path')
 if [[ ! -f "$TRANSCRIPT_PATH" ]]; then
   echo "⚠️  Ralph loop: Transcript file not found" >&2
   echo "   Expected: $TRANSCRIPT_PATH" >&2
-  echo "   This is unusual and may indicate a Claude Code internal issue." >&2
+  echo "   This is unusual and may indicate a SirGent AI internal issue." >&2
   echo "   Ralph loop is stopping." >&2
   rm "$RALPH_STATE_FILE"
   exit 0
@@ -163,7 +163,7 @@ else
 fi
 
 # Output JSON to block the stop and feed prompt back
-# The "reason" field contains the prompt that will be sent back to Claude
+# The "reason" field contains the prompt that will be sent back to SirGent
 jq -n \
   --arg prompt "$PROMPT_TEXT" \
   --arg msg "$SYSTEM_MSG" \

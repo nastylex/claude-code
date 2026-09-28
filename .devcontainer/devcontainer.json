@@ -1,10 +1,10 @@
 {
-  "name": "Claude Code Sandbox",
+  "name": "SirGent AI Sandbox",
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
       "TZ": "${localEnv:TZ:America/Los_Angeles}",
-      "CLAUDE_CODE_VERSION": "latest",
+      "SIRGENT_VERSION": "latest",
       "GIT_DELTA_VERSION": "0.18.2",
       "ZSH_IN_DOCKER_VERSION": "1.2.0"
     }
@@ -16,7 +16,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "anthropic.claude-code",
+        "sirgent.sirgent-ai",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "eamodio.gitlens"
@@ -42,12 +42,12 @@
   },
   "remoteUser": "node",
   "mounts": [
-    "source=claude-code-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
-    "source=claude-code-config-${devcontainerId},target=/home/node/.claude,type=volume"
+    "source=sirgent-ai-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
+    "source=sirgent-ai-config-${devcontainerId},target=/home/node/.sirgent,type=volume"
   ],
   "containerEnv": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
-    "CLAUDE_CONFIG_DIR": "/home/node/.claude",
+    "SIRGENT_CONFIG_DIR": "/home/node/.sirgent",
     "POWERLEVEL9K_DISABLE_GITSTATUS": "true"
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",

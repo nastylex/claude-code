@@ -1,4 +1,4 @@
-import type { On } from 'claude-code'
+import type { On } from 'sirgent-ai'
 
 /**
  * Answers the four subject events beneath every plugin as the engine's

@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 import { NOT_A_REPOSITORY } from './not-a-repository.js'
 import { REPOSITORY } from './repository.js'

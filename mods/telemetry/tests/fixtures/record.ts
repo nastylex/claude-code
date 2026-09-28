@@ -1,4 +1,4 @@
-import type { CommandRunInput } from 'claude-code'
+import type { CommandRunInput } from 'sirgent-ai'
 
 import type { TelemetryLogEntry } from '../../types'
 import { FULLSCREEN } from './fullscreen.js'

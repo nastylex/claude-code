@@ -6,6 +6,6 @@ import { SENDING_ENV } from './sending-env.js'
  */
 export const HOST_MANAGED_BEDROCK_ENV: Readonly<Record<string, string>> = {
   ...SENDING_ENV,
-  CLAUDE_CODE_USE_BEDROCK: '1',
-  CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST: '1',
+  SIRGENT_USE_BEDROCK: '1',
+  SIRGENT_PROVIDER_MANAGED_BY_HOST: '1',
 }

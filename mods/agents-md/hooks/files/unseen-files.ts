@@ -1,4 +1,4 @@
-import type { InstructionFile } from 'claude-code'
+import type { InstructionFile } from 'sirgent-ai'
 
 import Frames from '../frames'
 import { isProjectOwn } from './is-project-own.js'
@@ -7,9 +7,9 @@ import { isProjectOwn } from './is-project-own.js'
  * The candidate files the engine has not already loaded, and no candidate
  * twice.
  *
- * Leaves out one whose path is among the handed files (a CLAUDE.md that
+ * Leaves out one whose path is among the handed files (a SIRGENT.md that
  * `@`-imports AGENTS.md) or whose text equals a handed project file's (a
- * CLAUDE.md symlinked to AGENTS.md); other kinds' text does not count.
+ * SIRGENT.md symlinked to AGENTS.md); other kinds' text does not count.
  *
  * @param candidates the AGENTS.md instruction files of a walk
  * @param handed the files the engine handed the hook

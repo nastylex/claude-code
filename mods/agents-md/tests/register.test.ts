@@ -1,4 +1,4 @@
-import { describe, expect, mock, test, tier } from 'claude-code/testing'
+import { describe, expect, mock, test, tier } from 'sirgent-ai/testing'
 
 import Hooks from '../hooks'
 import Fixtures from './fixtures'
@@ -9,7 +9,7 @@ tier('builtin')
  * The blocks the engine hands `prompt.context`.
  */
 const BLOCKS = [
-  { name: 'claudeMd', text: 'x' },
+  { name: 'sirgentMd', text: 'x' },
   { name: 'currentDate', text: 'today' },
 ]
 
@@ -42,18 +42,18 @@ describe('register', () => {
     await started.clock.settle()
 
     expect(started.lines).toEqual([
-      'no CLAUDE.md found; AGENTS.md loaded: /repo/AGENTS.md',
+      'no SIRGENT.md found; AGENTS.md loaded: /repo/AGENTS.md',
     ])
   })
 
-  test('by default a project with a CLAUDE.md is left to the engine', async ($, on) => {
+  test('by default a project with a SIRGENT.md is left to the engine', async ($, on) => {
     const started = Fixtures.projectOf(
       on,
       [Fixtures.ancestorOf('/repo', 'AGENTS.md', '# top\n')],
-      [Fixtures.ancestorOf('/repo/a/b', 'CLAUDE.md', '# mine\n')],
+      [Fixtures.ancestorOf('/repo/a/b', 'SIRGENT.md', '# mine\n')],
     )
     const handed = [
-      { path: '/repo/a/b/CLAUDE.md', kind: 'project' as const, content: '#' },
+      { path: '/repo/a/b/SIRGENT.md', kind: 'project' as const, content: '#' },
     ]
 
     on('prompt.context', ($, e) => ({
@@ -179,7 +179,7 @@ describe('register', () => {
           {
             event: Hooks.MODE_EVENT,
             props: {
-              mode: { value: 'claude-md-or-agents-md', of: [...Hooks.MODES] },
+              mode: { value: 'sirgent-md-or-agents-md', of: [...Hooks.MODES] },
               is_interactive: true,
             },
           },

@@ -1,14 +1,14 @@
 ---
 name: MCP Integration
-description: This skill should be used when the user asks to "add MCP server", "integrate MCP", "configure MCP in plugin", "use .mcp.json", "set up Model Context Protocol", "connect external service", mentions "${CLAUDE_PLUGIN_ROOT} with MCP", or discusses MCP server types (SSE, stdio, HTTP, WebSocket). Provides comprehensive guidance for integrating Model Context Protocol servers into Claude Code plugins for external tool and service integration.
+description: This skill should be used when the user asks to "add MCP server", "integrate MCP", "configure MCP in plugin", "use .mcp.json", "set up Model Context Protocol", "connect external service", mentions "${SIRGENT_PLUGIN_ROOT} with MCP", or discusses MCP server types (SSE, stdio, HTTP, WebSocket). Provides comprehensive guidance for integrating Model Context Protocol servers into SirGent AI plugins for external tool and service integration.
 version: 0.1.0
 ---
 
-# MCP Integration for Claude Code Plugins
+# MCP Integration for SirGent AI Plugins
 
 ## Overview
 
-Model Context Protocol (MCP) enables Claude Code plugins to integrate with external services and APIs by providing structured tool access. Use MCP integration to expose external service capabilities as tools within Claude Code.
+Model Context Protocol (MCP) enables SirGent AI plugins to integrate with external services and APIs by providing structured tool access. Use MCP integration to expose external service capabilities as tools within SirGent AI.
 
 **Key capabilities:**
 - Connect to external services (databases, APIs, file systems)
@@ -27,8 +27,8 @@ Create `.mcp.json` at plugin root:
 ```json
 {
   "database-tools": {
-    "command": "${CLAUDE_PLUGIN_ROOT}/servers/db-server",
-    "args": ["--config", "${CLAUDE_PLUGIN_ROOT}/config.json"],
+    "command": "${SIRGENT_PLUGIN_ROOT}/servers/db-server",
+    "args": ["--config", "${SIRGENT_PLUGIN_ROOT}/config.json"],
     "env": {
       "DB_URL": "${DB_URL}"
     }
@@ -51,7 +51,7 @@ Add `mcpServers` field to plugin.json:
   "version": "1.0.0",
   "mcpServers": {
     "plugin-api": {
-      "command": "${CLAUDE_PLUGIN_ROOT}/servers/api-server",
+      "command": "${SIRGENT_PLUGIN_ROOT}/servers/api-server",
       "args": ["--port", "8080"]
     }
   }
@@ -88,9 +88,9 @@ Execute local MCP servers as child processes. Best for local tools and custom se
 - NPM-packaged MCP servers
 
 **Process management:**
-- Claude Code spawns and manages the process
+- SirGent AI spawns and manages the process
 - Communicates via stdin/stdout
-- Terminates when Claude Code exits
+- Terminates when SirGent AI exits
 
 ### SSE (Server-Sent Events)
 
@@ -115,7 +115,7 @@ Connect to hosted MCP servers with OAuth support. Best for cloud services.
 **Authentication:**
 - OAuth flows handled automatically
 - User prompted on first use
-- Tokens managed by Claude Code
+- Tokens managed by SirGent AI
 
 ### HTTP (REST API)
 
@@ -168,10 +168,10 @@ Connect to WebSocket MCP servers for real-time bidirectional communication.
 
 All MCP configurations support environment variable substitution:
 
-**${CLAUDE_PLUGIN_ROOT}** - Plugin directory (always use for portability):
+**${SIRGENT_PLUGIN_ROOT}** - Plugin directory (always use for portability):
 ```json
 {
-  "command": "${CLAUDE_PLUGIN_ROOT}/servers/my-server"
+  "command": "${SIRGENT_PLUGIN_ROOT}/servers/my-server"
 }
 ```
 
@@ -242,7 +242,7 @@ Use `/mcp` command to see all servers including plugin-provided ones.
 
 ### OAuth (SSE/HTTP)
 
-OAuth handled automatically by Claude Code:
+OAuth handled automatically by SirGent AI:
 
 ```json
 {
@@ -425,10 +425,10 @@ for id in task_ids:
 ### Local Testing
 
 1. Configure MCP server in `.mcp.json`
-2. Install plugin locally (`.claude-plugin/`)
+2. Install plugin locally (`.sirgent-plugin/`)
 3. Run `/mcp` to verify server appears
 4. Test tool calls in commands
-5. Check `claude --debug` logs for connection issues
+5. Check `sirgent --debug` logs for connection issues
 
 ### Validation Checklist
 
@@ -445,7 +445,7 @@ for id in task_ids:
 ### Enable Debug Logging
 
 ```bash
-claude --debug
+sirgent --debug
 ```
 
 Look for:
@@ -466,7 +466,7 @@ Look for:
 - Verify server connected successfully
 - Check tool names match exactly
 - Run `/mcp` to see available tools
-- Restart Claude Code after config changes
+- Restart SirGent AI after config changes
 
 **Authentication failing:**
 - Clear cached auth tokens
@@ -492,12 +492,12 @@ Look for:
 - [ ] Authentication configured
 - [ ] Environment variables documented
 - [ ] HTTPS/WSS used (not HTTP/WS)
-- [ ] ${CLAUDE_PLUGIN_ROOT} used for paths
+- [ ] ${SIRGENT_PLUGIN_ROOT} used for paths
 
 ### Best Practices
 
 **DO:**
-- ✅ Use ${CLAUDE_PLUGIN_ROOT} for portable paths
+- ✅ Use ${SIRGENT_PLUGIN_ROOT} for portable paths
 - ✅ Document required environment variables
 - ✅ Use secure connections (HTTPS/WSS)
 - ✅ Pre-allow specific MCP tools in commands
@@ -533,9 +533,9 @@ Working examples in `examples/`:
 ### External Resources
 
 - **Official MCP Docs**: https://modelcontextprotocol.io/
-- **Claude Code MCP Docs**: https://docs.claude.com/en/docs/claude-code/mcp
+- **SirGent AI MCP Docs**: https://docs.sirgent.ai/en/docs/sirgent-ai/mcp
 - **MCP SDK**: @modelcontextprotocol/sdk
-- **Testing**: Use `claude --debug` and `/mcp` command
+- **Testing**: Use `sirgent --debug` and `/mcp` command
 
 ## Implementation Workflow
 
@@ -543,7 +543,7 @@ To add MCP integration to a plugin:
 
 1. Choose MCP server type (stdio, SSE, HTTP, ws)
 2. Create `.mcp.json` at plugin root with configuration
-3. Use ${CLAUDE_PLUGIN_ROOT} for all file references
+3. Use ${SIRGENT_PLUGIN_ROOT} for all file references
 4. Document required environment variables in README
 5. Test locally with `/mcp` command
 6. Pre-allow MCP tools in relevant commands

@@ -5,7 +5,7 @@ import type {
   ResultOf,
   SessionMessage,
   Timer,
-} from 'claude-code'
+} from 'sirgent-ai'
 
 import Ask from './ask'
 import Backend from './backend'
@@ -31,7 +31,7 @@ import Views from './views'
 
 /**
  * Registers the diff pane: `/diff` once the built-in stands down, the
- * pane's drawing and refresh, its opening on Claude's first edit, the ask.
+ * pane's drawing and refresh, its opening on SirGent's first edit, the ask.
  *
  * Git runs when the built-in's would: `session.start` binds the host and
  * registers `/diff`, and off its dispatch reads the transcript, so a resumed
@@ -656,7 +656,7 @@ export function register(on: On) {
         isCheckpointing: async () =>
           isCheckpointing(
             await $.settings.read(),
-            await $.env.get('CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING'),
+            await $.env.get('SIRGENT_DISABLE_FILE_CHECKPOINTING'),
           ),
         messages: () => $.session.messages(),
         invalidate: () => $.ui.invalidate('ui.render'),

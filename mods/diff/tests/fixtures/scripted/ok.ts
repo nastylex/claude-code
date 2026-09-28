@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 /**
  * A scripted git answer that exited 0 with the given output, nothing on

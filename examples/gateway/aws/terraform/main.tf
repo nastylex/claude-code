@@ -1,6 +1,6 @@
-# Claude apps gateway on ECS Fargate — Terraform equivalent of setup.sh.
+# SirGent apps gateway on ECS Fargate — Terraform equivalent of setup.sh.
 # Section markers (§N) map to setup.sh and the walkthrough:
-# https://code.claude.com/docs/en/claude-apps-gateway-on-aws
+# https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-aws
 #
 # Unlike the GCP example this module does NOT create the network — the VPC and
 # private subnets are walkthrough prerequisites, passed in as variables.
@@ -30,20 +30,20 @@ locals {
 # gateway :8080, gateway -> Postgres :5432. Nothing else is reachable.
 # Rules are separate resources (not inline) so they never fight other tooling.
 resource "aws_security_group" "alb" {
-  name        = "claude-gateway-alb"
-  description = "Claude gateway ALB"
+  name        = "sirgent-gateway-alb"
+  description = "SirGent gateway ALB"
   vpc_id      = var.vpc_id
 }
 
 resource "aws_security_group" "gateway" {
-  name        = "claude-gateway-svc"
-  description = "Claude gateway service"
+  name        = "sirgent-gateway-svc"
+  description = "SirGent gateway service"
   vpc_id      = var.vpc_id
 }
 
 resource "aws_security_group" "db" {
-  name        = "claude-gateway-db"
-  description = "Claude gateway Postgres"
+  name        = "sirgent-gateway-db"
+  description = "SirGent gateway Postgres"
   vpc_id      = var.vpc_id
 }
 
@@ -95,7 +95,7 @@ resource "aws_vpc_security_group_egress_rule" "gateway_all" {
 
 # ── 2 IAM roles (least-privilege) ───────────────────────────────────────────
 # Task role: the gateway's runtime identity. Its ONLY permission is invoking
-# Claude models on Bedrock — the upstream's `auth: {}` resolves to this role
+# SirGent models on Bedrock — the upstream's `auth: {}` resolves to this role
 # via the AWS default credential chain. The policy must cover both the
 # cross-region inference-profile ARNs and the underlying foundation-model ARNs.
 data "aws_iam_policy_document" "ecs_trust" {
@@ -123,14 +123,14 @@ resource "aws_iam_role_policy" "bedrock_invoke" {
       Effect = "Allow"
       Action = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
       Resource = [
-        "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/us.anthropic.*",
-        "arn:aws:bedrock:*::foundation-model/anthropic.*",
+        "arn:aws:bedrock:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:inference-profile/us.sirgent.*",
+        "arn:aws:bedrock:*::foundation-model/sirgent.*",
       ]
     }]
   })
 
   # The walkthrough is scoped to commercial US regions: this policy and the
-  # gateway's built-in model catalog both use the us.anthropic.* geo-prefixed
+  # gateway's built-in model catalog both use the us.sirgent.* geo-prefixed
   # cross-region inference profiles, which only exist in the commercial US
   # regions — an explicit list, not a `us-` prefix match, because GovCloud
   # (us-gov-*) and ISO (us-iso-*) regions share the prefix but live in
@@ -138,13 +138,13 @@ resource "aws_iam_role_policy" "bedrock_invoke" {
   # ARNs are wrong. Anywhere else the deploy provisions fine and then every
   # model call fails. Other-region deploys must pin region-appropriate
   # profiles via a models: block in gateway.yaml (see the config reference's
-  # models: guidance: https://code.claude.com/docs/en/claude-apps-gateway-config),
+  # models: guidance: https://code.sirgent.ai/docs/en/sirgent-apps-gateway-config),
   # widen the inference-profile ARN geo prefix above, and set
   # allow_non_us_region = true.
   lifecycle {
     precondition {
       condition     = var.allow_non_us_region || contains(["us-east-1", "us-east-2", "us-west-1", "us-west-2"], var.region)
-      error_message = "region is not a commercial US region (GovCloud/ISO share the us- prefix but are different partitions), and this module's IAM policy and the built-in model catalog use the US-geo (us.anthropic.*) inference profiles. Pin your region's inference profiles in a models: block in gateway.yaml, adjust the bedrock-invoke ARN prefix, then set allow_non_us_region = true."
+      error_message = "region is not a commercial US region (GovCloud/ISO share the us- prefix but are different partitions), and this module's IAM policy and the built-in model catalog use the US-geo (us.sirgent.*) inference profiles. Pin your region's inference profiles in a models: block in gateway.yaml, adjust the bedrock-invoke ARN prefix, then set allow_non_us_region = true."
     }
   }
 }
@@ -199,7 +199,7 @@ resource "aws_ecr_repository" "repo" {
 # ── 3 RDS for PostgreSQL (private subnets, no public address) ───────────────
 resource "aws_db_subnet_group" "db" {
   name        = var.db_instance
-  description = "Claude gateway"
+  description = "SirGent gateway"
   subnet_ids  = var.private_subnet_ids
 }
 
@@ -217,7 +217,7 @@ resource "aws_db_subnet_group" "db" {
 resource "aws_db_parameter_group" "db" {
   name_prefix = "${var.db_instance}-"
   family      = "postgres${split(".", var.db_engine_version)[0]}"
-  description = "Claude gateway - require TLS on every connection"
+  description = "SirGent gateway - require TLS on every connection"
 
   parameter {
     name  = "rds.force_ssl"
@@ -275,7 +275,7 @@ resource "aws_secretsmanager_secret" "postgres_url" {
 
 # sslmode=verify-full: the gateway's driver (Bun.SQL) honors sslmode from the
 # URL and verifies the server certificate chain AND hostname. The trust anchor
-# is the AWS RDS CA bundle baked into the image at /etc/claude/rds-global-bundle.pem
+# is the AWS RDS CA bundle baked into the image at /etc/sirgent/rds-global-bundle.pem
 # and loaded via NODE_EXTRA_CA_CERTS (see ../Dockerfile) — do NOT add a
 # libpq-style `sslrootcert=` query param: the driver doesn't read it and
 # forwards it to Postgres as a startup parameter, which the server rejects.

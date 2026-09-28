@@ -1,4 +1,4 @@
-import type { FsAncestor, InstructionFile } from 'claude-code'
+import type { FsAncestor, InstructionFile } from 'sirgent-ai'
 
 /**
  * The found AGENTS.md files as project instruction files, one per file and

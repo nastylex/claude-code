@@ -168,15 +168,15 @@ if [ "$VERBOSE" = true ]; then
 fi
 
 # Set up environment
-export CLAUDE_PROJECT_DIR="${CLAUDE_PROJECT_DIR:-/tmp/test-project}"
-export CLAUDE_PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-$(pwd)}"
-export CLAUDE_ENV_FILE="${CLAUDE_ENV_FILE:-/tmp/test-env-$$}"
+export SIRGENT_PROJECT_DIR="${SIRGENT_PROJECT_DIR:-/tmp/test-project}"
+export SIRGENT_PLUGIN_ROOT="${SIRGENT_PLUGIN_ROOT:-$(pwd)}"
+export SIRGENT_ENV_FILE="${SIRGENT_ENV_FILE:-/tmp/test-env-$$}"
 
 if [ "$VERBOSE" = true ]; then
   echo "Environment:"
-  echo "  CLAUDE_PROJECT_DIR=$CLAUDE_PROJECT_DIR"
-  echo "  CLAUDE_PLUGIN_ROOT=$CLAUDE_PLUGIN_ROOT"
-  echo "  CLAUDE_ENV_FILE=$CLAUDE_ENV_FILE"
+  echo "  SIRGENT_PROJECT_DIR=$SIRGENT_PROJECT_DIR"
+  echo "  SIRGENT_PLUGIN_ROOT=$SIRGENT_PLUGIN_ROOT"
+  echo "  SIRGENT_ENV_FILE=$SIRGENT_ENV_FILE"
   echo ""
 fi
 
@@ -233,11 +233,11 @@ else
 fi
 
 # Check for environment file
-if [ -f "$CLAUDE_ENV_FILE" ]; then
+if [ -f "$SIRGENT_ENV_FILE" ]; then
   echo ""
   echo "Environment file created:"
-  cat "$CLAUDE_ENV_FILE"
-  rm -f "$CLAUDE_ENV_FILE"
+  cat "$SIRGENT_ENV_FILE"
+  rm -f "$SIRGENT_ENV_FILE"
 fi
 
 echo ""

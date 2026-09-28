@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """PreToolUse hook executor for hookify plugin.
 
-This script is called by Claude Code before any tool executes.
-It reads .claude/hookify.*.local.md files and evaluates rules.
+This script is called by SirGent AI before any tool executes.
+It reads .sirgent/hookify.*.local.md files and evaluates rules.
 """
 
 import os
@@ -11,7 +11,7 @@ import json
 
 # CRITICAL: Add plugin root to Python path for imports
 # We need to add the parent of the plugin directory so Python can find "hookify" package
-PLUGIN_ROOT = os.environ.get('CLAUDE_PLUGIN_ROOT')
+PLUGIN_ROOT = os.environ.get('SIRGENT_PLUGIN_ROOT')
 if PLUGIN_ROOT:
     # Add the parent directory of the plugin
     parent_dir = os.path.dirname(PLUGIN_ROOT)

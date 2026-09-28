@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 /**
  * What the plugin's git runner answers when the host rejected the spawn:

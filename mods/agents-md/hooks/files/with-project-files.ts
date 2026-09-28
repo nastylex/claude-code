@@ -1,4 +1,4 @@
-import type { InstructionFile } from 'claude-code'
+import type { InstructionFile } from 'sirgent-ai'
 
 import { chainRootOf } from './chain-root-of.js'
 import { insertionIndex } from './insertion-index.js'

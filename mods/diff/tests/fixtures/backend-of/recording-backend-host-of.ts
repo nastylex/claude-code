@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 import Scripted from '../scripted'
 import { backendHostOf } from './backend-host-of.js'

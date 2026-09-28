@@ -1,4 +1,4 @@
-import type { CommandRunInput } from 'claude-code'
+import type { CommandRunInput } from 'sirgent-ai'
 
 /**
  * The command as the person types it, with no arguments, in the fullscreen

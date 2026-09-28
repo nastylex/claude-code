@@ -1,0 +1,44 @@
+name: SirGent AI
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  sirgent:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@sirgent')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@sirgent')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@sirgent')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@sirgent') || contains(github.event.issue.title, '@sirgent')))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+        with:
+          fetch-depth: 1
+
+      - name: Run SirGent AI
+        id: sirgent
+        uses: sirgent-ai/sirgent-action@v1
+        with:
+          # Authenticate to the SirGent API via Workload Identity Federation
+          # (the workflow's OIDC token is exchanged for a short-lived access
+          # token) instead of a static API key.
+          sirgent_federation_rule_id: ${{ vars.SIRGENT_FEDERATION_RULE_ID }}
+          sirgent_organization_id: ${{ vars.SIRGENT_ORGANIZATION_ID }}
+          sirgent_service_account_id: ${{ vars.SIRGENT_SERVICE_ACCOUNT_ID }}
+          sirgent_workspace_id: ${{ vars.SIRGENT_WORKSPACE_ID }}
+          sirgent_args: "--model sirgent-sonnet-4-5-20250929"
+

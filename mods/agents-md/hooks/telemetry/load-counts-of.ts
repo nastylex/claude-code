@@ -1,4 +1,4 @@
-import type { InstructionFile } from 'claude-code'
+import type { InstructionFile } from 'sirgent-ai'
 
 import type { LoadCounts } from './types'
 
@@ -8,7 +8,7 @@ import type { LoadCounts } from './types'
  *
  * @param added the AGENTS.md instruction files handed to the engine, imports
  * among them
- * @param isYielded whether `claude-md-or-agents-md` stood down for a CLAUDE.md
+ * @param isYielded whether `sirgent-md-or-agents-md` stood down for a SIRGENT.md
  * @param isWalkFailed whether the walk threw
  * @returns the counts the load row and mark are built from
  */

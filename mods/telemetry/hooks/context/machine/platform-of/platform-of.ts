@@ -2,7 +2,7 @@
  * The row's `platform` as the CLI's own rows have it: the host platform the
  * environment names when it is one of the three, else by the system's name.
  *
- * @param hostPlatform CLAUDE_CODE_HOST_PLATFORM, when set
+ * @param hostPlatform SIRGENT_HOST_PLATFORM, when set
  * @param platformRaw the system's own name lowercased
  * @returns `win32`, `darwin`, or `linux` for anything else
  */

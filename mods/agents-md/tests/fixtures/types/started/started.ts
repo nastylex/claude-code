@@ -1,4 +1,4 @@
-import type { MockClock } from 'claude-code/testing'
+import type { MockClock } from 'sirgent-ai/testing'
 
 import type { ToastAsked } from '../toast-asked'
 

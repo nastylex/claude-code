@@ -1,4 +1,4 @@
-import type { SessionAuthorization } from 'claude-code'
+import type { SessionAuthorization } from 'sirgent-ai'
 
 /**
  * The credential a session signed in first party holds, by its handle.

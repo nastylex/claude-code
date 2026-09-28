@@ -15,5 +15,5 @@ secrets/
 # Dockerfile COPYs it — carve it out of the *.pem exclusion above.
 !rds-global-bundle.pem
 *.iam.json
-claude.download
-claude.bad
+sirgent.download
+sirgent.bad

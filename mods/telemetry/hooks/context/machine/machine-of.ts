@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 import type { Facts } from '../../facts'
 import { archOf } from './arch-of'

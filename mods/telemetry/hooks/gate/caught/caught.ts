@@ -1,4 +1,4 @@
-import type { Caught } from 'claude-code'
+import type { Caught } from 'sirgent-ai'
 
 import { REFUSED } from '../refused'
 

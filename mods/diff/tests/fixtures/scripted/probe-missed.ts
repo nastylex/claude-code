@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 /**
  * A probe that ran and found nothing: `rev-parse --verify` on an unborn

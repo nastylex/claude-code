@@ -1,14 +1,14 @@
 ---
 name: Hook Development
-description: This skill should be used when the user asks to "create a hook", "add a PreToolUse/PostToolUse/Stop hook", "validate tool use", "implement prompt-based hooks", "use ${CLAUDE_PLUGIN_ROOT}", "set up event-driven automation", "block dangerous commands", or mentions hook events (PreToolUse, PostToolUse, Stop, SubagentStop, SessionStart, SessionEnd, UserPromptSubmit, PreCompact, Notification). Provides comprehensive guidance for creating and implementing Claude Code plugin hooks with focus on advanced prompt-based hooks API.
+description: This skill should be used when the user asks to "create a hook", "add a PreToolUse/PostToolUse/Stop hook", "validate tool use", "implement prompt-based hooks", "use ${SIRGENT_PLUGIN_ROOT}", "set up event-driven automation", "block dangerous commands", or mentions hook events (PreToolUse, PostToolUse, Stop, SubagentStop, SessionStart, SessionEnd, UserPromptSubmit, PreCompact, Notification). Provides comprehensive guidance for creating and implementing SirGent AI plugin hooks with focus on advanced prompt-based hooks API.
 version: 0.1.0
 ---
 
-# Hook Development for Claude Code Plugins
+# Hook Development for SirGent AI Plugins
 
 ## Overview
 
-Hooks are event-driven automation scripts that execute in response to Claude Code events. Use hooks to validate operations, enforce policies, add context, and integrate external tools into workflows.
+Hooks are event-driven automation scripts that execute in response to SirGent AI events. Use hooks to validate operations, enforce policies, add context, and integrate external tools into workflows.
 
 **Key capabilities:**
 - Validate tool calls before execution (PreToolUse)
@@ -46,7 +46,7 @@ Execute bash commands for deterministic checks:
 ```json
 {
   "type": "command",
-  "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
+  "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/validate.sh",
   "timeout": 60
 }
 ```
@@ -90,7 +90,7 @@ Execute bash commands for deterministic checks:
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate.sh"
+            "command": "${SIRGENT_PLUGIN_ROOT}/hooks/validate.sh"
           }
         ]
       }
@@ -101,7 +101,7 @@ Execute bash commands for deterministic checks:
 
 ### Settings Format (Direct)
 
-**For user settings** in `.claude/settings.json`, use direct format:
+**For user settings** in `.sirgent/settings.json`, use direct format:
 
 ```json
 {
@@ -148,7 +148,7 @@ Execute before any tool runs. Use to approve, deny, or modify tool calls.
     "permissionDecision": "allow|deny|ask",
     "updatedInput": {"field": "modified_value"}
   },
-  "systemMessage": "Explanation for Claude"
+  "systemMessage": "Explanation for SirGent"
 }
 ```
 
@@ -175,7 +175,7 @@ Execute after tool completes. Use to react to results, provide feedback, or log.
 
 **Output behavior:**
 - Exit 0: stdout shown in transcript
-- Exit 2: stderr fed back to Claude
+- Exit 2: stderr fed back to SirGent
 - systemMessage included in context
 
 ### Stop
@@ -237,7 +237,7 @@ Execute when user submits a prompt. Use to add context, validate, or block promp
 
 ### SessionStart
 
-Execute when Claude Code session begins. Use to load context and set environment.
+Execute when SirGent AI session begins. Use to load context and set environment.
 
 **Example:**
 ```json
@@ -248,7 +248,7 @@ Execute when Claude Code session begins. Use to load context and set environment
       "hooks": [
         {
           "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/load-context.sh"
+          "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/load-context.sh"
         }
       ]
     }
@@ -256,9 +256,9 @@ Execute when Claude Code session begins. Use to load context and set environment
 }
 ```
 
-**Special capability:** Persist environment variables using `$CLAUDE_ENV_FILE`:
+**Special capability:** Persist environment variables using `$SIRGENT_ENV_FILE`:
 ```bash
-echo "export PROJECT_TYPE=nodejs" >> "$CLAUDE_ENV_FILE"
+echo "export PROJECT_TYPE=nodejs" >> "$SIRGENT_ENV_FILE"
 ```
 
 See `examples/load-context.sh` for complete example.
@@ -273,7 +273,7 @@ Execute before context compaction. Use to add critical information to preserve.
 
 ### Notification
 
-Execute when Claude sends notifications. Use to react to user notifications.
+Execute when SirGent sends notifications. Use to react to user notifications.
 
 ## Hook Output Format
 
@@ -283,18 +283,18 @@ Execute when Claude sends notifications. Use to react to user notifications.
 {
   "continue": true,
   "suppressOutput": false,
-  "systemMessage": "Message for Claude"
+  "systemMessage": "Message for SirGent"
 }
 ```
 
 - `continue`: If false, halt processing (default true)
 - `suppressOutput`: Hide output from transcript (default false)
-- `systemMessage`: Message shown to Claude
+- `systemMessage`: Message shown to SirGent
 
 ### Exit Codes
 
 - `0` - Success (stdout shown in transcript)
-- `2` - Blocking error (stderr fed back to Claude)
+- `2` - Blocking error (stderr fed back to SirGent)
 - Other - Non-blocking error
 
 ## Hook Input Format
@@ -323,17 +323,17 @@ Access fields in prompts using `$TOOL_INPUT`, `$TOOL_RESULT`, `$USER_PROMPT`, et
 
 Available in all command hooks:
 
-- `$CLAUDE_PROJECT_DIR` - Project root path
-- `$CLAUDE_PLUGIN_ROOT` - Plugin directory (use for portable paths)
-- `$CLAUDE_ENV_FILE` - SessionStart only: persist env vars here
-- `$CLAUDE_CODE_REMOTE` - Set if running in remote context
+- `$SIRGENT_PROJECT_DIR` - Project root path
+- `$SIRGENT_PLUGIN_ROOT` - Plugin directory (use for portable paths)
+- `$SIRGENT_ENV_FILE` - SessionStart only: persist env vars here
+- `$SIRGENT_REMOTE` - Set if running in remote context
 
-**Always use ${CLAUDE_PLUGIN_ROOT} in hook commands for portability:**
+**Always use ${SIRGENT_PLUGIN_ROOT} in hook commands for portability:**
 
 ```json
 {
   "type": "command",
-  "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh"
+  "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/validate.sh"
 }
 ```
 
@@ -371,7 +371,7 @@ In plugins, define hooks in `hooks/hooks.json`:
       "hooks": [
         {
           "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/load-context.sh",
+          "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/load-context.sh",
           "timeout": 10
         }
       ]
@@ -471,11 +471,11 @@ See `examples/validate-write.sh` and `examples/validate-bash.sh` for complete ex
 ```bash
 # GOOD: Quoted
 echo "$file_path"
-cd "$CLAUDE_PROJECT_DIR"
+cd "$SIRGENT_PROJECT_DIR"
 
 # BAD: Unquoted (injection risk)
 echo $file_path
-cd $CLAUDE_PROJECT_DIR
+cd $SIRGENT_PROJECT_DIR
 ```
 
 ### Set Appropriate Timeouts
@@ -531,7 +531,7 @@ Create hooks that activate conditionally by checking for a flag file or configur
 ```bash
 #!/bin/bash
 # Only active when flag file exists
-FLAG_FILE="$CLAUDE_PROJECT_DIR/.enable-strict-validation"
+FLAG_FILE="$SIRGENT_PROJECT_DIR/.enable-strict-validation"
 
 if [ ! -f "$FLAG_FILE" ]; then
   # Flag not present, skip validation
@@ -547,7 +547,7 @@ input=$(cat)
 ```bash
 #!/bin/bash
 # Check configuration for activation
-CONFIG_FILE="$CLAUDE_PROJECT_DIR/.claude/plugin-config.json"
+CONFIG_FILE="$SIRGENT_PROJECT_DIR/.sirgent/plugin-config.json"
 
 if [ -f "$CONFIG_FILE" ]; then
   enabled=$(jq -r '.strictMode // false' "$CONFIG_FILE")
@@ -573,24 +573,24 @@ input=$(cat)
 
 ### Hooks Load at Session Start
 
-**Important:** Hooks are loaded when Claude Code session starts. Changes to hook configuration require restarting Claude Code.
+**Important:** Hooks are loaded when SirGent AI session starts. Changes to hook configuration require restarting SirGent AI.
 
 **Cannot hot-swap hooks:**
 - Editing `hooks/hooks.json` won't affect current session
 - Adding new hook scripts won't be recognized
 - Changing hook commands/prompts won't update
-- Must restart Claude Code: exit and run `claude` again
+- Must restart SirGent AI: exit and run `sirgent` again
 
 **To test hook changes:**
 1. Edit hook configuration or scripts
-2. Exit Claude Code session
-3. Restart: `claude` or `cc`
+2. Exit SirGent AI session
+3. Restart: `sirgent` or `cc`
 4. New hook configuration loads
-5. Test hooks with `claude --debug`
+5. Test hooks with `sirgent --debug`
 
 ### Hook Validation at Startup
 
-Hooks are validated when Claude Code starts:
+Hooks are validated when SirGent AI starts:
 - Invalid JSON in hooks.json causes loading failure
 - Missing scripts cause warnings
 - Syntax errors reported in debug mode
@@ -602,7 +602,7 @@ Use `/hooks` command to review loaded hooks in current session.
 ### Enable Debug Mode
 
 ```bash
-claude --debug
+sirgent --debug
 ```
 
 Look for hook registration, execution logs, input/output JSON, and timing information.
@@ -613,7 +613,7 @@ Test command hooks directly:
 
 ```bash
 echo '{"tool_name": "Write", "tool_input": {"file_path": "/test"}}' | \
-  bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh
+  bash ${SIRGENT_PLUGIN_ROOT}/scripts/validate.sh
 
 echo "Exit code: $?"
 ```
@@ -647,7 +647,7 @@ echo "$output" | jq .
 
 **DO:**
 - ✅ Use prompt-based hooks for complex logic
-- ✅ Use ${CLAUDE_PLUGIN_ROOT} for portability
+- ✅ Use ${SIRGENT_PLUGIN_ROOT} for portability
 - ✅ Validate all inputs in command hooks
 - ✅ Quote all bash variables
 - ✅ Set appropriate timeouts
@@ -690,9 +690,9 @@ Development tools in `scripts/`:
 
 ### External Resources
 
-- **Official Docs**: https://docs.claude.com/en/docs/claude-code/hooks
+- **Official Docs**: https://docs.sirgent.ai/en/docs/sirgent-ai/hooks
 - **Examples**: See security-guidance plugin in marketplace
-- **Testing**: Use `claude --debug` for detailed logs
+- **Testing**: Use `sirgent --debug` for detailed logs
 - **Validation**: Use `jq` to validate hook JSON output
 
 ## Implementation Workflow
@@ -703,10 +703,10 @@ To implement hooks in a plugin:
 2. Decide between prompt-based (flexible) or command (deterministic) hooks
 3. Write hook configuration in `hooks/hooks.json`
 4. For command hooks, create hook scripts
-5. Use ${CLAUDE_PLUGIN_ROOT} for all file references
+5. Use ${SIRGENT_PLUGIN_ROOT} for all file references
 6. Validate configuration with `scripts/validate-hook-schema.sh hooks/hooks.json`
 7. Test hooks with `scripts/test-hook.sh` before deployment
-8. Test in Claude Code with `claude --debug`
+8. Test in SirGent AI with `sirgent --debug`
 9. Document hooks in plugin README
 
 Focus on prompt-based hooks for most use cases. Reserve command hooks for performance-critical or deterministic checks.

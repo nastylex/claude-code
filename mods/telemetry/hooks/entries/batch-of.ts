@@ -5,7 +5,7 @@ import { wireOf } from './wire-of'
 
 /**
  * The first-party event batch for the queued rows, shaped as the CLI's own
- * event exporter shapes its batches: one ClaudeCodeInternalEvent per row.
+ * event exporter shapes its batches: one SirGentAIInternalEvent per row.
  *
  * @param rows the rows as they were queued, oldest first
  * @param stamp what the batch stamps on every row
@@ -17,7 +17,7 @@ export const batchOf = (
 ) =>
   JSON.stringify({
     events: rows.map(row => ({
-      event_type: 'ClaudeCodeInternalEvent',
+      event_type: 'SirGentAIInternalEvent',
       event_data: wireOf(eventDataOf(row, stamp)),
     })),
   })

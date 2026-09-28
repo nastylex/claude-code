@@ -1,4 +1,4 @@
-import type { ProcessRunResult } from 'claude-code'
+import type { ProcessRunResult } from 'sirgent-ai'
 
 /**
  * What the one machine probe prints on the session's Mac: Darwin on arm64,

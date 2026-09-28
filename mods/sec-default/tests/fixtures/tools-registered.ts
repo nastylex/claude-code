@@ -1,4 +1,4 @@
-import type { On } from 'claude-code'
+import type { On } from 'sirgent-ai'
 
 import { registeredToolOf } from './registered-tool-of.js'
 

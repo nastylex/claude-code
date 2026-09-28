@@ -17,7 +17,7 @@ export type Environment = {
   readonly useBedrock: string | undefined
   readonly useVertex: string | undefined
   readonly useFoundry: string | undefined
-  readonly useAnthropicAws: string | undefined
-  readonly useAnthropicGoogleCloud: string | undefined
+  readonly useSirGentAws: string | undefined
+  readonly useSirGentGoogleCloud: string | undefined
   readonly useMantle: string | undefined
 }

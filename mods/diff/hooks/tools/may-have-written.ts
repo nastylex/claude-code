@@ -1,4 +1,4 @@
-import type { ResultOf } from 'claude-code'
+import type { ResultOf } from 'sirgent-ai'
 
 /**
  * Whether a shell tool's outcome may have changed the working tree, as the

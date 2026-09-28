@@ -1,6 +1,6 @@
-# Claude Gateway on Cloud Run — Terraform equivalent of setup.sh.
+# SirGent Gateway on Cloud Run — Terraform equivalent of setup.sh.
 # Section markers (§N) map to setup.sh and the walkthrough:
-# https://code.claude.com/docs/en/claude-apps-gateway-on-gcp
+# https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-gcp
 
 locals {
   config_path    = var.gateway_config_path != "" ? var.gateway_config_path : "${path.module}/../gateway.yaml"
@@ -35,7 +35,7 @@ resource "google_project_service" "apis" {
 resource "google_service_account" "gateway" {
   project      = var.project_id
   account_id   = var.sa_name
-  display_name = "Claude Gateway"
+  display_name = "SirGent Gateway"
   depends_on   = [google_project_service.apis]
 }
 
@@ -61,7 +61,7 @@ resource "google_artifact_registry_repository" "repo" {
   location      = var.region
   repository_id = var.ar_repo
   format        = "DOCKER"
-  description   = "Claude Gateway container images"
+  description   = "SirGent Gateway container images"
   depends_on    = [google_project_service.apis]
 }
 
@@ -317,10 +317,10 @@ resource "google_cloud_run_v2_service" "gateway" {
       image = local.image
       ports { container_port = 8080 }
 
-      # gateway.yaml mounted as a file at /etc/claude/gateway.yaml (alone in its dir).
+      # gateway.yaml mounted as a file at /etc/sirgent/gateway.yaml (alone in its dir).
       volume_mounts {
         name       = "config"
-        mount_path = "/etc/claude"
+        mount_path = "/etc/sirgent"
       }
 
       # Cloud Run can't mount multiple secrets in one dir, so the rest are env vars

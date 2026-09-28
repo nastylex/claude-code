@@ -1,7 +1,7 @@
 import type { ConfigLocation } from '../../../config-location'
 
 /**
- * Where the CLI keeps its global config: `.claude.json` under the config
+ * Where the CLI keeps its global config: `.sirgent.json` under the config
  * directory when one is named, else under the home or profile directory.
  *
  * @param location the three variables as read
@@ -14,6 +14,6 @@ export function globalConfigPath(location: ConfigLocation): string | undefined {
     directory?.includes('\\') && !directory.includes('/') ? '\\' : '/'
 
   return directory
-    ? `${directory.replace(/[\\/]+$/, '')}${separator}.claude.json`
+    ? `${directory.replace(/[\\/]+$/, '')}${separator}.sirgent.json`
     : undefined
 }

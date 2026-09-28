@@ -4,7 +4,7 @@ import type {
   InstructionFile,
   On,
   PluginOptions,
-} from 'claude-code'
+} from 'sirgent-ai'
 
 import Files from './files'
 import Frames from './frames'
@@ -20,22 +20,22 @@ const NONE: readonly FsAncestor[] = []
 
 /**
  * Registers the plugin's hooks for the mode `instructionFiles` names
- * (`claude-md-or-agents-md` when unset; the manifest lists the four, nothing
+ * (`sirgent-md-or-agents-md` when unset; the manifest lists the four, nothing
  * else arrives).
  *
- * `claude-md`: nothing beyond the usage row, the engine's CLAUDE.md walk
+ * `sirgent-md`: nothing beyond the usage row, the engine's SIRGENT.md walk
  * standing alone. `managed-only`: the project's and the person's instruction
- * files dropped, the organization's kept. `claude-md-or-agents-md` (a project
- * with none of its own) and `claude-md-and-agents-md`: AGENTS.md files joined
+ * files dropped, the organization's kept. `sirgent-md-or-agents-md` (a project
+ * with none of its own) and `sirgent-md-and-agents-md`: AGENTS.md files joined
  * to the engine's instruction files, nested ones on a Read except in a run
  * where the engine attaches nothing to a turn (--bare, which sets
- * CLAUDE_CODE_SIMPLE, or CLAUDE_CODE_DISABLE_ATTACHMENTS). Every mode sends
+ * SIRGENT_SIMPLE, or SIRGENT_DISABLE_ATTACHMENTS). Every mode sends
  * its usage rows through `$.telemetry` where that noun is seated and drops
  * them where it is not.
  *
  * @param on the engine's registrar
- * @param options the plugin's options; `instructionFiles` is `claude-md`,
- * `claude-md-or-agents-md`, `claude-md-and-agents-md` or `managed-only`
+ * @param options the plugin's options; `instructionFiles` is `sirgent-md`,
+ * `sirgent-md-or-agents-md`, `sirgent-md-and-agents-md` or `managed-only`
  */
 export function register(on: On, options: PluginOptions): void {
   const named = Modes.modeOf(options.instructionFiles)
@@ -67,7 +67,7 @@ export function register(on: On, options: PluginOptions): void {
     return next(e)
   })
 
-  if (mode === 'claude-md') {
+  if (mode === 'sirgent-md') {
     return
   }
 
@@ -87,11 +87,11 @@ export function register(on: On, options: PluginOptions): void {
     return
   }
 
-  const isFallback = mode === 'claude-md-or-agents-md'
+  const isFallback = mode === 'sirgent-md-or-agents-md'
   const given = new Map<string, Set<string>>()
   let inContext: readonly InstructionFile[] = []
   let home: string | undefined
-  let isClaudeProject: boolean | undefined
+  let isSirGentProject: boolean | undefined
   let rootSeen: string | undefined
   let rootLogged: string | undefined
   let isCounted = false
@@ -109,11 +109,11 @@ export function register(on: On, options: PluginOptions): void {
     rootSeen = root ?? rootSeen
     let isWalkFailed = false
     // The walk, not only what was handed: the engine can withhold a project
-    // CLAUDE.md it loaded, and the project still has one.
-    isClaudeProject =
+    // SIRGENT.md it loaded, and the project still has one.
+    isSirGentProject =
       root !== undefined &&
-      (handed.some(file => Files.isClaudeFileOnWalk(file, root)) ||
-        (await $.fs.ancestors({ names: Names.CLAUDE_NAMES }).then(
+      (handed.some(file => Files.isSirGentFileOnWalk(file, root)) ||
+        (await $.fs.ancestors({ names: Names.SIRGENT_NAMES }).then(
           files => files.length > 0,
           () => {
             isWalkFailed = true
@@ -121,7 +121,7 @@ export function register(on: On, options: PluginOptions): void {
             return true
           },
         )))
-    const found = isClaudeProject
+    const found = isSirGentProject
       ? NONE
       : await $.fs.ancestors({ names: Names.AGENTS_NAMES }).catch(() => {
           isWalkFailed = true
@@ -134,7 +134,7 @@ export function register(on: On, options: PluginOptions): void {
       isCounted = true
       const counts = Telemetry.loadCountsOf(
         added,
-        isClaudeProject && !isWalkFailed,
+        isSirGentProject && !isWalkFailed,
         isWalkFailed,
       )
       Telemetry.quietly(() =>
@@ -149,7 +149,7 @@ export function register(on: On, options: PluginOptions): void {
     if (isFirstLoad) {
       rootLogged = root
       $.ui.log(
-        'no CLAUDE.md found; AGENTS.md loaded: ' +
+        'no SIRGENT.md found; AGENTS.md loaded: ' +
           added
             .filter(file => file.parent === undefined)
             .map(file => file.path)
@@ -195,32 +195,32 @@ export function register(on: On, options: PluginOptions): void {
 
     if (root !== rootSeen) {
       rootSeen = root
-      isClaudeProject = undefined
+      isSirGentProject = undefined
       given.clear()
     }
 
-    isClaudeProject ??=
+    isSirGentProject ??=
       isFallback &&
-      (await $.fs.ancestors({ names: Names.CLAUDE_NAMES })).length > 0
-    const isOutOfReach = isClaudeProject || !Frames.isBelow(read, root)
+      (await $.fs.ancestors({ names: Names.SIRGENT_NAMES })).length > 0
+    const isOutOfReach = isSirGentProject || !Frames.isBelow(read, root)
 
     if (isOutOfReach) {
       return result
     }
 
-    const [stack, claude] = await Promise.all([
+    const [stack, sirgent] = await Promise.all([
       $.fs.ancestors({ names: Names.AGENTS_NAMES, of: read, below: root }),
-      $.fs.ancestors({ names: Names.CLAUDE_NAMES, of: read, below: root }),
+      $.fs.ancestors({ names: Names.SIRGENT_NAMES, of: read, below: root }),
     ]).catch((): [typeof NONE, typeof NONE] => [NONE, NONE])
     const loop = e.agentId ?? Names.MAIN_LOOP
     const sent = given.get(loop) ?? new Set<string>()
     given.set(loop, sent)
     const nested = (
-      isFallback ? Frames.outsideClaudeDirs(stack, claude) : stack
+      isFallback ? Frames.outsideSirGentDirs(stack, sirgent) : stack
     ).filter(file => Frames.isBelow(file.dir, root))
     const fresh = Files.unseenFiles(Files.filesOf(nested), [
       ...inContext,
-      ...Files.filesOf(claude),
+      ...Files.filesOf(sirgent),
     ]).filter(file => !sent.has(file.path))
     const attached = fresh.filter(file => !Frames.isFileAt(file, read))
     const output = result.result
@@ -263,9 +263,9 @@ export function register(on: On, options: PluginOptions): void {
 
 /**
  * Whether a Read attaches nested AGENTS.md files in this run: not where the
- * engine attaches nothing to a turn, a nested CLAUDE.md included, which is a
- * --bare run (it sets CLAUDE_CODE_SIMPLE) or one with
- * CLAUDE_CODE_DISABLE_ATTACHMENTS on.
+ * engine attaches nothing to a turn, a nested SIRGENT.md included, which is a
+ * --bare run (it sets SIRGENT_SIMPLE) or one with
+ * SIRGENT_DISABLE_ATTACHMENTS on.
  *
  * Read on every Read, as the engine reads them on every turn: a settings
  * `env` block or a managed delivery can flip either mid-session. The files of
@@ -277,8 +277,8 @@ export function register(on: On, options: PluginOptions): void {
  */
 async function attachesOnRead($: EngineInterface): Promise<boolean> {
   const [simple, attachmentsOff] = await Promise.all([
-    $.env.get('CLAUDE_CODE_SIMPLE'),
-    $.env.get('CLAUDE_CODE_DISABLE_ATTACHMENTS'),
+    $.env.get('SIRGENT_SIMPLE'),
+    $.env.get('SIRGENT_DISABLE_ATTACHMENTS'),
   ])
 
   return (

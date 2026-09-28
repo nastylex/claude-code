@@ -1,4 +1,4 @@
-import type { On, Settings } from 'claude-code'
+import type { On, Settings } from 'sirgent-ai'
 
 /**
  * Answers every settings read beneath the plugins with the policy given,

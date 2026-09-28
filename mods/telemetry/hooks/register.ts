@@ -1,4 +1,4 @@
-import type { EngineInterface, On } from 'claude-code'
+import type { EngineInterface, On } from 'sirgent-ai'
 
 import { answerOf } from './answer-of'
 import Context from './context'
@@ -65,28 +65,28 @@ export function register(on: On) {
         nodeEnv: await beneath.env.get('NODE_ENV'),
         disableTelemetry: await beneath.env.get('DISABLE_TELEMETRY'),
         disableNonessentialTraffic: await beneath.env.get(
-          'CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC',
+          'SIRGENT_DISABLE_NONESSENTIAL_TRAFFIC',
         ),
         doNotTrack: await beneath.env.get('DO_NOT_TRACK'),
-        customOauthUrl: await beneath.env.get('CLAUDE_CODE_CUSTOM_OAUTH_URL'),
-        useGateway: await beneath.env.get('CLAUDE_CODE_USE_GATEWAY'),
+        customOauthUrl: await beneath.env.get('SIRGENT_CUSTOM_OAUTH_URL'),
+        useGateway: await beneath.env.get('SIRGENT_USE_GATEWAY'),
         providerManagedByHost: await beneath.env.get(
-          'CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST',
+          'SIRGENT_PROVIDER_MANAGED_BY_HOST',
         ),
-        useBedrock: await beneath.env.get('CLAUDE_CODE_USE_BEDROCK'),
-        useVertex: await beneath.env.get('CLAUDE_CODE_USE_VERTEX'),
-        useFoundry: await beneath.env.get('CLAUDE_CODE_USE_FOUNDRY'),
-        useAnthropicAws: await beneath.env.get('CLAUDE_CODE_USE_ANTHROPIC_AWS'),
-        useAnthropicGoogleCloud: await beneath.env.get(
-          'CLAUDE_CODE_USE_ANTHROPIC_GOOGLE_CLOUD',
+        useBedrock: await beneath.env.get('SIRGENT_USE_BEDROCK'),
+        useVertex: await beneath.env.get('SIRGENT_USE_VERTEX'),
+        useFoundry: await beneath.env.get('SIRGENT_USE_FOUNDRY'),
+        useSirGentAws: await beneath.env.get('SIRGENT_USE_SIRGENT_AWS'),
+        useSirGentGoogleCloud: await beneath.env.get(
+          'SIRGENT_USE_SIRGENT_GOOGLE_CLOUD',
         ),
-        useMantle: await beneath.env.get('CLAUDE_CODE_USE_MANTLE'),
+        useMantle: await beneath.env.get('SIRGENT_USE_MANTLE'),
       }),
       policy: () => beneath.settings.read({ source: 'policy' }),
       facts: async () => ({
-        entrypoint: await beneath.env.get('CLAUDE_CODE_ENTRYPOINT'),
-        agentSdkVersion: await beneath.env.get('CLAUDE_AGENT_SDK_VERSION'),
-        hostPlatform: await beneath.env.get('CLAUDE_CODE_HOST_PLATFORM'),
+        entrypoint: await beneath.env.get('SIRGENT_ENTRYPOINT'),
+        agentSdkVersion: await beneath.env.get('SIRGENT_AGENT_SDK_VERSION'),
+        hostPlatform: await beneath.env.get('SIRGENT_HOST_PLATFORM'),
         os: await beneath.env.get('OS'),
         processorArchitecture: await beneath.env.get('PROCESSOR_ARCHITECTURE'),
         shellPath:
@@ -95,22 +95,22 @@ export function register(on: On) {
         ci: await beneath.env.get('CI'),
         claubbit: await beneath.env.get('CLAUBBIT'),
         githubActions: await beneath.env.get('GITHUB_ACTIONS'),
-        claudeCodeAction: await beneath.env.get('CLAUDE_CODE_ACTION'),
-        claudeCodeRemote: await beneath.env.get('CLAUDE_CODE_REMOTE'),
+        sirgentCodeAction: await beneath.env.get('SIRGENT_ACTION'),
+        sirgentCodeRemote: await beneath.env.get('SIRGENT_REMOTE'),
         remoteEnvironmentType: await beneath.env.get(
-          'CLAUDE_CODE_REMOTE_ENVIRONMENT_TYPE',
+          'SIRGENT_REMOTE_ENVIRONMENT_TYPE',
         ),
-        containerId: await beneath.env.get('CLAUDE_CODE_CONTAINER_ID'),
-        remoteSessionId: await beneath.env.get('CLAUDE_CODE_REMOTE_SESSION_ID'),
-        tags: await beneath.env.get('CLAUDE_CODE_TAGS'),
+        containerId: await beneath.env.get('SIRGENT_CONTAINER_ID'),
+        remoteSessionId: await beneath.env.get('SIRGENT_REMOTE_SESSION_ID'),
+        tags: await beneath.env.get('SIRGENT_TAGS'),
         hasSessionAccessToken: IsAnalyticsOff.isEnvSet(
-          await beneath.env.get('CLAUDE_CODE_SESSION_ACCESS_TOKEN'),
+          await beneath.env.get('SIRGENT_SESSION_ACCESS_TOKEN'),
         ),
         hasSessionIngressTokenFile: IsAnalyticsOff.isEnvSet(
-          await beneath.env.get('CLAUDE_SESSION_INGRESS_TOKEN_FILE'),
+          await beneath.env.get('SIRGENT_SESSION_INGRESS_TOKEN_FILE'),
         ),
         hasWebsocketAuthFileDescriptor: IsAnalyticsOff.isEnvSet(
-          await beneath.env.get('CLAUDE_CODE_WEBSOCKET_AUTH_FILE_DESCRIPTOR'),
+          await beneath.env.get('SIRGENT_WEBSOCKET_AUTH_FILE_DESCRIPTOR'),
         ),
         githubEventName: await beneath.env.get('GITHUB_EVENT_NAME'),
         runnerEnvironment: await beneath.env.get('RUNNER_ENVIRONMENT'),
@@ -343,7 +343,7 @@ export function register(on: On) {
         ],
       ],
       configLocation: async () => ({
-        configDir: await beneath.env.get('CLAUDE_CONFIG_DIR'),
+        configDir: await beneath.env.get('SIRGENT_CONFIG_DIR'),
         home: await beneath.env.get('HOME'),
         userProfile: await beneath.env.get('USERPROFILE'),
       }),

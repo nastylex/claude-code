@@ -21,13 +21,13 @@ The hookify plugin makes it simple to create hooks without editing complex `hook
 /hookify Warn me when I use rm -rf commands
 ```
 
-This analyzes your request and creates `.claude/hookify.warn-rm.local.md`.
+This analyzes your request and creates `.sirgent/hookify.warn-rm.local.md`.
 
 ### 2. Test It Immediately
 
 **No restart needed!** Rules take effect on the very next tool use.
 
-Ask Claude to run a command that should trigger the rule:
+Ask SirGent to run a command that should trigger the rule:
 ```
 Run rm -rf /tmp/test
 ```
@@ -72,7 +72,7 @@ Enable/disable existing rules through an interactive interface.
 
 ### Simple Rule (Single Pattern)
 
-`.claude/hookify.dangerous-rm.local.md`:
+`.sirgent/hookify.dangerous-rm.local.md`:
 ```markdown
 ---
 name: block-dangerous-rm
@@ -96,7 +96,7 @@ This command could delete important files. Please:
 
 ### Advanced Rule (Multiple Conditions)
 
-`.claude/hookify.sensitive-files.local.md`:
+`.sirgent/hookify.sensitive-files.local.md`:
 ```markdown
 ---
 name: warn-sensitive-files
@@ -123,7 +123,7 @@ Ensure credentials are not hardcoded and file is in .gitignore.
 
 - **`bash`**: Triggers on Bash tool commands
 - **`file`**: Triggers on Edit, Write, MultiEdit tools
-- **`stop`**: Triggers when Claude wants to stop (for completion checks)
+- **`stop`**: Triggers when SirGent wants to stop (for completion checks)
 - **`prompt`**: Triggers on user prompt submission
 - **`all`**: Triggers on all events
 
@@ -166,7 +166,7 @@ This command can cause data loss. Operation blocked for safety.
 Please verify the exact path and use a safer approach.
 ```
 
-**This rule blocks the operation** - Claude will not be allowed to execute these commands.
+**This rule blocks the operation** - SirGent will not be allowed to execute these commands.
 
 ### Example 2: Warn About Debug Code
 
@@ -184,7 +184,7 @@ action: warn
 Remember to remove debugging statements before committing.
 ```
 
-**This rule warns but allows** - Claude sees the message but can still proceed.
+**This rule warns but allows** - SirGent sees the message but can still proceed.
 
 ### Example 3: Require Tests Before Stopping
 
@@ -205,7 +205,7 @@ conditions:
 Before stopping, please run tests to verify your changes work correctly.
 ```
 
-**This blocks Claude from stopping** if no test commands appear in the session transcript. Enable only when you want strict enforcement.
+**This blocks SirGent from stopping** if no test commands appear in the session transcript. Enable only when you want strict enforcement.
 
 ## Advanced Usage
 
@@ -277,7 +277,7 @@ Set `enabled: true`
 
 Simply delete the `.local.md` file:
 ```bash
-rm .claude/hookify.my-rule.local.md
+rm .sirgent/hookify.my-rule.local.md
 ```
 
 ### View All Rules
@@ -288,7 +288,7 @@ rm .claude/hookify.my-rule.local.md
 
 ## Installation
 
-This plugin is part of the Claude Code Marketplace. It should be auto-discovered when the marketplace is installed.
+This plugin is part of the SirGent AI Marketplace. It should be auto-discovered when the marketplace is installed.
 
 **Manual testing:**
 ```bash
@@ -303,7 +303,7 @@ cc --plugin-dir /path/to/hookify
 ## Troubleshooting
 
 **Rule not triggering:**
-1. Check rule file exists in `.claude/` directory (in project root, not plugin directory)
+1. Check rule file exists in `.sirgent/` directory (in project root, not plugin directory)
 2. Verify `enabled: true` in frontmatter
 3. Test regex pattern separately
 4. Rules should work immediately - no restart needed

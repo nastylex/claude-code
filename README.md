@@ -1,71 +1,155 @@
-# Claude Code
-![](https://img.shields.io/badge/Node.js-18%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@anthropic-ai/claude-code)
+<div align="center">
 
-[npm]: https://img.shields.io/npm/v/@anthropic-ai/claude-code.svg?style=flat-square
+```
+ ▄▄▄•  .▄▄ ·  ▄▄· ▪   ▄▄· ▄▄▄ .▄▄▄      ▄▄▄· ▄▄▌  ▄▄▄· .▄▄ · 
+▐█ ▀█ ▐█ ▀. ▐█ ▌▪██ ▐█ ▌▪▀▄.▀·▀▄ █·   ▐█ ▀█ ██• ▐█ ▀█ ▐█ ▀. 
+▄█▀▀█ ▄▀▀▀█▄██ ▄▄▌▐█·██ ▄▄▌▐▀▀▪▄▐▀▀▄   ▄█▀▀█ ██▪ ▄█▀▀█ ▄▀▀▀█▄
+▐█ ▪▐▌▐█▄▪▐█▐███▌▐█▌▐███▌▐█▄▄▌▐█▄▄▌  ▐█ ▪▐▌▐█▌▐▌▐█ ▪▐▌▐█▄▪▐█
+ ▀  ▀  ▀▀▀▀ ·▀▀▀ ▀▀▀·▀▀▀  ▀▀▀  ▀▀▀    ▀  ▀ .▀▀▀  ▀  ▀  ▀▀▀▀ 
+```
 
-Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows -- all through natural language commands. Use it in your terminal, IDE, or tag @claude on Github.
+```
+$ sirgent --version
+sirgent/2.1.283 — your codebase is now occupied
+```
 
-**Learn more in the [official documentation](https://code.claude.com/docs/en/overview)**.
+**SirGent AI** is an agentic coding tool that lives in your terminal. It reads
+your codebase, executes the routine, explains the gnarly, and drives git
+workflows — all through natural-language commands. Terminal, IDE, or
+`@sirgent` on GitHub.
 
-<img src="./demo.gif" />
+[![](https://img.shields.io/badge/Node.js-18%2B-00ff41?style=flat-square&labelColor=0d1117)](https://nodejs.org)
+[![](https://img.shields.io/badge/CLI-sirgent-00ff41?style=flat-square&labelColor=0d1117)](https://sirgent.ai)
+[![](https://img.shields.io/badge/license-commercial-8b949e?style=flat-square&labelColor=0d1117)](./LICENSE.md)
 
-## Get started
+</div>
+
+---
+
+```
+┌──[ operator@shell ]──────────────────────────────┐
+│  ▸ whoami     an AI agent with root on your repo │
+│  ▸ motive     ship faster, break less            │
+│  ▸ habitat    your terminal, IDE, and GitHub     │
+└──────────────────────────────────────────────────┘
+```
+
+Full documentation at **[code.sirgent.ai](https://code.sirgent.ai/docs/en/overview)**.
+
+## ▚ Get started
+
 > [!NOTE]
 > Installation via npm is deprecated. Use one of the recommended methods below.
 
-For more installation options, uninstall steps, and troubleshooting, see the [setup documentation](https://code.claude.com/docs/en/setup).
+More install options, uninstall steps, and troubleshooting live in the
+[setup documentation](https://code.sirgent.ai/docs/en/setup).
 
-1. Install Claude Code:
+1. Install the CLI:
 
-    **MacOS/Linux (Recommended):**
-    ```bash
-    curl -fsSL https://claude.ai/install.sh | bash
-    ```
+   **MacOS/Linux (recommended):**
+   ```bash
+   curl -fsSL https://sirgent.ai/install.sh | bash
+   ```
 
-    **Homebrew (MacOS/Linux):**
-    ```bash
-    brew install --cask claude-code
-    ```
+   **Homebrew (MacOS/Linux):**
+   ```bash
+   brew install --cask sirgent
+   ```
 
-    **Windows (Recommended):**
-    ```powershell
-    irm https://claude.ai/install.ps1 | iex
-    ```
+   **Windows (recommended):**
+   ```powershell
+   irm https://sirgent.ai/install.ps1 | iex
+   ```
 
-    **WinGet (Windows):**
-    ```powershell
-    winget install Anthropic.ClaudeCode
-    ```
+   **WinGet (Windows):**
+   ```powershell
+   winget install SirGentAI.SirGent
+   ```
 
-    **NPM (Deprecated):**
-    ```bash
-    npm install -g @anthropic-ai/claude-code
-    ```
+   **NPM (deprecated):**
+   ```bash
+   npm install -g @sirgent-ai/cli
+   ```
 
-2. Navigate to your project directory and run `claude`.
+2. cd into your project and run:
 
-## Plugins
+   ```bash
+   $ sirgent
+   █ 
+   ```
 
-This repository includes several Claude Code plugins that extend functionality with custom commands and agents. See the [plugins directory](./plugins/README.md) for detailed documentation on available plugins.
+## ▚ Plugins
 
-## Reporting Bugs
+```
+$ tree plugins/ -L 1
+plugins/
+├── agent-sdk-dev        # SDK dev kit: /new-sdk-app + verifier agents
+├── code-review          # multi-agent PR review, confidence-scored
+├── commit-commands      # /commit, /commit-push-pr, /clean_gone
+├── feature-dev          # 7-phase feature workflow
+├── frontend-design      # distinctive UI, zero generic AI aesthetic
+├── hookify              # custom hooks from plain markdown rules
+├── plugin-dev           # 7 skills for building your own plugins
+├── pr-review-toolkit    # 6 specialized review agents
+├── ralph-wiggum         # self-referential AI iteration loops
+├── security-guidance    # 9-pattern security hook
+└── sirgent-opus-4-5-migration
+                          # migrate Sonnet 4.x / Opus 4.1 → Opus 4.5
+```
 
-We welcome your feedback. Use the `/bug` command to report issues directly within Claude Code, or file a [GitHub issue](https://github.com/anthropics/claude-code/issues).
+Plugins extend SirGent AI with custom slash commands, agents, hooks, and MCP
+servers — shareable across projects and teams. These are examples of what the
+plugin system can do; many more ship through community marketplaces.
 
-## Connect on Discord
+See the [plugins directory](./plugins/README.md) for full docs.
 
-Join the [Claude Developers Discord](https://anthropic.com/discord) to connect with other developers using Claude Code. Get help, share feedback, and discuss your projects with the community.
+## ▚ Mods
 
-## Data collection, usage, and retention
+Mods are built-in plugins whose behavior lives in a hooks module — one
+`register(on, options)` entry hooking engine events as `($, e, next)`.
+This repo holds their source, published as it ships inside the binary:
+[`sec-default`](./mods/sec-default), [`diff`](./mods/diff),
+[`telemetry`](./mods/telemetry), [`agents-md`](./mods/agents-md).
 
-When you use Claude Code, we collect feedback, which includes usage data (such as code acceptance or rejections), associated conversation data, and user feedback submitted via the `/bug` command.
+Run one from source:
 
-### How we use your data
+```bash
+$ sirgent --plugin-dir mods/diff
+```
 
-See our [data usage policies](https://code.claude.com/docs/en/data-usage).
+See [mods/README.md](./mods/README.md).
 
-### Privacy safeguards
+## ▚ Repository layout
 
-We have implemented several safeguards to protect your data, including limited retention periods for sensitive information, restricted access to user session data, and clear policies against using feedback for model training.
+```
+$ ls -la
+├── CHANGELOG.md          # every release, every line
+├── plugins/              # example plugins (commands, agents, skills)
+├── mods/                 # built-in plugin sources + tests
+├── examples/             # gateway deployments (AWS/GCP), MDM, hooks
+├── scripts/              # repo maintenance tooling
+└── .sirgent-plugin/      # plugin marketplace manifest
+```
 
-For full details, please review our [Commercial Terms of Service](https://www.anthropic.com/legal/commercial-terms) and [Privacy Policy](https://www.anthropic.com/legal/privacy).
+## ▚ Reporting bugs
+
+Spot something glitched in the matrix? File a
+[GitHub issue](https://github.com/sirgent-ai/sirgent-ai/issues).
+
+## ▚ License & data
+
+© SirGent AI. All rights reserved. Use is subject to the
+[Commercial Terms of Service](https://sirgent.ai/legal/commercial-terms) —
+see [LICENSE.md](./LICENSE.md) and the
+[data usage policies](https://code.sirgent.ai/docs/en/data-usage).
+
+---
+
+<div align="center">
+
+```
+$ exit
+connection to sirgent-ai closed. // nothing to see here, operator.
+```
+
+</div>

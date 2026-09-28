@@ -1,4 +1,4 @@
-import type { Origin } from 'claude-code'
+import type { Origin } from 'sirgent-ai'
 
 /**
  * Providers in the organization's tiers: a policy-installed plugin

@@ -1,4 +1,4 @@
-import type { SessionMessage, Settings } from 'claude-code'
+import type { SessionMessage, Settings } from 'sirgent-ai'
 
 /**
  * What the world beneath a repository session holds and answers besides

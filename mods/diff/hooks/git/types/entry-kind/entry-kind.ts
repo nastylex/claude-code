@@ -1,4 +1,4 @@
-import type { FsEntry } from 'claude-code'
+import type { FsEntry } from 'sirgent-ai'
 
 /**
  * A directory entry's own kind as `$.fs.list` reports it, no link
