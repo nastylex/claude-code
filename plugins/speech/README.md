@@ -1,19 +1,17 @@
 # speech
 
 Speech capabilities for SirGent AI: voice narration of responses through
-ElevenLabs text-to-speech, voice dictation into your prompts through
-ElevenLabs speech-to-text, an on-demand `/speak` command, a `/hush` mute
-toggle, and a `/dictate` command for voice input.
+
 
 ## What it does
 
 | Piece | Where | What happens |
 | --- | --- | --- |
 | Stop hook narrator | `hooks/speak_response.py` | When SirGent finishes a turn, the final assistant message is distilled (markdown stripped, capped at ~400 chars), converted to MP3 with ElevenLabs TTS, and played through the platform's audio player. |
+| Two-way voice (barge-in) | same hook, `/voice on` | While the response plays, the mic is monitored. A signal above the barge-in floor lowers (kills) playback and records your reply; ElevenLabs speech-to-text transcribes it and SirGent responds to your words. |
 | `/speak` command | `commands/speak.md` | Speak any text the user supplies, on demand. |
 | `/hush` command | `commands/hush.md` | Mute/unmute the Stop-hook narrator with a flag file (`~/.sirgent/speech-disabled`). |
-| `/dictate` command | `commands/dictate.md` + `hooks/dictate_stt.py` | Voice input: record from the default mic, transcribe with ElevenLabs STT, and deliver the words as your prompt to SirGent. |
-| Voice skill | `skills/voice/SKILL.md` | Guidance for preparing natural spoken text, calling the TTS API, and playing audio on macOS/Linux/Windows. |
+
 
 ## Setup
 
@@ -30,9 +28,7 @@ toggle, and a `/dictate` command for voice input.
 3. Make sure a player exists for your platform: `afplay` ships with macOS;
    on Linux install `mpv` or `ffmpeg`; on Windows the PowerShell
    `Media.SoundPlayer` path needs no extra install.
-4. For `/dictate`, install a mic recorder: `sox` (recommended, all
-   platforms via Homebrew/apt/choco), or use `arecord` (ALSA Linux) /
-   `ffmpeg` (macOS avfoundation).
+
 
 Without an API key the narrator stays silent (one setup hint on first run)
 and everything else keeps working.
@@ -41,6 +37,7 @@ and everything else keeps working.
 
 - `SPEECH_DISABLE=1` — disables the Stop-hook narrator entirely
 - `/hush off` — mutes via the flag file; `/hush on` unmutes
+- `/voice off` — disables mic monitoring / barge-in
 - Removing the plugin disables everything
 
 The hook always exits 0 and never blocks the session: a missing key, an API
@@ -72,12 +69,7 @@ speech/
 ├── commands/
 │   ├── speak.md           # /speak — say arbitrary text aloud
 │   ├── hush.md            # /hush — mute/unmute the narrator
-│   └── dictate.md         # /dictate — voice input (mic → STT → prompt)
-├── hooks/
-│   ├── hooks.json         # Stop hook wiring
-│   ├── speak_response.py  # the narrator (TTS + playback)
-│   ├── dictate_stt.py     # dictation bridge (record → STT → stdout)
-│   └── tts-python.sh      # python3 finder shim (Windows-safe)
+
 ├── skills/
 │   └── voice/SKILL.md     # voice narration guidance
 └── README.md

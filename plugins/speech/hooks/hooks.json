@@ -1,17 +1,1 @@
 {
-  "description": "Speech plugin — narrates SirGent's final response aloud via ElevenLabs TTS; /dictate covers the input side (mic → STT → prompt)",
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${SIRGENT_PLUGIN_ROOT}/hooks/tts-python.sh\" \"${SIRGENT_PLUGIN_ROOT}/hooks/speak_response.py\"",
-            "asyncRewake": false,
-            "timeout": 60
-          }
-        ]
-      }
-    ]
-  }
-}
