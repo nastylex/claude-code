@@ -1,4 +1,4 @@
-# Provider + version pins for the Claude Gateway Cloud Run deployment.
+# Provider + version pins for the SirGent Gateway Cloud Run deployment.
 terraform {
   required_version = ">= 1.5"
   required_providers {

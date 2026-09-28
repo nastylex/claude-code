@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# setup.sh — GCP setup for Claude Gateway (walkthrough §1–7b).
+# setup.sh — GCP setup for SirGent Gateway (walkthrough §1–7b).
 #
 # Provisions, in doc order: APIs (§1), service account + IAM (§2), the gateway
 # container image in Artifact Registry (§3), a Cloud SQL (PostgreSQL) backend
@@ -14,7 +14,7 @@
 # one-time, irreducible networking required for private IP.
 #
 #   Section markers (§N) below map to the walkthrough:
-#   https://code.claude.com/docs/en/claude-apps-gateway-on-gcp
+#   https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-gcp
 #
 # Covers here:  APIs (§1) -> service account + IAM (§2) -> build & push image (§3)
 #               -> VPC + Private Services Access -> Cloud SQL (private IP only) -> database
@@ -31,18 +31,18 @@ set -euo pipefail
 PROJECT_ID="${PROJECT_ID:-$(gcloud config get-value project 2>/dev/null)}"
 REGION="${REGION:-${CLOUDSDK_COMPUTE_REGION:-us-east5}}"   # guide §1 uses us-east5 (Agent Platform model region)
 
-SA_NAME="${SA_NAME:-claude-gateway}"                       # §2 service account
+SA_NAME="${SA_NAME:-sirgent-gateway}"                       # §2 service account
 SA_EMAIL="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 
 # §3 image
-AR_REPO="${AR_REPO:-claude-gateway}"                       # Artifact Registry repository
+AR_REPO="${AR_REPO:-sirgent-gateway}"                       # Artifact Registry repository
 IMAGE_NAME="${IMAGE_NAME:-gateway}"
-RELEASES_URL="${RELEASES_URL:-https://downloads.claude.ai/claude-code-releases}"   # public Claude Code release endpoint
-VERSION="${VERSION:-}"                                     # Claude Code release to deploy; empty = latest release (resolved below)
-VERSION_FILE="${VERSION_FILE:-./.claude-version}"          # pins the resolved release across re-runs; delete it (or set VERSION) to upgrade
+RELEASES_URL="${RELEASES_URL:-https://downloads.sirgent.ai/sirgent-ai-releases}"   # public SirGent AI release endpoint
+VERSION="${VERSION:-}"                                     # SirGent AI release to deploy; empty = latest release (resolved below)
+VERSION_FILE="${VERSION_FILE:-./.sirgent-version}"          # pins the resolved release across re-runs; delete it (or set VERSION) to upgrade
 DOCKERFILE="${DOCKERFILE:-./Dockerfile}"
-CLAUDE_BINARY="${CLAUDE_BINARY:-./claude}"                 # linux-x64 Claude Code binary; downloaded from RELEASES_URL if missing
-CLAUDE_SHA256="${CLAUDE_SHA256:-}"                         # optional: out-of-band sha256 pin for the downloaded binary, checked in addition to the release manifest
+SIRGENT_BINARY="${SIRGENT_BINARY:-./sirgent}"                 # linux-x64 SirGent AI binary; downloaded from RELEASES_URL if missing
+SIRGENT_SHA256="${SIRGENT_SHA256:-}"                         # optional: out-of-band sha256 pin for the downloaded binary, checked in addition to the release manifest
 
 VPC_NETWORK="${VPC_NETWORK:-cc-gateway-vpc}"
 SUBNET="${SUBNET:-cc-gateway-subnet}"
@@ -51,20 +51,20 @@ SUBNET_RANGE="${SUBNET_RANGE:-10.0.0.0/24}"
 PSA_RANGE_NAME="${PSA_RANGE_NAME:-google-managed-services-${VPC_NETWORK}}"
 PSA_PREFIX_LENGTH="${PSA_PREFIX_LENGTH:-16}"               # /16 is GCP's recommendation; reserved, not consumed
 
-DB_INSTANCE="${DB_INSTANCE:-claude-gateway-db}"
+DB_INSTANCE="${DB_INSTANCE:-sirgent-gateway-db}"
 DB_VERSION="${DB_VERSION:-POSTGRES_16}"   # PG14+ supported; 16 is the recommended default (§4)
 DB_TIER="${DB_TIER:-db-g1-small}"
-DB_NAME="${DB_NAME:-claude_gateway}"
+DB_NAME="${DB_NAME:-sirgent_gateway}"
 DB_USER="${DB_USER:-gateway}"
 
 SECRET_NAME="${SECRET_NAME:-gateway-postgres-url}"         # §5 store.postgres_url
 JWT_SECRET_NAME="${JWT_SECRET_NAME:-gateway-jwt-secret}"   # §5 session.jwt_secret
 
 GATEWAY_YAML="${GATEWAY_YAML:-./gateway.yaml}"             # §6 config file
-CONFIG_SECRET="${CONFIG_SECRET:-gateway-config}"           # §6 mounted at /etc/claude/gateway.yaml
+CONFIG_SECRET="${CONFIG_SECRET:-gateway-config}"           # §6 mounted at /etc/sirgent/gateway.yaml
 
 # §7 Cloud Run deploy
-SERVICE_NAME="${SERVICE_NAME:-claude-gateway}"
+SERVICE_NAME="${SERVICE_NAME:-sirgent-gateway}"
 OIDC_SECRET_NAME="${OIDC_SECRET_NAME:-gateway-oidc-client-secret}"   # operator-created (Google OAuth client)
 DEPLOY="${DEPLOY:-1}"                                      # set DEPLOY=0 to provision only, no Cloud Run deploy
 INGRESS="${INGRESS:-internal}"                             # internal (default; no public URL) | internal-and-cloud-load-balancing (only if you front it with your own internal ALB)
@@ -81,7 +81,7 @@ if [[ -z "${PROJECT_ID}" ]]; then
   echo "       Set it with: export PROJECT_ID=<your-project>   (or 'gcloud config set project ...')" >&2
   exit 1
 fi
-# VERSION tags the image and selects the public Claude Code release to download.
+# VERSION tags the image and selects the public SirGent AI release to download.
 # The first resolved value is pinned to ${VERSION_FILE} so the documented
 # re-runs (fill gateway.yaml -> re-run; set public_url -> re-run) don't silently
 # build and deploy a newer release mid-bootstrap.
@@ -89,14 +89,14 @@ if [[ -z "${VERSION}" && -f "${VERSION_FILE}" ]]; then
   VERSION="$(< "${VERSION_FILE}")"
   log "Using release pinned in ${VERSION_FILE}: ${VERSION}   (delete the file or set VERSION to change it)"
 elif [[ -z "${VERSION}" ]]; then
-  # /latest is the channel the official installer (claude.ai/install.sh) uses.
+  # /latest is the channel the official installer (sirgent.ai/install.sh) uses.
   VERSION="$(curl_https -fsSL "${RELEASES_URL}/latest" | tr -d '[:space:]' || true)"
   if [[ -z "${VERSION}" ]]; then
     echo "ERROR: could not resolve the latest release from ${RELEASES_URL}/latest." >&2
-    echo "       Set VERSION to a Claude Code release version, e.g. export VERSION=2.1.195" >&2
+    echo "       Set VERSION to a SirGent AI release version, e.g. export VERSION=2.1.195" >&2
     exit 1
   fi
-  log "VERSION not set — using latest Claude Code release: ${VERSION}"
+  log "VERSION not set — using latest SirGent AI release: ${VERSION}"
 fi
 # Reject non-version content (e.g. an HTML error page served with HTTP 200)
 # before it reaches the image tag and download URLs.
@@ -106,11 +106,11 @@ if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
 fi
 printf '%s' "${VERSION}" > "${VERSION_FILE}"
 IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/${AR_REPO}/${IMAGE_NAME}:${VERSION}"
-# Claude Code only connects to a gateway whose hostname resolves to private
+# SirGent AI only connects to a gateway whose hostname resolves to private
 # addresses (a client-side /login check), so public ingress can never serve
 # clients — mirror the terraform module's validation and refuse it up front.
 if [[ "${INGRESS}" != "internal" && "${INGRESS}" != "internal-and-cloud-load-balancing" ]]; then
-  echo "ERROR: INGRESS must be 'internal' or 'internal-and-cloud-load-balancing' — Claude Code's" >&2
+  echo "ERROR: INGRESS must be 'internal' or 'internal-and-cloud-load-balancing' — SirGent AI's" >&2
   echo "       /login only accepts gateway hosts on private addresses, so public ingress cannot serve clients." >&2
   exit 1
 fi
@@ -142,7 +142,7 @@ if gcloud iam service-accounts describe "${SA_EMAIL}" --project="${PROJECT_ID}" 
   skip "service account ${SA_EMAIL}"
 else
   gcloud iam service-accounts create "${SA_NAME}" \
-    --display-name="Claude Gateway" --project="${PROJECT_ID}"
+    --display-name="SirGent Gateway" --project="${PROJECT_ID}"
 fi
 
 # add-iam-policy-binding is idempotent (re-adding an existing binding is a no-op).
@@ -174,9 +174,9 @@ fi
 if gcloud artifacts docker images describe "${IMAGE}" >/dev/null 2>&1; then
   skip "image ${IMAGE}"
 else
-  # The public Claude Code release includes the gateway subcommand, so the
+  # The public SirGent AI release includes the gateway subcommand, so the
   # binary comes straight from the release endpoint, verified against the
-  # release manifest's sha256. A pre-existing ${CLAUDE_BINARY} (stale version,
+  # release manifest's sha256. A pre-existing ${SIRGENT_BINARY} (stale version,
   # interrupted download, hand-placed file) is verified the same way and
   # re-downloaded on mismatch, so an unverified binary can never reach the image.
   manifest="$(curl_https -fsSL "${RELEASES_URL}/${VERSION}/manifest.json" | tr -d '[:space:]' || true)"
@@ -186,22 +186,22 @@ else
     exit 1
   fi
   expected_sha="${BASH_REMATCH[1]}"
-  if [[ -f "${CLAUDE_BINARY}" && "$(sha_of "${CLAUDE_BINARY}")" == "${expected_sha}" ]]; then
-    skip "binary ${CLAUDE_BINARY} (sha256 matches release ${VERSION})"
+  if [[ -f "${SIRGENT_BINARY}" && "$(sha_of "${SIRGENT_BINARY}")" == "${expected_sha}" ]]; then
+    skip "binary ${SIRGENT_BINARY} (sha256 matches release ${VERSION})"
   else
-    if [[ -f "${CLAUDE_BINARY}" ]]; then
-      log "Existing ${CLAUDE_BINARY} does not match release ${VERSION} — re-downloading"
+    if [[ -f "${SIRGENT_BINARY}" ]]; then
+      log "Existing ${SIRGENT_BINARY} does not match release ${VERSION} — re-downloading"
     else
-      log "Downloading Claude Code ${VERSION} (linux-x64) from ${RELEASES_URL}"
+      log "Downloading SirGent AI ${VERSION} (linux-x64) from ${RELEASES_URL}"
     fi
     # Until verification passes, ANY exit (curl failure, set -e, signal, the
     # error exit below) removes the file, so a partial download can't be
     # silently picked up by a later run.
-    trap 'rm -f "${CLAUDE_BINARY}"' EXIT INT TERM
-    curl_https -fL -o "${CLAUDE_BINARY}" "${RELEASES_URL}/${VERSION}/linux-x64/claude"
-    actual_sha="$(sha_of "${CLAUDE_BINARY}")"
+    trap 'rm -f "${SIRGENT_BINARY}"' EXIT INT TERM
+    curl_https -fL -o "${SIRGENT_BINARY}" "${RELEASES_URL}/${VERSION}/linux-x64/sirgent"
+    actual_sha="$(sha_of "${SIRGENT_BINARY}")"
     if [[ "${actual_sha}" != "${expected_sha}" ]]; then
-      echo "ERROR: sha256 of ${CLAUDE_BINARY} is ${actual_sha} but the release manifest says ${expected_sha} — refusing to build." >&2
+      echo "ERROR: sha256 of ${SIRGENT_BINARY} is ${actual_sha} but the release manifest says ${expected_sha} — refusing to build." >&2
       exit 1
     fi
     trap - EXIT INT TERM
@@ -209,19 +209,19 @@ else
   fi
   # Optional out-of-band pin, checked even for a pre-existing binary: the
   # manifest shares an origin with the binary, so it can't defend against a
-  # compromised endpoint — CLAUDE_SHA256 can.
-  if [[ -n "${CLAUDE_SHA256}" && "$(sha_of "${CLAUDE_BINARY}")" != "${CLAUDE_SHA256}" ]]; then
-    echo "ERROR: sha256 of ${CLAUDE_BINARY} does not match CLAUDE_SHA256 (${CLAUDE_SHA256}) — refusing to build." >&2
+  # compromised endpoint — SIRGENT_SHA256 can.
+  if [[ -n "${SIRGENT_SHA256}" && "$(sha_of "${SIRGENT_BINARY}")" != "${SIRGENT_SHA256}" ]]; then
+    echo "ERROR: sha256 of ${SIRGENT_BINARY} does not match SIRGENT_SHA256 (${SIRGENT_SHA256}) — refusing to build." >&2
     exit 1
   fi
-  chmod +x "${CLAUDE_BINARY}"
+  chmod +x "${SIRGENT_BINARY}"
   log "Building and pushing ${IMAGE}"
   gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
   # Cloud Run requires linux/amd64. --platform forces it (e.g. when building on an
   # Apple Silicon Mac), and --provenance=false keeps buildx from wrapping the result
   # in an OCI image index that Cloud Run rejects ("manifest ... must support amd64/linux").
   docker build --platform=linux/amd64 --provenance=false \
-    -f "${DOCKERFILE}" --build-arg CLAUDE_BINARY="${CLAUDE_BINARY}" -t "${IMAGE}" .
+    -f "${DOCKERFILE}" --build-arg SIRGENT_BINARY="${SIRGENT_BINARY}" -t "${IMAGE}" .
   docker push "${IMAGE}"
 fi
 
@@ -394,7 +394,7 @@ fi
 # We deliberately do NOT use --add-cloudsql-instances (that's the Auth Proxy /
 # socket path, which would need a different connection string).
 #
-# Secrets: gateway.yaml is mounted as a FILE at /etc/claude (alone in its dir).
+# Secrets: gateway.yaml is mounted as a FILE at /etc/sirgent (alone in its dir).
 # The JWT / OIDC / Postgres secrets are injected as ENV VARS — Cloud Run cannot
 # mount multiple secrets into one directory, and gateway.yaml references them via
 # ${ENV_VAR}. (See the env-var names in gateway.yaml: GATEWAY_JWT_SECRET etc.)
@@ -418,7 +418,7 @@ elif [[ -n "${missing// }" ]]; then
   echo "        Fill ${GATEWAY_YAML} and re-run to publish ${CONFIG_SECRET}; create ${OIDC_SECRET_NAME}"
   echo "        from the Google OAuth client. Then re-run to deploy."
 else
-  SECRET_MOUNTS="/etc/claude/gateway.yaml=${CONFIG_SECRET}:latest"          # file mount (alone in /etc/claude)
+  SECRET_MOUNTS="/etc/sirgent/gateway.yaml=${CONFIG_SECRET}:latest"          # file mount (alone in /etc/sirgent)
   SECRET_MOUNTS="${SECRET_MOUNTS},GATEWAY_JWT_SECRET=${JWT_SECRET_NAME}:latest"        # env var
   SECRET_MOUNTS="${SECRET_MOUNTS},OIDC_CLIENT_SECRET=${OIDC_SECRET_NAME}:latest"       # env var
   SECRET_MOUNTS="${SECRET_MOUNTS},GATEWAY_POSTGRES_URL=${SECRET_NAME}:latest"          # env var
@@ -544,7 +544,7 @@ cat <<EOF
   Secrets               ${SECRET_NAME}, ${JWT_SECRET_NAME}, ${CONFIG_SECRET}
   Cloud Run service     ${SERVICE_NAME} -> ${RUN_URL:-(not deployed yet)}   (ingress: ${INGRESS})
 
-Next steps (see https://code.claude.com/docs/en/claude-apps-gateway-on-gcp):
+Next steps (see https://code.sirgent.ai/docs/en/sirgent-apps-gateway-on-gcp):
   - Create the one operator-provided secret (from the Google Cloud Console OAuth client):
       printf '%s' "<client-secret>" | gcloud secrets create ${OIDC_SECRET_NAME} \\
         --data-file=- --project="${PROJECT_ID}"

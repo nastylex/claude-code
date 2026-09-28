@@ -1,4 +1,4 @@
-import type { CommandRunInput } from 'claude-code'
+import type { CommandRunInput } from 'sirgent-ai'
 
 /**
  * The command that starts the conversation over, as the person types it.

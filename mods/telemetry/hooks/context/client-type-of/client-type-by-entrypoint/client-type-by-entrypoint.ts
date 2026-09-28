@@ -6,7 +6,7 @@ export const CLIENT_TYPE_BY_ENTRYPOINT: Readonly<Record<string, string>> = {
   'sdk-ts': 'sdk-typescript',
   'sdk-py': 'sdk-python',
   'sdk-cli': 'sdk-cli',
-  'claude-vscode': 'claude-vscode',
+  'sirgent-vscode': 'sirgent-vscode',
   'local-agent': 'local-agent',
-  'claude-desktop': 'claude-desktop',
+  'sirgent-desktop': 'sirgent-desktop',
 }

@@ -1,4 +1,4 @@
-import type { PromptSubmitInput } from 'claude-code'
+import type { PromptSubmitInput } from 'sirgent-ai'
 
 /**
  * A prompt as the person submits it from the composer with a plain Enter,

@@ -1,4 +1,4 @@
-import type { On } from 'claude-code'
+import type { On } from 'sirgent-ai'
 
 /**
  * Answers `$.fs` over /work holding MOVED_IN's two files, both last

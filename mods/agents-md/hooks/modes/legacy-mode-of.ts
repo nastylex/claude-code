@@ -6,14 +6,14 @@ import type { Mode } from './types'
  */
 const LEGACY_MODES: Readonly<Record<string, Mode>> = {
   none: 'managed-only',
-  claude: 'claude-md',
-  'agents-fallback': 'claude-md-or-agents-md',
-  both: 'claude-md-and-agents-md',
+  sirgent: 'sirgent-md',
+  'agents-fallback': 'sirgent-md-or-agents-md',
+  both: 'sirgent-md-and-agents-md',
 }
 
 /**
  * The mode a value stored under the old `projectInstructions` key keeps; a
- * value it never took reads as `claude-md`, which adds nothing, never as the
+ * value it never took reads as `sirgent-md`, which adds nothing, never as the
  * default, which loads AGENTS.md.
  *
  * COMPAT_BREAK(agents-md-project-instructions): drop the projectInstructions
@@ -28,6 +28,6 @@ export function legacyModeOf(value: unknown): Mode | undefined {
   }
 
   return (
-    (typeof value === 'string' ? LEGACY_MODES[value] : undefined) ?? 'claude-md'
+    (typeof value === 'string' ? LEGACY_MODES[value] : undefined) ?? 'sirgent-md'
   )
 }

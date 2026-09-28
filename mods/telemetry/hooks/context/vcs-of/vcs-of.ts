@@ -1,4 +1,4 @@
-import type { FsEntry } from 'claude-code'
+import type { FsEntry } from 'sirgent-ai'
 
 import { distinct } from './distinct'
 import { VCS_MARKERS } from './vcs-markers'

@@ -51,10 +51,10 @@ STOPPING:
 
 MONITORING:
   # View current iteration:
-  grep '^iteration:' .claude/ralph-loop.local.md
+  grep '^iteration:' .sirgent/ralph-loop.local.md
 
   # View full state:
-  head -10 .claude/ralph-loop.local.md
+  head -10 .sirgent/ralph-loop.local.md
 HELP_EOF
       exit 0
       ;;
@@ -128,7 +128,7 @@ if [[ -z "$PROMPT" ]]; then
 fi
 
 # Create state file for stop hook (markdown with YAML frontmatter)
-mkdir -p .claude
+mkdir -p .sirgent
 
 # Quote completion promise for YAML if it contains special chars or is not null
 if [[ -n "$COMPLETION_PROMISE" ]] && [[ "$COMPLETION_PROMISE" != "null" ]]; then
@@ -137,7 +137,7 @@ else
   COMPLETION_PROMISE_YAML="null"
 fi
 
-cat > .claude/ralph-loop.local.md <<EOF
+cat > .sirgent/ralph-loop.local.md <<EOF
 ---
 active: true
 iteration: 1
@@ -161,7 +161,7 @@ The stop hook is now active. When you try to exit, the SAME PROMPT will be
 fed back to you. You'll see your previous work in files, creating a
 self-referential loop where you iteratively improve on the same task.
 
-To monitor: head -10 .claude/ralph-loop.local.md
+To monitor: head -10 .sirgent/ralph-loop.local.md
 
 ⚠️  WARNING: This loop cannot be stopped manually! It will run infinitely
     unless you set --max-iterations or --completion-promise.

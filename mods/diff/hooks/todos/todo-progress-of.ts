@@ -1,4 +1,4 @@
-import type { SessionMessage } from 'claude-code'
+import type { SessionMessage } from 'sirgent-ai'
 
 import { arrayOf } from '../array-of'
 import { countOf } from '../count-of'

@@ -12,7 +12,7 @@ secrets/
 *.iam.json
 
 # Vendored release binary — download per release (see setup.sh DIST_URL).
-# claude.bad is a checksum-mismatched binary that setup.sh set aside.
-claude
-claude.download
-claude.bad
+# sirgent.bad is a checksum-mismatched binary that setup.sh set aside.
+sirgent
+sirgent.download
+sirgent.bad

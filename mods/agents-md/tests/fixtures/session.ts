@@ -1,4 +1,4 @@
-import type { SessionStartInput } from 'claude-code'
+import type { SessionStartInput } from 'sirgent-ai'
 
 /**
  * An interactive terminal session two directories under /repo.

@@ -11,7 +11,7 @@ click puts that file's hunks at the top; the list also scrolls under the
 built-in's list keys (`ctrl+up`/`ctrl+down`, `opt+up`/`opt+down`), and
 `ctrl+x b` moves the comparison base on, as the built-in's chord does: both
 through Buttons that declare the engine's own actions. The pane refreshes
-as Claude edits and runs shell commands, and while it is open it polls
+as SirGent edits and runs shell commands, and while it is open it polls
 the repository's HEAD so a commit or checkout made elsewhere shows too.
 The main loop's first successful edit of a session opens the pane by
 itself, as the built-in panel opens on its first checkpoint: where the
@@ -29,7 +29,7 @@ width is known, as the built-in opens on the history it restores.
 
 Under the fullscreen layout a terminal under 110 columns gets the
 built-in's line asking for a wider one and nothing opens. Without that
-layout (`CLAUDE_CODE_NO_FLICKER=0`, which `/diff` learns from the command's
+layout (`SIRGENT_NO_FLICKER=0`, which `/diff` learns from the command's
 `presentation`) the pane opens inline at any width, focused and as tall
 as its content (the open's `rows`), in the built-in dialog's shape: the
 title, the count, five file rows at a time round the selected one (`❯`,
@@ -84,7 +84,7 @@ moved file by.
 ## What it calls on `$`
 
 `clock.after`, `clock.every`, `clock.now`, `command.register`, `env.get`
-(`CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING`), `fs.list`, `fs.read`, `fs.stat`,
+(`SIRGENT_DISABLE_FILE_CHECKPOINTING`), `fs.list`, `fs.read`, `fs.stat`,
 `process.run` (git, read-only), `session.id`, `session.messages`,
 `settings.read`, `store.get`, `store.set`, `telemetry.log`, `telemetry.mark`,
 `ui.close`, `ui.invalidate`, `ui.log`, `ui.open`, `ui.resolve`, `ui.status`.
@@ -95,7 +95,7 @@ are dropped and nothing else changes.
 ## Try it
 
 ```sh
-claude --plugin-dir /path/to/diff
+sirgent --plugin-dir /path/to/diff
 ```
 
 then `/diff` inside a git repository with a modified file.

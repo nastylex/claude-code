@@ -13,18 +13,18 @@ The Ralph Wiggum technique is an iterative development methodology based on cont
 **Core concept:**
 ```bash
 while :; do
-  cat PROMPT.md | claude-code --continue
+  cat PROMPT.md | sirgent-ai --continue
 done
 ```
 
-The same prompt is fed to Claude repeatedly. The "self-referential" aspect comes from Claude seeing its own previous work in the files and git history, not from feeding output back as input.
+The same prompt is fed to SirGent repeatedly. The "self-referential" aspect comes from SirGent seeing its own previous work in the files and git history, not from feeding output back as input.
 
 **Each iteration:**
-1. Claude receives the SAME prompt
+1. SirGent receives the SAME prompt
 2. Works on the task, modifying files
 3. Tries to exit
 4. Stop hook intercepts and feeds the same prompt again
-5. Claude sees its previous work in the files
+5. SirGent sees its previous work in the files
 6. Iteratively improves until completion
 
 The technique is described as "deterministically bad in an undeterministic world" - failures are predictable, enabling systematic improvement through prompt tuning.
@@ -46,7 +46,7 @@ Start a Ralph loop in your current session.
 - `--completion-promise <text>` - Promise phrase to signal completion
 
 **How it works:**
-1. Creates `.claude/.ralph-loop.local.md` state file
+1. Creates `.sirgent/.ralph-loop.local.md` state file
 2. You work on the task
 3. When you try to exit, stop hook intercepts
 4. Same prompt fed back
@@ -66,7 +66,7 @@ Cancel an active Ralph loop (removes the loop state file).
 
 **How it works:**
 - Checks for active loop state file
-- Removes `.claude/.ralph-loop.local.md`
+- Removes `.sirgent/.ralph-loop.local.md`
 - Reports cancellation with iteration count
 
 ---
@@ -75,7 +75,7 @@ Cancel an active Ralph loop (removes the loop state file).
 
 ### Completion Promises
 
-To signal completion, Claude must output a `<promise>` tag:
+To signal completion, SirGent must output a `<promise>` tag:
 
 ```
 <promise>TASK COMPLETE</promise>
@@ -85,9 +85,9 @@ The stop hook looks for this specific tag. Without it (or `--max-iterations`), R
 
 ### Self-Reference Mechanism
 
-The "loop" doesn't mean Claude talks to itself. It means:
+The "loop" doesn't mean SirGent talks to itself. It means:
 - Same prompt repeated
-- Claude's work persists in files
+- SirGent's work persists in files
 - Each iteration sees previous attempts
 - Builds incrementally toward goal
 

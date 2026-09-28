@@ -15,7 +15,7 @@ export function clientTypeOf(facts: Facts) {
     facts.hasSessionAccessToken ||
     facts.hasSessionIngressTokenFile ||
     facts.hasWebsocketAuthFileDescriptor ||
-    IsAnalyticsOff.isEnvTruthy(facts.claudeCodeRemote)
+    IsAnalyticsOff.isEnvTruthy(facts.sirgentCodeRemote)
 
   const isGithubAction = IsAnalyticsOff.isEnvTruthy(facts.githubActions)
 

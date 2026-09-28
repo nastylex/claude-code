@@ -1,4 +1,4 @@
-import type { HttpResponse } from 'claude-code'
+import type { HttpResponse } from 'sirgent-ai'
 
 /**
  * The ingest's answer to a batch it took.

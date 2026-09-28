@@ -1,4 +1,4 @@
-import type { AgentOfferInput, Origin } from 'claude-code'
+import type { AgentOfferInput, Origin } from 'sirgent-ai'
 
 /**
  * An agent type's offer as the engine asks for it, pinned to who provides

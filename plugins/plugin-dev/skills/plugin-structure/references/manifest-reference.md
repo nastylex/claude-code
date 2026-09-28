@@ -4,9 +4,9 @@ Complete reference for `plugin.json` configuration.
 
 ## File Location
 
-**Required path**: `.claude-plugin/plugin.json`
+**Required path**: `.sirgent-plugin/plugin.json`
 
-The manifest MUST be in the `.claude-plugin/` directory at the plugin root. Claude Code will not recognize plugins without this file in the correct location.
+The manifest MUST be in the `.sirgent-plugin/` directory at the plugin root. SirGent AI will not recognize plugins without this file in the correct location.
 
 ## Complete Field Reference
 
@@ -19,7 +19,7 @@ The manifest MUST be in the `.claude-plugin/` directory at the plugin root. Clau
 **Example**: `"test-automation-suite"`
 
 The unique identifier for the plugin. Used for:
-- Plugin identification in Claude Code
+- Plugin identification in SirGent AI
 - Conflict detection with other plugins
 - Command namespacing (optional)
 
@@ -280,7 +280,7 @@ Hook configuration location or inline definition.
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
+            "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/validate.sh",
             "timeout": 30
           }
         ]
@@ -315,7 +315,7 @@ MCP server configuration location or inline definition.
   "mcpServers": {
     "github": {
       "command": "node",
-      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/github-mcp.js"],
+      "args": ["${SIRGENT_PLUGIN_ROOT}/servers/github-mcp.js"],
       "env": {
         "GITHUB_TOKEN": "${GITHUB_TOKEN}"
       }
@@ -351,7 +351,7 @@ All paths in component fields must follow these rules:
 
 ### Resolution Order
 
-When Claude Code loads components:
+When SirGent AI loads components:
 
 1. **Default directories**: Scans standard locations first
    - `./commands/`
@@ -374,7 +374,7 @@ When Claude Code loads components:
 
 ### Manifest Validation
 
-Claude Code validates the manifest on plugin load:
+SirGent AI validates the manifest on plugin load:
 
 **Syntax validation**:
 - Valid JSON format

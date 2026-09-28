@@ -1,4 +1,4 @@
-import type { Origin } from 'claude-code'
+import type { Origin } from 'sirgent-ai'
 
 /**
  * Providers no site pins: tierless, or of a tier the engine does not have.

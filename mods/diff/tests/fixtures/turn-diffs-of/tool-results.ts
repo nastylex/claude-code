@@ -1,4 +1,4 @@
-import type { SessionMessage } from 'claude-code'
+import type { SessionMessage } from 'sirgent-ai'
 
 /**
  * The message that carries a turn's tool results back, no text of its own.

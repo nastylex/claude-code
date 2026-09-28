@@ -1,4 +1,4 @@
-import { describe, expect, mock, test, tier } from 'claude-code/testing'
+import { describe, expect, mock, test, tier } from 'sirgent-ai/testing'
 
 import Hooks from '../hooks'
 import Fixtures from './fixtures'
@@ -38,12 +38,12 @@ describe('register', () => {
         ]),
       ).toEqual([
         [
-          'https://api.anthropic.com/api/event_logging/v2/batch',
+          'https://api.sirgent.ai/api/event_logging/v2/batch',
           'POST',
           'the-handle',
           {
             'Content-Type': 'application/json',
-            'x-service-name': 'claude-code',
+            'x-service-name': 'sirgent-ai',
           },
         ],
       ])
@@ -658,11 +658,11 @@ describe('register', () => {
 
       expect(Fixtures.rowsOf(session)[0]).toMatchObject({
         client_type: 'github-action',
-        entrypoint: 'claude-code-github-action',
+        entrypoint: 'sirgent-ai-github-action',
         env: {
           is_ci: true,
           is_github_action: true,
-          is_claude_code_action: true,
+          is_sirgent_code_action: true,
           deployment_environment: 'github-actions',
           github_event_name: 'pull_request',
           github_actions_runner_os: 'Linux',

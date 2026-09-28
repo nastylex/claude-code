@@ -1,4 +1,4 @@
-import type { ResultOf } from 'claude-code'
+import type { ResultOf } from 'sirgent-ai'
 
 /**
  * A shell tool's answer as the engine gives it for a command the tool holds

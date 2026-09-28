@@ -1,4 +1,4 @@
-import { describe, expect, mock, test, tier } from 'claude-code/testing'
+import { describe, expect, mock, test, tier } from 'sirgent-ai/testing'
 
 import Hooks from '../hooks'
 import Fixtures from './fixtures'

@@ -1,4 +1,4 @@
-import type { Args } from 'claude-code'
+import type { Args } from 'sirgent-ai'
 
 import type { IngestBatch } from './ingest-batch.js'
 

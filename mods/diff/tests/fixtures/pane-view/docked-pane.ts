@@ -1,5 +1,5 @@
-import type { On, RenderElement } from 'claude-code'
-import type { Engine } from 'claude-code/testing'
+import type { On, RenderElement } from 'sirgent-ai'
+import type { Engine } from 'sirgent-ai/testing'
 
 import type PaneState from '../../../hooks/pane-state'
 import { docksPane } from './docks-pane.js'

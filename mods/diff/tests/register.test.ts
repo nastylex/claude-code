@@ -1,5 +1,5 @@
-import type { Args, ResultOf, SessionMessage } from 'claude-code'
-import { describe, expect, mock, test, tier } from 'claude-code/testing'
+import type { Args, ResultOf, SessionMessage } from 'sirgent-ai'
+import { describe, expect, mock, test, tier } from 'sirgent-ai/testing'
 
 import Limits from '../hooks/limits'
 import Names from '../hooks/names'
@@ -546,7 +546,7 @@ describe('register', () => {
 
   test('checkpointing off by variable: edits open nothing', async ($, on) => {
     const world = Fixtures.inRepository(on, Fixtures.REPOSITORY, {
-      env: { CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING: 'true' },
+      env: { SIRGENT_DISABLE_FILE_CHECKPOINTING: 'true' },
     })
 
     on('tool.call', () => ({ result: 'edited' }))

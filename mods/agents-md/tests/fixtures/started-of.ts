@@ -1,5 +1,5 @@
-import type { On } from 'claude-code'
-import { mock } from 'claude-code/testing'
+import type { On } from 'sirgent-ai'
+import { mock } from 'sirgent-ai/testing'
 
 import { SESSION } from './session.js'
 import type { Started, ToastAsked } from './types'

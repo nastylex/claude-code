@@ -1,4 +1,4 @@
-import type { HttpResponse } from 'claude-code'
+import type { HttpResponse } from 'sirgent-ai'
 
 /**
  * The ingest's answer while it is down: worth the one retry.

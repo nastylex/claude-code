@@ -18,14 +18,14 @@ The hookify plugin makes it easy to create custom hooks that prevent unwanted be
 Hookify installs generic hooks that run on these events:
 - **PreToolUse**: Before any tool executes (Bash, Edit, Write, etc.)
 - **PostToolUse**: After a tool executes
-- **Stop**: When Claude wants to stop working
+- **Stop**: When SirGent wants to stop working
 - **UserPromptSubmit**: When user submits a prompt
 
-These hooks read configuration files from `.claude/hookify.*.local.md` and check if any rules match the current operation.
+These hooks read configuration files from `.sirgent/hookify.*.local.md` and check if any rules match the current operation.
 
 ### 2. Configuration Files
 
-Users create rules in `.claude/hookify.{rule-name}.local.md` files:
+Users create rules in `.sirgent/hookify.{rule-name}.local.md` files:
 
 ```markdown
 ---
@@ -46,7 +46,7 @@ This command could delete important files. Please verify the path.
 - `event`: bash, file, stop, prompt, or all
 - `pattern`: Regex pattern to match
 
-The message body is what Claude sees when the rule triggers.
+The message body is what SirGent sees when the rule triggers.
 
 ### 3. Creating Rules
 
@@ -58,7 +58,7 @@ The message body is what Claude sees when the rule triggers.
 This analyzes your request and creates the appropriate rule file.
 
 **Option B: Create manually**
-Create `.claude/hookify.my-rule.local.md` with the format above.
+Create `.sirgent/hookify.my-rule.local.md` with the format above.
 
 **Option C: Analyze conversation**
 ```
@@ -135,14 +135,14 @@ Use Python regex syntax:
 
 **Block or Warn**: Rules can either `block` operations (prevent execution) or `warn` (show message but allow). Set `action: block` or `action: warn` in the rule's frontmatter.
 
-**Rule Files**: Keep rules in `.claude/hookify.*.local.md` - they should be git-ignored (add to .gitignore if needed).
+**Rule Files**: Keep rules in `.sirgent/hookify.*.local.md` - they should be git-ignored (add to .gitignore if needed).
 
 **Disable Rules**: Set `enabled: false` in frontmatter or delete the file.
 
 ## Troubleshooting
 
 **Hook not triggering:**
-- Check rule file is in `.claude/` directory
+- Check rule file is in `.sirgent/` directory
 - Verify `enabled: true` in frontmatter
 - Confirm pattern is valid regex
 - Test pattern: `python3 -c "import re; print(re.search('your_pattern', 'test_text'))"`
@@ -165,11 +165,11 @@ Use Python regex syntax:
    ```
 
 2. Try to trigger it:
-   - Ask Claude to run `rm -rf /tmp/test`
+   - Ask SirGent to run `rm -rf /tmp/test`
    - You should see the warning
 
-4. Refine the rule by editing `.claude/hookify.warn-rm.local.md`
+4. Refine the rule by editing `.sirgent/hookify.warn-rm.local.md`
 
 5. Create more rules as you encounter unwanted behaviors
 
-For more examples, check the `${CLAUDE_PLUGIN_ROOT}/examples/` directory.
+For more examples, check the `${SIRGENT_PLUGIN_ROOT}/examples/` directory.

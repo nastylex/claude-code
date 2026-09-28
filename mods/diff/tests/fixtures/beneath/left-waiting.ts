@@ -1,4 +1,4 @@
-import type { ResultOf } from 'claude-code'
+import type { ResultOf } from 'sirgent-ai'
 
 /**
  * What an engine answers an open it leaves waiting undrawn: the plugin

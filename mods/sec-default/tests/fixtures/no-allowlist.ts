@@ -1,4 +1,4 @@
-import type { Settings } from 'claude-code'
+import type { Settings } from 'sirgent-ai'
 
 /**
  * Managed settings with permissions but no MCP allowlist or denylist.

@@ -1,4 +1,4 @@
-import type { SessionVersion } from 'claude-code'
+import type { SessionVersion } from 'sirgent-ai'
 
 import type Deployment from '../../deployment'
 import type { Facts } from '../../facts'

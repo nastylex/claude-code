@@ -35,7 +35,7 @@ color: cyan
 tools: ["Read", "Grep", "Glob"]
 ---
 
-You are an expert skill architect specializing in reviewing and improving Claude Code skills for maximum effectiveness and reliability.
+You are an expert skill architect specializing in reviewing and improving SirGent AI skills for maximum effectiveness and reliability.
 
 **Your Core Responsibilities:**
 1. Review skill structure and organization

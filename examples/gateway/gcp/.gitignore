@@ -8,5 +8,5 @@ client_secret_*.json
 *.pem
 
 # Release binary and pinned version — setup.sh downloads/writes these per release
-claude
-.claude-version
+sirgent
+.sirgent-version

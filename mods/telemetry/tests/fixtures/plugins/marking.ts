@@ -1,4 +1,4 @@
-import type { Plugin } from 'claude-code/testing'
+import type { Plugin } from 'sirgent-ai/testing'
 
 /**
  * A built-in plugin whose `/mark <entry>` marks the entry through

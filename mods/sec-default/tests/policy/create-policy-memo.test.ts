@@ -1,5 +1,5 @@
-import type { Settings } from 'claude-code'
-import { describe, expect, test, tier } from 'claude-code/testing'
+import type { Settings } from 'sirgent-ai'
+import { describe, expect, test, tier } from 'sirgent-ai/testing'
 
 import Policy from '../../hooks/policy'
 import Fixtures from '../fixtures'

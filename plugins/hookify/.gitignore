@@ -26,5 +26,5 @@ Thumbs.db
 htmlcov/
 
 # Local configuration (should not be committed)
-.claude/*.local.md
-.claude/*.local.json
+.sirgent/*.local.md
+.sirgent/*.local.json

@@ -9,7 +9,7 @@ cost of this plugin's additional instructions and output.
 ## What it does
 
 When enabled, this plugin automatically adds instructions at the start of each
-session that encourage Claude to:
+session that encourage SirGent to:
 
 1. Provide educational insights about implementation choices
 2. Explain codebase patterns and decisions
@@ -18,7 +18,7 @@ session that encourage Claude to:
 ## How it works
 
 The plugin uses a SessionStart hook to inject additional context into every
-session. This context instructs Claude to provide brief educational explanations
+session. This context instructs SirGent to provide brief educational explanations
 before and after writing code, formatted as:
 
 ```
@@ -53,11 +53,11 @@ previously used:
 You can now achieve the same behavior by installing this plugin instead.
 
 More generally, this SessionStart hook pattern is roughly equivalent to
-CLAUDE.md, but it is more flexible and allows for distribution through plugins.
+SIRGENT.md, but it is more flexible and allows for distribution through plugins.
 
 Note: Output styles that involve tasks besides software development, are better
 expressed as
-[subagents](https://docs.claude.com/en/docs/claude-code/sub-agents), not as
+[subagents](https://docs.sirgent.ai/en/docs/sirgent-ai/sub-agents), not as
 SessionStart hooks. Subagents change the system prompt while SessionStart hooks
 add to the default system prompt.
 
@@ -67,6 +67,6 @@ add to the default system prompt.
 - Uninstall the plugin - remove the code from your device
 - Update the plugin - create a local copy of this plugin to personalize this
   plugin
-  - Hint: Ask Claude to read
-    https://docs.claude.com/en/docs/claude-code/plugins.md and set it up for
+  - Hint: Ask SirGent to read
+    https://docs.sirgent.ai/en/docs/sirgent-ai/plugins.md and set it up for
     you!

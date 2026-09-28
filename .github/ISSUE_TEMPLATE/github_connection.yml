@@ -1,5 +1,5 @@
-name: GitHub connection problem (claude.ai)
-description: Report a problem connecting GitHub to Claude on claude.ai, usually opened from the "Report an issue" link on the GitHub connector page.
+name: GitHub connection problem (sirgent.ai)
+description: Report a problem connecting GitHub to SirGent on sirgent.ai, usually opened from the "Report an issue" link on the GitHub connector page.
 title: "[GitHub integration] "
 labels: ["github-integration"]
 body:
@@ -12,7 +12,7 @@ body:
     id: screenshot
     attributes:
       label: Screenshot
-      description: Take a screenshot of the claude.ai page where you hit the problem (the whole page, including any error message), then paste or drag it here.
+      description: Take a screenshot of the sirgent.ai page where you hit the problem (the whole page, including any error message), then paste or drag it here.
     validations:
       required: false
   - type: textarea
@@ -31,7 +31,7 @@ body:
     id: diagnostics
     attributes:
       label: Diagnostics
-      description: Filled in by claude.ai. Don't edit.
+      description: Filled in by sirgent.ai. Don't edit.
       render: text
     validations:
       required: false

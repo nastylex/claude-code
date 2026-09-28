@@ -1,4 +1,4 @@
-import type { HttpResponse, Timer } from 'claude-code'
+import type { HttpResponse, Timer } from 'sirgent-ai'
 
 import type { Telemetry } from '../../types'
 import Batching from '../batching'
@@ -74,7 +74,7 @@ export function telemetryOf(deps: TelemetryDeps): Sender {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-service-name': 'claude-code',
+        'x-service-name': 'sirgent-ai',
       },
       auth,
       body,
@@ -125,7 +125,7 @@ export function telemetryOf(deps: TelemetryDeps): Sender {
         model: await deps.model(),
         userType: environment.userType === 'ant' ? 'ant' : 'external',
         isInteractive: await deps.isInteractive(),
-        isClaudeAiAuth:
+        isSirGentAiAuth:
           authorization.kind === 'bearer' &&
           settled.identity.accountUuid !== undefined,
         context: settled,

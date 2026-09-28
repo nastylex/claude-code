@@ -1,6 +1,6 @@
 # Agent SDK Development Plugin
 
-A comprehensive plugin for creating and verifying Claude Agent SDK applications in Python and TypeScript.
+A comprehensive plugin for creating and verifying SirGent Agent SDK applications in Python and TypeScript.
 
 ## Overview
 
@@ -10,7 +10,7 @@ The Agent SDK Development Plugin streamlines the entire lifecycle of building Ag
 
 ### Command: `/new-sdk-app`
 
-Interactive command that guides you through creating a new Claude Agent SDK application.
+Interactive command that guides you through creating a new SirGent Agent SDK application.
 
 **What it does:**
 - Asks clarifying questions about your project (language, name, agent type, starting point)
@@ -136,7 +136,7 @@ The command automatically runs `agent-sdk-verifier-ts` to ensure everything is c
 4. **Start developing:**
 ```bash
 # Set your API key
-echo "ANTHROPIC_API_KEY=your_key_here" > .env
+echo "SIRGENT_API_KEY=your_key_here" > .env
 
 # Run your agent
 npm start
@@ -149,9 +149,9 @@ npm start
 
 ## Installation
 
-This plugin is included in the Claude Code repository. To use it:
+This plugin is included in the SirGent AI repository. To use it:
 
-1. Ensure Claude Code is installed
+1. Ensure SirGent AI is installed
 2. The plugin commands and agents are automatically available
 
 ## Best Practices
@@ -165,10 +165,10 @@ This plugin is included in the Claude Code repository. To use it:
 
 ## Resources
 
-- [Agent SDK Overview](https://docs.claude.com/en/api/agent-sdk/overview)
-- [TypeScript SDK Reference](https://docs.claude.com/en/api/agent-sdk/typescript)
-- [Python SDK Reference](https://docs.claude.com/en/api/agent-sdk/python)
-- [Agent SDK Examples](https://docs.claude.com/en/api/agent-sdk/examples)
+- [Agent SDK Overview](https://docs.sirgent.ai/en/api/agent-sdk/overview)
+- [TypeScript SDK Reference](https://docs.sirgent.ai/en/api/agent-sdk/typescript)
+- [Python SDK Reference](https://docs.sirgent.ai/en/api/agent-sdk/python)
+- [Agent SDK Examples](https://docs.sirgent.ai/en/api/agent-sdk/examples)
 
 ## Troubleshooting
 
@@ -183,12 +183,12 @@ This plugin is included in the Claude Code repository. To use it:
 
 ### Python import errors
 
-**Issue**: Cannot import from `claude_agent_sdk`
+**Issue**: Cannot import from `sirgent_agent_sdk`
 
 **Solution**:
 - Ensure you've installed dependencies: `pip install -r requirements.txt`
 - Activate your virtual environment if using one
-- Check that the SDK is installed: `pip show claude-agent-sdk`
+- Check that the SDK is installed: `pip show sirgent-agent-sdk`
 
 ### Verification fails with warnings
 
@@ -201,7 +201,7 @@ This plugin is included in the Claude Code repository. To use it:
 
 ## Author
 
-Ashwin Bhat (ashwin@anthropic.com)
+Ashwin Bhat (ashwin@sirgent.ai)
 
 ## Version
 

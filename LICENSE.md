@@ -1,1 +1,1 @@
-© Anthropic PBC. All rights reserved. Use is subject to Anthropic's [Commercial Terms of Service](https://www.anthropic.com/legal/commercial-terms).
+© SirGent AI. All rights reserved. Use is subject to SirGent AI's [Commercial Terms of Service](https://sirgent.ai/legal/commercial-terms).

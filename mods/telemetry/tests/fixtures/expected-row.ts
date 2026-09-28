@@ -7,7 +7,7 @@ import { REMOTE_HASH } from './remote-hash.js'
  * shape rowOf reads back, every column the plugin can fill filled.
  */
 export const EXPECTED_ROW = {
-  event_type: 'ClaudeCodeInternalEvent',
+  event_type: 'SirGentAIInternalEvent',
   hasEventId: true,
   hasTimestamp: true,
   event_name: 'tengu_plugin_survey_answered',
@@ -31,8 +31,8 @@ export const EXPECTED_ROW = {
     is_ci: false,
     is_claubbit: false,
     is_github_action: false,
-    is_claude_code_action: false,
-    is_claude_code_remote: false,
+    is_sirgent_code_action: false,
+    is_sirgent_code_remote: false,
     is_local_agent_mode: false,
     is_conductor: false,
     deployment_environment: 'unknown-darwin',
@@ -40,7 +40,7 @@ export const EXPECTED_ROW = {
     version: ENGINE_VERSION.version,
     version_base: ENGINE_VERSION.base,
     build_time: ENGINE_VERSION.builtAt,
-    is_claude_ai_auth: true,
+    is_sirgent_ai_auth: true,
   },
   metadata: { rh: REMOTE_HASH, answer: 2, page: 'ready', seen: true },
 }

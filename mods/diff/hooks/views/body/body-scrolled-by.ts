@@ -1,4 +1,4 @@
-import type { UiScrollInput } from 'claude-code'
+import type { UiScrollInput } from 'sirgent-ai'
 
 import Limits from '../../limits'
 import type PaneState from '../../pane-state'

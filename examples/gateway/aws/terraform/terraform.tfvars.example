@@ -1,6 +1,6 @@
 # Copy to terraform.tfvars and edit. terraform.tfvars is gitignored (see .gitignore).
 
-region = "us-east-1" # a region where Bedrock serves the Claude models you need
+region = "us-east-1" # a region where Bedrock serves the SirGent models you need
 
 # Prerequisite networking (NOT created by this module): the VPC and two+ private
 # subnets in different AZs with outbound internet via a NAT gateway.

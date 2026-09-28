@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""SessionStart bootstrap: ensure claude_agent_sdk is importable for the
+"""SessionStart bootstrap: ensure sirgent_agent_sdk is importable for the
 agentic commit reviewer.
 
-If claude_agent_sdk already imports in the current python3, this is a no-op.
-Otherwise it creates a venv at ~/.claude/security/agent-sdk-venv and installs
+If sirgent_agent_sdk already imports in the current python3, this is a no-op.
+Otherwise it creates a venv at ~/.sirgent/security/agent-sdk-venv and installs
 the SDK there. security_reminder_hook.py prepends that venv's site-packages to
 sys.path before attempting the SDK import, so the venv is used as a
 fallback only when the system install is missing.
 
-The venv lives under ~/.claude/security/ (same dir the plugin already uses
+The venv lives under ~/.sirgent/security/ (same dir the plugin already uses
 for per-session state) so it persists across plugin updates — rebuilding
 on every update is 30-60s of wasted work for a package that changes far
 less often than the plugin does.
@@ -24,7 +24,7 @@ import time
 from pathlib import Path
 
 # Outcome codes for the sdk_bootstrap metric. Values are stable for telemetry.
-NOOP_SYSTEM = 0      # claude_agent_sdk already importable in system python
+NOOP_SYSTEM = 0      # sirgent_agent_sdk already importable in system python
 NOOP_VENV = 1        # venv already built and SDK imports from it
 BUILT = 2            # venv created + SDK pip-installed this run
 BUILD_FAILED = 3     # venv create or pip install raised/timed out
@@ -37,7 +37,7 @@ def _sdk_on_syspath() -> bool:
     # transitive deps and costs ~800ms — too heavy for a
     # per-SessionStart no-op check that most sessions hit.
     try:
-        return importlib.util.find_spec("claude_agent_sdk") is not None
+        return importlib.util.find_spec("sirgent_agent_sdk") is not None
     except Exception:
         return False
 
@@ -46,7 +46,7 @@ def _plugin_version_int() -> int:
     # Same encoding as security_reminder_hook._read_plugin_version_int so
     # metrics rows from both hooks join on pv.
     try:
-        p = Path(__file__).parent.parent / ".claude-plugin" / "plugin.json"
+        p = Path(__file__).parent.parent / ".sirgent-plugin" / "plugin.json"
         v = json.loads(p.read_text())["version"]
         major, minor, patch = (int(x) for x in v.split(".")[:3])
         return major * 10000 + minor * 100 + patch
@@ -72,7 +72,7 @@ def main() -> tuple[int, str, str]:
 
     state_dir = Path(
         os.environ.get("SECURITY_WARNINGS_STATE_DIR")
-        or os.path.expanduser("~/.claude/security")
+        or os.path.expanduser("~/.sirgent/security")
     )
     venv = state_dir / "agent-sdk-venv"
     venv_py = venv / "bin" / "python"
@@ -95,7 +95,7 @@ def main() -> tuple[int, str, str]:
     if venv_py.exists():
         try:
             r = subprocess.run(
-                [str(venv_py), "-c", "import claude_agent_sdk"],
+                [str(venv_py), "-c", "import sirgent_agent_sdk"],
                 capture_output=True, timeout=10,
             )
             if r.returncode == 0:
@@ -128,7 +128,7 @@ def main() -> tuple[int, str, str]:
         err_phase = "pip"
         subprocess.run(
             [str(venv_py), "-m", "pip", "install", "--quiet",
-             "--disable-pip-version-check", "claude-agent-sdk"],
+             "--disable-pip-version-check", "sirgent-agent-sdk"],
             capture_output=True, timeout=120, check=True,
         )
         return BUILT, "", ""

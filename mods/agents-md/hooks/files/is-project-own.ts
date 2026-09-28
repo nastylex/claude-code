@@ -1,4 +1,4 @@
-import type { InstructionFile } from 'claude-code'
+import type { InstructionFile } from 'sirgent-ai'
 
 /**
  * Whether an instruction file is one of the project's own (checked in or

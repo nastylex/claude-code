@@ -4,7 +4,7 @@ The security default for organizations. Function hooks give every plugin a
 say on every event, in chain order, and the plugins a person installs sit
 in the user tier, beneath the organization's prepend tier and above its
 append tier. Some of what an organization sets today (its classic hooks,
-its managed CLAUDE.md and rules, its settings, its MCP allowlist) was never
+its managed SIRGENT.md and rules, its settings, its MCP allowlist) was never
 within a person's reach before function hooks; seated outermost, this
 plugin keeps exactly those out of the user tier's reach and adds no policy
 of its own. Everything else passes through untouched.
@@ -24,7 +24,7 @@ settings it decides by.
 | event | from the outermost seat |
 | --- | --- |
 | `classic.*` | Continue past the user tier: the organization's settings hooks see the engine's input and their answer stands. |
-| `prompt.section`, `prompt.context`, `skill.prompt`, `attribution.text` | Continue past the user tier: managed CLAUDE.md, rules and policy skills reach the model as written. A person's plugins keep `prompt.submit` and its additive context. |
+| `prompt.section`, `prompt.context`, `skill.prompt`, `attribution.text` | Continue past the user tier: managed SIRGENT.md, rules and policy skills reach the model as written. A person's plugins keep `prompt.submit` and its additive context. |
 | `settings.read` | Continue past the user tier: no user hook rewrites what any caller reads as settings, this plugin's own policy reads included. |
 | `tool.describe`, `command.describe`, `agent.offer`, `agent.spawn` | When the subject's pinned `e.provider.tier` is `prepend` or `append` (a policy-installed plugin, the managed folder, a policy MCP server), continue past the user tier; a subject provided by `user`, `builtin` or `core` passes. |
 | `tool.register` | A caller in `prepend` or `append` continues past the user tier. A `user`-tier caller is refused by name while managed settings hold `allowedMcpServers` (set at all, empty included); otherwise it passes. |

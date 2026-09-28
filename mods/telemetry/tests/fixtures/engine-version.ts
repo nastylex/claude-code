@@ -1,4 +1,4 @@
-import type { SessionVersion } from 'claude-code'
+import type { SessionVersion } from 'sirgent-ai'
 
 /**
  * What the engine answers `$.session.version()` in the plain session: a

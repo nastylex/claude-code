@@ -1,4 +1,4 @@
-import type { RenderElement } from 'claude-code'
+import type { RenderElement } from 'sirgent-ai'
 
 /**
  * What the engine draws for the hint, standing in beneath the plugin.

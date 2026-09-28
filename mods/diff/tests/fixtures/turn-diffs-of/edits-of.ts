@@ -1,4 +1,4 @@
-import type { SessionMessage } from 'claude-code'
+import type { SessionMessage } from 'sirgent-ai'
 
 /**
  * An assistant message whose Edit calls came back with the given results,

@@ -1,4 +1,4 @@
-import type { RenderInput } from 'claude-code'
+import type { RenderInput } from 'sirgent-ai'
 
 /**
  * The prompt's hint on a 160-column terminal under the fullscreen layout:

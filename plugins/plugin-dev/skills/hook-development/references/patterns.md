@@ -1,6 +1,6 @@
 # Common Hook Patterns
 
-This reference provides common, proven patterns for implementing Claude Code hooks. Use these patterns as starting points for typical hook use cases.
+This reference provides common, proven patterns for implementing SirGent AI hooks. Use these patterns as starting points for typical hook use cases.
 
 ## Pattern 1: Security Validation
 
@@ -58,7 +58,7 @@ Load project-specific context at session start:
       "hooks": [
         {
           "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/load-context.sh"
+          "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/load-context.sh"
         }
       ]
     }
@@ -69,15 +69,15 @@ Load project-specific context at session start:
 **Example script (load-context.sh):**
 ```bash
 #!/bin/bash
-cd "$CLAUDE_PROJECT_DIR" || exit 1
+cd "$SIRGENT_PROJECT_DIR" || exit 1
 
 # Detect project type
 if [ -f "package.json" ]; then
   echo "📦 Node.js project detected"
-  echo "export PROJECT_TYPE=nodejs" >> "$CLAUDE_ENV_FILE"
+  echo "export PROJECT_TYPE=nodejs" >> "$SIRGENT_ENV_FILE"
 elif [ -f "Cargo.toml" ]; then
   echo "🦀 Rust project detected"
-  echo "export PROJECT_TYPE=rust" >> "$CLAUDE_ENV_FILE"
+  echo "export PROJECT_TYPE=rust" >> "$SIRGENT_ENV_FILE"
 fi
 ```
 
@@ -95,7 +95,7 @@ Log all notifications for audit or analysis:
       "hooks": [
         {
           "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/log-notification.sh"
+          "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/log-notification.sh"
         }
       ]
     }
@@ -183,7 +183,7 @@ Run linters or formatters on file edits:
       "hooks": [
         {
           "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-quality.sh"
+          "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/check-quality.sh"
         }
       ]
     }
@@ -248,7 +248,7 @@ Combine multiple patterns for comprehensive protection:
       "hooks": [
         {
           "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/load-context.sh"
+          "command": "bash ${SIRGENT_PLUGIN_ROOT}/scripts/load-context.sh"
         }
       ]
     }
@@ -265,7 +265,7 @@ Create hooks that only run when explicitly enabled via flag files:
 ```bash
 #!/bin/bash
 # Hook only active when flag file exists
-FLAG_FILE="$CLAUDE_PROJECT_DIR/.enable-security-scan"
+FLAG_FILE="$SIRGENT_PROJECT_DIR/.enable-security-scan"
 
 if [ ! -f "$FLAG_FILE" ]; then
   # Quick exit when disabled
@@ -295,7 +295,7 @@ rm .enable-security-scan
 - Project-specific validation that's opt-in
 - Performance-intensive checks only when needed
 
-**Note:** Must restart Claude Code after creating/removing flag files for hooks to recognize changes.
+**Note:** Must restart SirGent AI after creating/removing flag files for hooks to recognize changes.
 
 ## Pattern 10: Configuration-Driven Hooks
 
@@ -303,7 +303,7 @@ Use JSON configuration to control hook behavior:
 
 ```bash
 #!/bin/bash
-CONFIG_FILE="$CLAUDE_PROJECT_DIR/.claude/my-plugin.local.json"
+CONFIG_FILE="$SIRGENT_PROJECT_DIR/.sirgent/my-plugin.local.json"
 
 # Read configuration
 if [ -f "$CONFIG_FILE" ]; then
@@ -330,7 +330,7 @@ if [ "$file_size" -gt "$max_file_size" ]; then
 fi
 ```
 
-**Configuration file (.claude/my-plugin.local.json):**
+**Configuration file (.sirgent/my-plugin.local.json):**
 ```json
 {
   "strictMode": true,

@@ -1,5 +1,5 @@
-import type { Args, On } from 'claude-code'
-import { mock } from 'claude-code/testing'
+import type { Args, On } from 'sirgent-ai'
+import { mock } from 'sirgent-ai/testing'
 
 import { ACCEPTED } from './accepted.js'
 import { BEARER } from './bearer.js'

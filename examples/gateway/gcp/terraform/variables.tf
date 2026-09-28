@@ -15,7 +15,7 @@ variable "region" {
 variable "sa_name" {
   description = "Service account account_id (the part before @)."
   type        = string
-  default     = "claude-gateway"
+  default     = "sirgent-gateway"
 }
 
 # ── Image (§3) ──────────────────────────────────────────────────────────────
@@ -24,7 +24,7 @@ variable "sa_name" {
 variable "ar_repo" {
   description = "Artifact Registry Docker repository ID."
   type        = string
-  default     = "claude-gateway"
+  default     = "sirgent-gateway"
 }
 
 variable "image_name" {
@@ -34,11 +34,11 @@ variable "image_name" {
 }
 
 variable "image_tag" {
-  description = "Image tag — the Claude Code release version you build and push (must already be pushed as linux/amd64). See the README Deploy section for the build command."
+  description = "Image tag — the SirGent AI release version you build and push (must already be pushed as linux/amd64). See the README Deploy section for the build command."
   type        = string
   validation {
     condition     = can(regex("^[A-Za-z0-9_][A-Za-z0-9._-]{0,127}$", var.image_tag))
-    error_message = "image_tag must be a valid OCI tag — set it to the Claude Code release version you pushed (the '<version>' in terraform.tfvars.example is a placeholder)."
+    error_message = "image_tag must be a valid OCI tag — set it to the SirGent AI release version you pushed (the '<version>' in terraform.tfvars.example is a placeholder)."
   }
 }
 
@@ -71,7 +71,7 @@ variable "psa_prefix_length" {
 variable "db_instance" {
   description = "Cloud SQL instance name."
   type        = string
-  default     = "claude-gateway-db"
+  default     = "sirgent-gateway-db"
 }
 
 variable "db_version" {
@@ -89,7 +89,7 @@ variable "db_tier" {
 variable "db_name" {
   description = "Database name."
   type        = string
-  default     = "claude_gateway"
+  default     = "sirgent_gateway"
 }
 
 variable "db_user" {
@@ -118,7 +118,7 @@ variable "oidc_secret_name" {
 }
 
 variable "config_secret_name" {
-  description = "Secret Manager secret holding gateway.yaml (mounted at /etc/claude/gateway.yaml)."
+  description = "Secret Manager secret holding gateway.yaml (mounted at /etc/sirgent/gateway.yaml)."
   type        = string
   default     = "gateway-config"
 }
@@ -140,7 +140,7 @@ variable "gateway_config_path" {
 variable "service_name" {
   description = "Cloud Run service name."
   type        = string
-  default     = "claude-gateway"
+  default     = "sirgent-gateway"
 }
 
 variable "min_instances" {
@@ -156,12 +156,12 @@ variable "max_instances" {
 }
 
 variable "ingress" {
-  description = "Cloud Run ingress — Claude Code's /login only accepts gateway hosts on private addresses, so public ingress cannot serve clients: INGRESS_TRAFFIC_INTERNAL_ONLY (default; no public URL — VPC-only; reaches corp on-prem only with the private-access prerequisites in the README; public_url stays the run.app URL, so no LB or custom cert needed) or INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER (front with your own internal ALB for a custom hostname/cert)."
+  description = "Cloud Run ingress — SirGent AI's /login only accepts gateway hosts on private addresses, so public ingress cannot serve clients: INGRESS_TRAFFIC_INTERNAL_ONLY (default; no public URL — VPC-only; reaches corp on-prem only with the private-access prerequisites in the README; public_url stays the run.app URL, so no LB or custom cert needed) or INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER (front with your own internal ALB for a custom hostname/cert)."
   type        = string
   default     = "INGRESS_TRAFFIC_INTERNAL_ONLY"
   validation {
     condition     = contains(["INGRESS_TRAFFIC_INTERNAL_ONLY", "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"], var.ingress)
-    error_message = "ingress must be INGRESS_TRAFFIC_INTERNAL_ONLY or INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER — Claude Code only connects to gateways on private addresses."
+    error_message = "ingress must be INGRESS_TRAFFIC_INTERNAL_ONLY or INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER — SirGent AI only connects to gateways on private addresses."
   }
 }
 

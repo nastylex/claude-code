@@ -1,4 +1,4 @@
-import type { SessionMessage } from 'claude-code'
+import type { SessionMessage } from 'sirgent-ai'
 
 import { editPatchOf } from './edit-patch-of.js'
 import TurnDiffsOf from './turn-diffs-of'

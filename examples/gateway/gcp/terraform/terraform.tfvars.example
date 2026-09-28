@@ -3,7 +3,7 @@
 project_id = "your-gcp-project-id"
 region     = "us-east5"
 
-image_tag = "<version>" # REQUIRED — the Claude Code release version you build and push as linux/amd64 (see README Deploy)
+image_tag = "<version>" # REQUIRED — the SirGent AI release version you build and push as linux/amd64 (see README Deploy)
 
 # Public access at the Cloud Run IAM layer (the gateway runs its own OIDC):
 #   Preferred — disable the invoker check: no allUsers binding, works under Domain
@@ -14,7 +14,7 @@ image_tag = "<version>" # REQUIRED — the Claude Code release version you build
 allow_unauthenticated = true
 
 # Network reachability — a separate axis from the IAM choice above. Default is internal-only:
-# no public URL (Claude Code's /login only accepts gateway hosts on private addresses, so
+# no public URL (SirGent AI's /login only accepts gateway hosts on private addresses, so
 # public ingress cannot serve clients); corp on-prem reaches run.app via a PSC endpoint +
 # private run.app DNS — see README "Private access" for the prerequisites. The only
 # alternative to the internal-only default:

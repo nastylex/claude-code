@@ -7,7 +7,7 @@ import type {
   SessionRepo,
   SessionVersion,
   Timer,
-} from 'claude-code'
+} from 'sirgent-ai'
 
 import type { ConfigLocation } from '../config-location'
 import type Deployment from '../deployment'

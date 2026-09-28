@@ -1,4 +1,4 @@
-import type { Plugin } from 'claude-code/testing'
+import type { Plugin } from 'sirgent-ai/testing'
 
 import type { Held } from '../held.js'
 

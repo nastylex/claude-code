@@ -2,7 +2,7 @@ import type {
   HttpResponse,
   SessionAuthorization,
   SessionVersion,
-} from 'claude-code'
+} from 'sirgent-ai'
 
 import type { PolicyOption } from './policy-option.js'
 

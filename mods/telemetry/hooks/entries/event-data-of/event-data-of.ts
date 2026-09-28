@@ -4,7 +4,7 @@ import { authOf } from './auth-of'
 import { metadataOf } from './metadata-of'
 
 /**
- * One row as a ClaudeCodeInternalEvent, keyed as the plugin builds it;
+ * One row as a SirGentAIInternalEvent, keyed as the plugin builds it;
  * wireOf spells it for the ingest.
  *
  * Its id, name and time, who and where it is from, the session's fields,
@@ -26,6 +26,6 @@ export const eventDataOf = (row: Batching.PendingRow, stamp: BatchStamp) => ({
   userType: stamp.userType,
   isInteractive: stamp.isInteractive,
   ...stamp.context.session,
-  env: { ...stamp.context.environment, isClaudeAiAuth: stamp.isClaudeAiAuth },
+  env: { ...stamp.context.environment, isSirGentAiAuth: stamp.isSirGentAiAuth },
   additionalMetadata: metadataOf(row, stamp.context.remoteHash),
 })

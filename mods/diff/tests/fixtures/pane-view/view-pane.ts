@@ -1,4 +1,4 @@
-import type { RenderInput } from 'claude-code'
+import type { RenderInput } from 'sirgent-ai'
 
 import { BODY_ROWS } from './body-rows.js'
 import { COLUMNS } from './columns.js'

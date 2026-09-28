@@ -1,4 +1,4 @@
-import type { TargetTier } from 'claude-code'
+import type { TargetTier } from 'sirgent-ai'
 
 /**
  * What the shared hook needs of `next` on those events: the call, and the

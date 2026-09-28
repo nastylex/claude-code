@@ -1,5 +1,5 @@
-import type { Args } from 'claude-code'
-import type { MockClock } from 'claude-code/testing'
+import type { Args } from 'sirgent-ai'
+import type { MockClock } from 'sirgent-ai/testing'
 
 /**
  * What a test reads back of its session: each post to the ingest, each file

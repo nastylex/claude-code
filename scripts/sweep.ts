@@ -4,7 +4,7 @@ import { lifecycle, STALE_UPVOTE_THRESHOLD } from "./issue-lifecycle.ts";
 
 // --
 
-const NEW_ISSUE = "https://github.com/anthropics/claude-code/issues/new/choose";
+const NEW_ISSUE = "https://github.com/sirgent-ai/sirgent-ai/issues/new/choose";
 const DRY_RUN = process.argv.includes("--dry-run");
 
 const CLOSE_MESSAGE = (reason: string) =>

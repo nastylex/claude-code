@@ -16,8 +16,8 @@ export type Facts = {
   readonly ci: string | undefined
   readonly claubbit: string | undefined
   readonly githubActions: string | undefined
-  readonly claudeCodeAction: string | undefined
-  readonly claudeCodeRemote: string | undefined
+  readonly sirgentCodeAction: string | undefined
+  readonly sirgentCodeRemote: string | undefined
   readonly remoteEnvironmentType: string | undefined
   readonly containerId: string | undefined
   readonly remoteSessionId: string | undefined

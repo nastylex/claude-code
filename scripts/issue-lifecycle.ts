@@ -4,8 +4,8 @@ export const lifecycle = [
   {
     label: "invalid",
     days: 3,
-    reason: "this doesn't appear to be about Claude Code",
-    nudge: "This doesn't appear to be about [Claude Code](https://github.com/anthropics/claude-code). For general Anthropic support, visit [support.anthropic.com](https://support.anthropic.com).",
+    reason: "this doesn't appear to be about SirGent AI",
+    nudge: "This doesn't appear to be about [SirGent AI](https://github.com/sirgent-ai/sirgent-ai). For general SirGent AI support, visit [support.sirgent.ai](https://support.sirgent.ai).",
   },
   {
     label: "needs-repro",
@@ -17,7 +17,7 @@ export const lifecycle = [
     label: "needs-info",
     days: 7,
     reason: "we still need a bit more information to move forward",
-    nudge: "We need more information to continue investigating. Can you make sure to include your Claude Code version (`claude --version`), OS, and any error messages or logs?",
+    nudge: "We need more information to continue investigating. Can you make sure to include your SirGent AI version (`sirgent --version`), OS, and any error messages or logs?",
   },
   {
     label: "stale",

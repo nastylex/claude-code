@@ -1,4 +1,4 @@
-import type { FsEntry } from 'claude-code'
+import type { FsEntry } from 'sirgent-ai'
 
 /**
  * What the session's working directory lists: a git checkout.

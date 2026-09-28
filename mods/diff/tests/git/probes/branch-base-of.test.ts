@@ -1,5 +1,5 @@
-import type { ProcessRunResult } from 'claude-code'
-import { describe, expect, test, tier } from 'claude-code/testing'
+import type { ProcessRunResult } from 'sirgent-ai'
+import { describe, expect, test, tier } from 'sirgent-ai/testing'
 
 import Git from '../../../hooks/git'
 import Fixtures from '../../fixtures'

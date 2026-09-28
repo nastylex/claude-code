@@ -1,4 +1,4 @@
-import type { Origin, ToolDescribeInput } from 'claude-code'
+import type { Origin, ToolDescribeInput } from 'sirgent-ai'
 
 /**
  * A tool's description as the engine asks for it, `d`, pinned to who

@@ -3,12 +3,12 @@
 Plugin analytics as a plugin: its hooks on `telemetry.log` and
 `telemetry.mark` are what those two events do, built over the nouns its
 `engine.create` step is handed, and a gate above them serves the plugins
-built into Claude Code alone: a call from a plugin a person installed or an
+built into SirGent AI alone: a call from a plugin a person installed or an
 administrator listed is refused with a reason (the host stamps every call
 with the plugin that raised it, `next.origin`, and the gate reads its tier).
 On an engine that has no `$.telemetry` of its own the same step adds the
 noun, so the calls exist there too. An entry names where it goes with `to`:
-`anthropic`, the default, is this mod's; one for `collector`, the telemetry
+`sirgent`, the default, is this mod's; one for `collector`, the telemetry
 collector an operator configured, is passed on beneath untouched, and `to`
 is never part of a row.
 `$.telemetry.log({ event, props })` queues one event as one first-party
@@ -39,7 +39,7 @@ request's betas, the subscription tier, the calling agent) is not on `$`,
 and those columns stay empty.
 
 It sends nothing wherever the CLI's own analytics are off: under
-`DISABLE_TELEMETRY`, `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` or
+`DISABLE_TELEMETRY`, `SIRGENT_DISABLE_NONESSENTIAL_TRAFFIC` or
 `DO_NOT_TRACK`, in a test run, on any third-party provider (Bedrock,
 Vertex, Foundry and kin) the host does not manage, on a cloud gateway
 (the environment's switch or the managed policy's login pins), and on a

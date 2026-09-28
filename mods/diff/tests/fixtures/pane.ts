@@ -1,4 +1,4 @@
-import type { RenderInput } from 'claude-code'
+import type { RenderInput } from 'sirgent-ai'
 
 /**
  * The diff pane docked on a 160-column terminal, unfocused, 80 columns of

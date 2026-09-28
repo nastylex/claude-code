@@ -1,4 +1,4 @@
-import type { RenderElement } from 'claude-code'
+import type { RenderElement } from 'sirgent-ai'
 
 import Limits from '../../../limits'
 import type { Kit } from '../../kit'

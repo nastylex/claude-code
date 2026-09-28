@@ -1,4 +1,4 @@
-import type { ToolInfo } from 'claude-code'
+import type { ToolInfo } from 'sirgent-ai'
 
 /**
  * The session's tools: one from the organization's MCP server, one built in.

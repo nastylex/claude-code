@@ -1,4 +1,4 @@
-import type { Plugin } from 'claude-code/testing'
+import type { Plugin } from 'sirgent-ai/testing'
 
 import { DEAF_TELEMETRY } from '../deaf-telemetry.js'
 

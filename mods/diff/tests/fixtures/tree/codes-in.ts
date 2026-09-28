@@ -1,4 +1,4 @@
-import type { CodeProps, RenderNode } from 'claude-code'
+import type { CodeProps, RenderNode } from 'sirgent-ai'
 
 /**
  * The props of every `Code` under a rendered tree node, depth-first in

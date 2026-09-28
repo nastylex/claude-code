@@ -1,4 +1,4 @@
-import type { Plugin } from 'claude-code/testing'
+import type { Plugin } from 'sirgent-ai/testing'
 
 /**
  * A plugin that registers a tool when the session starts, in the tier

@@ -1,4 +1,4 @@
-import type { ToolCallArgs } from 'claude-code'
+import type { ToolCallArgs } from 'sirgent-ai'
 
 /**
  * A Read the model asks for, for the reaching plugin's tool.call hook.

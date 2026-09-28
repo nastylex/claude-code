@@ -1,4 +1,4 @@
-import type { SessionStartInput } from 'claude-code'
+import type { SessionStartInput } from 'sirgent-ai'
 
 /**
  * The session as it starts: a person at the prompt in the checkout.

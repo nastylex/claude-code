@@ -69,7 +69,7 @@ def _find_git_index(cwd):
 
 def _diff_pathspec(cwd, paths):
     """Convert absolute touched-paths to repo-relative pathspec args for
-    git diff. Paths outside cwd (e.g. ~/.claude/…) are dropped. Returns the
+    git diff. Paths outside cwd (e.g. ~/.sirgent/…) are dropped. Returns the
     list to splice after `--`, or [] for an unrestricted diff. realpath both
     sides so the macOS /var ↔ /private/var symlink doesn't make in-repo
     paths look external."""
@@ -406,7 +406,7 @@ def get_git_diff(cwd, baseline_sha, full_context=False, paths=None, untracked_pa
     pathspec = _diff_pathspec(cwd, paths)
     if paths and not pathspec:
         # Caller restricted to specific paths but none are inside this repo
-        # (e.g. only ~/.claude/... edits). Returning "" flows to skip(6); an
+        # (e.g. only ~/.sirgent/... edits). Returning "" flows to skip(6); an
         # empty pathspec would mean an UNRESTRICTED diff — the bug this whole
         # change exists to fix.
         return ""

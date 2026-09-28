@@ -1,4 +1,4 @@
-import type { InstructionFileKind } from 'claude-code'
+import type { InstructionFileKind } from 'sirgent-ai'
 
 /**
  * The kinds `managed-only` drops: the project's checked-in and private

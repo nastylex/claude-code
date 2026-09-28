@@ -1,14 +1,14 @@
 ---
 name: Command Development
-description: This skill should be used when the user asks to "create a slash command", "add a command", "write a custom command", "define command arguments", "use command frontmatter", "organize commands", "create command with file references", "interactive command", "use AskUserQuestion in command", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in commands, user interaction patterns, or command development best practices for Claude Code.
+description: This skill should be used when the user asks to "create a slash command", "add a command", "write a custom command", "define command arguments", "use command frontmatter", "organize commands", "create command with file references", "interactive command", "use AskUserQuestion in command", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in commands, user interaction patterns, or command development best practices for SirGent AI.
 version: 0.2.0
 ---
 
-# Command Development for Claude Code
+# Command Development for SirGent AI
 
 ## Overview
 
-Slash commands are frequently-used prompts defined as Markdown files that Claude executes during interactive sessions. Understanding command structure, frontmatter options, and dynamic features enables creating powerful, reusable workflows.
+Slash commands are frequently-used prompts defined as Markdown files that SirGent executes during interactive sessions. Understanding command structure, frontmatter options, and dynamic features enables creating powerful, reusable workflows.
 
 **Key concepts:**
 - Markdown file format for commands
@@ -21,19 +21,19 @@ Slash commands are frequently-used prompts defined as Markdown files that Claude
 
 ### What is a Slash Command?
 
-A slash command is a Markdown file containing a prompt that Claude executes when invoked. Commands provide:
+A slash command is a Markdown file containing a prompt that SirGent executes when invoked. Commands provide:
 - **Reusability**: Define once, use repeatedly
 - **Consistency**: Standardize common workflows
 - **Sharing**: Distribute across team or projects
 - **Efficiency**: Quick access to complex prompts
 
-### Critical: Commands are Instructions FOR Claude
+### Critical: Commands are Instructions FOR SirGent
 
 **Commands are written for agent consumption, not human consumption.**
 
-When a user invokes `/command-name`, the command content becomes Claude's instructions. Write commands as directives TO Claude about what to do, not as messages TO the user.
+When a user invokes `/command-name`, the command content becomes SirGent's instructions. Write commands as directives TO SirGent about what to do, not as messages TO the user.
 
-**Correct approach (instructions for Claude):**
+**Correct approach (instructions for SirGent):**
 ```markdown
 Review this code for security vulnerabilities including:
 - SQL injection
@@ -49,18 +49,18 @@ This command will review your code for security issues.
 You'll receive a report with vulnerability details.
 ```
 
-The first example tells Claude what to do. The second tells the user what will happen but doesn't instruct Claude. Always use the first approach.
+The first example tells SirGent what to do. The second tells the user what will happen but doesn't instruct SirGent. Always use the first approach.
 
 ### Command Locations
 
 **Project commands** (shared with team):
-- Location: `.claude/commands/`
+- Location: `.sirgent/commands/`
 - Scope: Available in specific project
 - Label: Shown as "(project)" in `/help`
 - Use for: Team workflows, project-specific tasks
 
 **Personal commands** (available everywhere):
-- Location: `~/.claude/commands/`
+- Location: `~/.sirgent/commands/`
 - Scope: Available in all projects
 - Label: Shown as "(user)" in `/help`
 - Use for: Personal workflows, cross-project utilities
@@ -78,7 +78,7 @@ The first example tells Claude what to do. The second tells the user what will h
 Commands are Markdown files with `.md` extension:
 
 ```
-.claude/commands/
+.sirgent/commands/
 ├── review.md           # /review command
 ├── test.md             # /test command
 └── deploy.md           # /deploy command
@@ -285,7 +285,7 @@ Review @$1 for:
 > /review-file src/api/users.ts
 ```
 
-**Effect:** Claude reads `src/api/users.ts` before processing command
+**Effect:** SirGent reads `src/api/users.ts` before processing command
 
 ### Multiple File References
 
@@ -315,7 +315,7 @@ Ensure:
 
 ## Bash Execution in Commands
 
-Commands can execute bash commands inline to dynamically gather context before Claude processes the command. This is useful for including repository state, environment information, or project-specific context.
+Commands can execute bash commands inline to dynamically gather context before SirGent processes the command. This is useful for including repository state, environment information, or project-specific context.
 
 **When to use:**
 - Include dynamic context (git status, environment vars, etc.)
@@ -332,7 +332,7 @@ For complete syntax, examples, and best practices, see `references/plugin-featur
 Simple organization for small command sets:
 
 ```
-.claude/commands/
+.sirgent/commands/
 ├── build.md
 ├── test.md
 ├── deploy.md
@@ -347,7 +347,7 @@ Simple organization for small command sets:
 Organize commands in subdirectories:
 
 ```
-.claude/commands/
+.sirgent/commands/
 ├── ci/
 │   ├── build.md        # /build (project:ci)
 │   ├── test.md         # /test (project:ci)
@@ -505,7 +505,7 @@ PR #$1 Workflow:
 - Check file is in correct directory
 - Verify `.md` extension present
 - Ensure valid Markdown format
-- Restart Claude Code
+- Restart SirGent AI
 
 **Arguments not working:**
 - Verify `$1`, `$2` syntax correct
@@ -526,9 +526,9 @@ PR #$1 Workflow:
 
 ## Plugin-Specific Features
 
-### CLAUDE_PLUGIN_ROOT Variable
+### SIRGENT_PLUGIN_ROOT Variable
 
-Plugin commands have access to `${CLAUDE_PLUGIN_ROOT}`, an environment variable that resolves to the plugin's absolute path.
+Plugin commands have access to `${SIRGENT_PLUGIN_ROOT}`, an environment variable that resolves to the plugin's absolute path.
 
 **Purpose:**
 - Reference plugin files portably
@@ -544,7 +544,7 @@ description: Analyze using plugin script
 allowed-tools: Bash(node:*)
 ---
 
-Run analysis: !`node ${CLAUDE_PLUGIN_ROOT}/scripts/analyze.js $1`
+Run analysis: !`node ${SIRGENT_PLUGIN_ROOT}/scripts/analyze.js $1`
 
 Review results and report findings.
 ```
@@ -553,16 +553,16 @@ Review results and report findings.
 
 ```markdown
 # Execute plugin script
-!`bash ${CLAUDE_PLUGIN_ROOT}/scripts/script.sh`
+!`bash ${SIRGENT_PLUGIN_ROOT}/scripts/script.sh`
 
 # Load plugin configuration
-@${CLAUDE_PLUGIN_ROOT}/config/settings.json
+@${SIRGENT_PLUGIN_ROOT}/config/settings.json
 
 # Use plugin template
-@${CLAUDE_PLUGIN_ROOT}/templates/report.md
+@${SIRGENT_PLUGIN_ROOT}/templates/report.md
 
 # Access plugin resources
-@${CLAUDE_PLUGIN_ROOT}/docs/reference.md
+@${SIRGENT_PLUGIN_ROOT}/docs/reference.md
 ```
 
 **Why use it:**
@@ -608,7 +608,7 @@ argument-hint: [environment]
 allowed-tools: Read, Bash(*)
 ---
 
-Load configuration: @${CLAUDE_PLUGIN_ROOT}/config/$1-deploy.json
+Load configuration: @${SIRGENT_PLUGIN_ROOT}/config/$1-deploy.json
 
 Deploy to $1 using configuration settings.
 Monitor deployment and report status.
@@ -622,7 +622,7 @@ description: Generate docs from template
 argument-hint: [component]
 ---
 
-Template: @${CLAUDE_PLUGIN_ROOT}/templates/docs.md
+Template: @${SIRGENT_PLUGIN_ROOT}/templates/docs.md
 
 Generate documentation for $1 following template structure.
 ```
@@ -635,9 +635,9 @@ description: Complete build workflow
 allowed-tools: Bash(*)
 ---
 
-Build: !`bash ${CLAUDE_PLUGIN_ROOT}/scripts/build.sh`
-Test: !`bash ${CLAUDE_PLUGIN_ROOT}/scripts/test.sh`
-Package: !`bash ${CLAUDE_PLUGIN_ROOT}/scripts/package.sh`
+Build: !`bash ${SIRGENT_PLUGIN_ROOT}/scripts/build.sh`
+Test: !`bash ${SIRGENT_PLUGIN_ROOT}/scripts/test.sh`
+Package: !`bash ${SIRGENT_PLUGIN_ROOT}/scripts/package.sh`
 
 Review outputs and report workflow status.
 ```
@@ -667,13 +667,13 @@ The agent will analyze:
 - Best practices
 
 Agent uses plugin resources:
-- ${CLAUDE_PLUGIN_ROOT}/config/rules.json
-- ${CLAUDE_PLUGIN_ROOT}/checklists/review.md
+- ${SIRGENT_PLUGIN_ROOT}/config/rules.json
+- ${SIRGENT_PLUGIN_ROOT}/checklists/review.md
 ```
 
 **Key points:**
 - Agent must exist in `plugin/agents/` directory
-- Claude uses Task tool to launch agent
+- SirGent uses Task tool to launch agent
 - Document agent capabilities
 - Reference plugin resources agent uses
 
@@ -710,7 +710,7 @@ Design commands that work with plugin hooks:
 - Commands can prepare state for hooks to process
 - Hooks execute automatically on tool events
 - Commands should document expected hook behavior
-- Guide Claude on interpreting hook output
+- Guide SirGent on interpreting hook output
 
 See `references/plugin-features-reference.md` for examples of commands that coordinate with hooks
 
@@ -728,7 +728,7 @@ allowed-tools: Bash(node:*), Read
 Target: @$1
 
 Phase 1 - Static Analysis:
-!`node ${CLAUDE_PLUGIN_ROOT}/scripts/lint.js $1`
+!`node ${SIRGENT_PLUGIN_ROOT}/scripts/lint.js $1`
 
 Phase 2 - Deep Review:
 Launch code-reviewer agent for detailed analysis.
@@ -737,7 +737,7 @@ Phase 3 - Standards Check:
 Use coding-standards skill for validation.
 
 Phase 4 - Report:
-Template: @${CLAUDE_PLUGIN_ROOT}/templates/review.md
+Template: @${SIRGENT_PLUGIN_ROOT}/templates/review.md
 
 Compile findings into report following template.
 ```
@@ -796,8 +796,8 @@ allowed-tools: Bash(test:*)
 ---
 
 Validate plugin setup:
-- Script: !`test -x ${CLAUDE_PLUGIN_ROOT}/bin/analyze && echo "✓" || echo "✗"`
-- Config: !`test -f ${CLAUDE_PLUGIN_ROOT}/config.json && echo "✓" || echo "✗"`
+- Script: !`test -x ${SIRGENT_PLUGIN_ROOT}/bin/analyze && echo "✓" || echo "✗"`
+- Config: !`test -f ${SIRGENT_PLUGIN_ROOT}/config.json && echo "✓" || echo "✗"`
 
 If all checks pass, run analysis.
 Otherwise, report missing components.
@@ -811,7 +811,7 @@ description: Build with error handling
 allowed-tools: Bash(*)
 ---
 
-Execute build: !`bash ${CLAUDE_PLUGIN_ROOT}/scripts/build.sh 2>&1 || echo "BUILD_FAILED"`
+Execute build: !`bash ${SIRGENT_PLUGIN_ROOT}/scripts/build.sh 2>&1 || echo "BUILD_FAILED"`
 
 If build succeeded:
   Report success and output location

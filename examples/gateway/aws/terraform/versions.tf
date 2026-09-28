@@ -1,4 +1,4 @@
-# Provider + version pins for the Claude apps gateway ECS Fargate deployment.
+# Provider + version pins for the SirGent apps gateway ECS Fargate deployment.
 terraform {
   required_version = ">= 1.5"
   required_providers {

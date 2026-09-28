@@ -1,4 +1,4 @@
-import type { InstructionFile } from 'claude-code'
+import type { InstructionFile } from 'sirgent-ai'
 
 import { normalSpellingOf } from './normal-spelling-of.js'
 

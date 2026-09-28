@@ -1,4 +1,4 @@
-import type { Settings } from 'claude-code'
+import type { Settings } from 'sirgent-ai'
 
 /**
  * The MCP servers managed policy names, as their tools are prefixed

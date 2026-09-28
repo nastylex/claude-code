@@ -1,4 +1,4 @@
-import type { ElementTable } from 'claude-code'
+import type { ElementTable } from 'sirgent-ai'
 
 /**
  * The element constructors the pane draws with, destructured from the

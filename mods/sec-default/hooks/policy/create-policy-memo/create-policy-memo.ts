@@ -1,4 +1,4 @@
-import type { Settings } from 'claude-code'
+import type { Settings } from 'sirgent-ai'
 
 /**
  * A reader of managed policy that serves one read to every caller inside a

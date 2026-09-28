@@ -1,4 +1,4 @@
-import type { RenderSurface } from 'claude-code'
+import type { RenderSurface } from 'sirgent-ai'
 
 /**
  * Whether a render event comes from a surface that draws the pane: every

@@ -1,4 +1,4 @@
-import type { CommandDescribeInput, Origin } from 'claude-code'
+import type { CommandDescribeInput, Origin } from 'sirgent-ai'
 
 /**
  * A visible command's description as the engine asks for it, pinned to
