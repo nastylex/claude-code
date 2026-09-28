@@ -68,3 +68,14 @@ Clean up the MP3 after playback. Never print or echo the API key.
 The Stop-hook narrator honours three silences, checked in order:
 `SPEECH_DISABLE=1`, a missing `ELEVENLABS_API_KEY`, and the flag file
 `~/.sirgent/speech-disabled` (toggled by the `/hush` command).
+
+## Two-way voice (barge-in)
+
+With `/voice on` (or `SPEECH_CONVERSATION=1`) the Stop hook plays the
+response in the background and monitors the microphone. A sustained signal
+above `SPEECH_BARGE_IN_DB` (default **150**, SPL-equivalent — deliberately
+extreme so background noise never triggers it) kills playback, records up
+to `SPEECH_REPLY_SECS` seconds of the user's reply, transcribes it with the
+ElevenLabs speech-to-text API (`scribe_v1`), and hands the text back to
+SirGent by blocking the stop with the reply as the reason. The user's
+spoken words then become the next instruction.
