@@ -1,14 +1,14 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 Discord Community
-    url: https://sirgent.ai/discord
+    url: https://anthropic.com/discord
     about: Get help, ask questions, and chat with other SirGent AI users
   - name: 📖 Documentation
-    url: https://docs.sirgent.ai/en/docs/sirgent-ai
+    url: https://docs.claude.com/en/docs/claude-code
     about: Read the official documentation and guides
   - name: 🎓 Getting Started Guide
-    url: https://docs.sirgent.ai/en/docs/sirgent-ai/quickstart
+    url: https://docs.claude.com/en/docs/claude-code/quickstart
     about: New to SirGent AI? Start here
   - name: 🔧 Troubleshooting Guide
-    url: https://docs.sirgent.ai/en/docs/sirgent-ai/troubleshooting
+    url: https://docs.claude.com/en/docs/claude-code/troubleshooting
     about: Common issues and how to fix them

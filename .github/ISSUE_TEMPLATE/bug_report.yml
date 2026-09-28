@@ -10,8 +10,8 @@ body:
         Thanks for taking the time to report this bug! Please fill out the sections below to help us understand and fix the issue.
         
         Before submitting, please check:
-        - You're using the [latest version](https://www.npmjs.com/package/@sirgent-ai/cli?activeTab=versions) of SirGent AI (`sirgent --version`) 
-        - This issue hasn't already been reported by searching [existing issues](https://github.com/sirgent-ai/sirgent-ai/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug).
+        - You're using the [latest version](https://www.npmjs.com/package/@anthropic-ai/claude-code?activeTab=versions) of SirGent AI (`claude --version`) 
+        - This issue hasn't already been reported by searching [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug).
         - This is a bug, not a feature request or support question
         
   - type: checkboxes
@@ -20,7 +20,7 @@ body:
       label: Preflight Checklist
       description: Please confirm before submitting
       options:
-        - label: I have searched [existing issues](https://github.com/sirgent-ai/sirgent-ai/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet
+        - label: I have searched [existing issues](https://github.com/anthropics/claude-code/issues?q=is%3Aissue%20state%3Aopen%20label%3Abug) and this hasn't been reported yet
           required: true
         - label: This is a single bug report (please file separate reports for different bugs)
           required: true
@@ -33,7 +33,7 @@ body:
       label: What's Wrong?
       description: Describe what's happening that shouldn't be
       placeholder: |
-        When I try to create a Python file, SirGent shows an error "EACCES: permission denied" and the file isn't created.
+        When I try to create a Python file, Claude shows an error "EACCES: permission denied" and the file isn't created.
         
         The command fails immediately after accepting the file write permission...
     validations:
@@ -44,7 +44,7 @@ body:
     attributes:
       label: What Should Happen?
       description: Describe the expected behavior
-      placeholder: SirGent should create a Python script file successfully without errors
+      placeholder: Claude should create a Python script file successfully without errors
     validations:
       required: true
       
@@ -74,7 +74,7 @@ body:
            def hello():
                print("test")
            ```
-        2. Run `sirgent "add type hints to test.py"`
+        2. Run `claude "add type hints to test.py"`
         3. When prompted for file access, accept
         4. Error appears: "Unable to parse..."
         
@@ -85,7 +85,7 @@ body:
   - type: dropdown
     id: model
     attributes:
-      label: SirGent Model
+      label: Claude Model
       description: Which model were you using? (Run `/model` to check)
       options:
         - Sonnet (default)
@@ -120,8 +120,8 @@ body:
     id: version
     attributes:
       label: SirGent AI Version
-      description: Run `sirgent --version` and paste the output
-      placeholder: "e.g., 1.0.123 (SirGent AI)"
+      description: Run `claude --version` and paste the output
+      placeholder: "e.g., 1.0.123 (Claude Code)"
     validations:
       required: true
       
@@ -131,7 +131,7 @@ body:
       label: Platform
       description: Which API platform are you using?
       options:
-        - SirGent AI API
+        - Anthropic API
         - AWS Bedrock
         - Google Vertex AI
         - Other

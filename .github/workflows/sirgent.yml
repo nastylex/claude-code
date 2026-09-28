@@ -11,12 +11,12 @@ on:
     types: [submitted]
 
 jobs:
-  sirgent:
+  claude:
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@sirgent')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@sirgent')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@sirgent')) ||
-      (github.event_name == 'issues' && (contains(github.event.issue.body, '@sirgent') || contains(github.event.issue.title, '@sirgent')))
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,15 +30,15 @@ jobs:
           fetch-depth: 1
 
       - name: Run SirGent AI
-        id: sirgent
-        uses: sirgent-ai/sirgent-action@v1
+        id: claude
+        uses: anthropics/claude-code-action@v1
         with:
-          # Authenticate to the SirGent API via Workload Identity Federation
+          # Authenticate to the Claude API via Workload Identity Federation
           # (the workflow's OIDC token is exchanged for a short-lived access
           # token) instead of a static API key.
-          sirgent_federation_rule_id: ${{ vars.SIRGENT_FEDERATION_RULE_ID }}
-          sirgent_organization_id: ${{ vars.SIRGENT_ORGANIZATION_ID }}
-          sirgent_service_account_id: ${{ vars.SIRGENT_SERVICE_ACCOUNT_ID }}
-          sirgent_workspace_id: ${{ vars.SIRGENT_WORKSPACE_ID }}
-          sirgent_args: "--model sirgent-sonnet-4-5-20250929"
+          anthropic_federation_rule_id: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}
+          anthropic_organization_id: ${{ vars.ANTHROPIC_ORGANIZATION_ID }}
+          anthropic_service_account_id: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+          anthropic_workspace_id: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
+          claude_args: "--model claude-sonnet-4-5-20250929"
 
