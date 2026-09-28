@@ -1,5 +1,5 @@
 # Security Policy
-Thank you for helping us keep Claude Code secure!
+Thank you for helping us keep SirGent AI secure!
 
 ## Reporting Security Issues
 

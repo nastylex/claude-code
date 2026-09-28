@@ -37,7 +37,7 @@ jobs:
           gh pr comment "$PR_NUMBER" -R "$REPO" --body '<!-- non-write-users-check -->
           **`allowed_non_write_users` detected**
 
-          This PR adds or modifies `allowed_non_write_users`, which allows users without write access to trigger Claude Code Action workflows. This can introduce security risks.
+          This PR adds or modifies `allowed_non_write_users`, which allows users without write access to trigger SirGent AI Action workflows. This can introduce security risks.
 
           If this is a new flow, please make sure you actually need `allowed_non_write_users`. If you are editing an existing workflow, double check that you are not adding new Claude permissions which might lead to a vulnerability.
 

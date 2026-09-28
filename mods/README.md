@@ -1,8 +1,8 @@
 # Mods
 
-A mod is a Claude Code plugin whose behaviour lives in a hooks module: one
+A mod is a SirGent AI plugin whose behaviour lives in a hooks module: one
 `register(on, options)` entry that hooks the engine's events as functions
-`($, e, next)`. These four ship inside Claude Code; this folder is their
+`($, e, next)`. These four ship inside SirGent AI; this folder is their
 source, published as it is built into the binary.
 
 | Mod | What it does | Seated |

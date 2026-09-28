@@ -18,7 +18,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install Claude Code and TypeScript
+      - name: Install SirGent AI and TypeScript
         run: npm install -g @anthropic-ai/claude-code typescript@5.9.3
 
       - name: Typecheck each mod's hooks and tests

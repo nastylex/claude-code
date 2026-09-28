@@ -2,13 +2,13 @@ blank_issues_enabled: false
 contact_links:
   - name: 💬 Discord Community
     url: https://anthropic.com/discord
-    about: Get help, ask questions, and chat with other Claude Code users
+    about: Get help, ask questions, and chat with other SirGent AI users
   - name: 📖 Documentation
     url: https://docs.claude.com/en/docs/claude-code
     about: Read the official documentation and guides
   - name: 🎓 Getting Started Guide
     url: https://docs.claude.com/en/docs/claude-code/quickstart
-    about: New to Claude Code? Start here
+    about: New to SirGent AI? Start here
   - name: 🔧 Troubleshooting Guide
     url: https://docs.claude.com/en/docs/claude-code/troubleshooting
     about: Common issues and how to fix them

@@ -1,4 +1,4 @@
-name: Claude Code
+name: SirGent AI
 
 on:
   issue_comment:
@@ -29,7 +29,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Run Claude Code
+      - name: Run SirGent AI
         id: claude
         uses: anthropics/claude-code-action@v1
         with:

@@ -1,5 +1,5 @@
-name: Claude Issue Dedupe
-description: Automatically dedupe GitHub issues using Claude Code
+name: SirGent Issue Dedupe
+description: Automatically dedupe GitHub issues using SirGent AI
 on:
   issues:
     types: [opened]
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Claude Code slash command
+      - name: Run SirGent AI slash command
         uses: anthropics/claude-code-action@v1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

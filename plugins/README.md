@@ -1,10 +1,10 @@
-# Claude Code Plugins
+# SirGent AI Plugins
 
-This directory contains some official Claude Code plugins that extend functionality through custom commands, agents, and workflows. These are examples of what's possible with the Claude Code plugin system—many more plugins are available through community marketplaces.
+This directory contains some official SirGent AI plugins that extend functionality through custom commands, agents, and workflows. These are examples of what's possible with the plugin system—many more plugins are available through community marketplaces.
 
-## What are Claude Code Plugins?
+## What are SirGent AI Plugins?
 
-Claude Code plugins are extensions that enhance Claude Code with custom slash commands, specialized agents, hooks, and MCP servers. Plugins can be shared across projects and teams, providing consistent tooling and workflows.
+SirGent AI plugins are extensions that enhance the assistant with custom slash commands, specialized agents, hooks, and MCP servers. Plugins can be shared across projects and teams, providing consistent tooling and workflows.
 
 Learn more in the [official plugins documentation](https://docs.claude.com/en/docs/claude-code/plugins).
 
@@ -30,7 +30,7 @@ Learn more in the [official plugins documentation](https://docs.claude.com/en/do
 
 These plugins are included in the Claude Code repository. To use them in your own projects:
 
-1. Install Claude Code globally:
+1. Install SirGent AI globally:
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
@@ -46,7 +46,7 @@ For detailed plugin installation and configuration, see the [official documentat
 
 ## Plugin Structure
 
-Each plugin follows the standard Claude Code plugin structure:
+Each plugin follows the standard SirGent AI plugin structure:
 
 ```
 plugin-name/
