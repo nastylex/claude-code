@@ -1,5 +1,5 @@
 {
-  "description": "Speech plugin — narrates SirGent's final response aloud via ElevenLabs TTS",
+  "description": "Speech plugin — narrates SirGent's final response aloud via ElevenLabs TTS; /dictate covers the input side (mic → STT → prompt)",
   "hooks": {
     "Stop": [
       {
