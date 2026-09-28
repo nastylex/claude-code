@@ -1,0 +1,10 @@
+{
+  "name": "speech",
+  "version": "1.0.0",
+  "description": "Speech capabilities for SirGent AI. Narrates responses aloud through a Stop hook using ElevenLabs text-to-speech, with /speak and /hush slash commands, a voice skill, and playback via native players or afplay/mpv/powershell.",
+  "author": {
+    "name": "SirGent AI",
+    "email": "support@sirgent.ai"
+  },
+  "homepage": "https://github.com/sirgent-ai/sirgent-ai/tree/main/plugins/speech"
+}

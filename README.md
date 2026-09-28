@@ -47,7 +47,7 @@ For more installation options, uninstall steps, and troubleshooting, see the [se
 
 ## Plugins
 
-This repository includes several plugins that extend functionality with custom commands and agents. See the [plugins directory](./plugins/README.md) for detailed documentation on available plugins.
+This repository includes several plugins that extend functionality with custom commands and agents — including **speech**: voice narration of responses via ElevenLabs text-to-speech, with `/speak` and `/hush` commands. See the [plugins directory](./plugins/README.md) for detailed documentation on available plugins.
 
 ## Reporting Bugs
 
